@@ -1,20 +1,6 @@
 #include "Continent.h"
 #include <string.h>
 
-class Continent{
-    private:
-        std::vector<Country*> listCountries;
-        char *name;
-    public:
-        Continent(char *nameContinent);
-
-        std::vector<Country*> getCountries() const;
-        char* getContinentName() const;
-
-        Country* getCountry(char *nameCountry);
-        void addCountry(Country* country);
-};
-
 Continent::Continent(char* nameContinent){
     int len = strlen(nameContinent);
     name = new char[len];

@@ -1,21 +1,5 @@
 #include "Map.h"
 #include <string.h>
-class Map{
-    private:
-        std::vector<Country*> countries;
-        std::vector<Continent*> continents;
-
-    public:
-        Map();
-        void addCountry(char* name);
-        void addNeighbor(Country* country, Country* neighbor);//adds a neighbor to a country
-
-        void addContinent(char* name);
-        void addCountryToContinent(char* nameContinent, Country* country);
-        std::vector<Continent*> getContinents() const;
-        std::vector<Country*> getCountriesOwnedBy(short playerNumber);
-        static Map* createDefaultMap();
-};
 
 Map::Map(){
 
@@ -72,11 +56,11 @@ Map* Map::createDefaultMap(){
     //    D
 
     Map* defaultMap = new Map();
-    defaultMap->addCountry("A");
-    defaultMap->addCountry("B");
-    defaultMap->addCountry("C");
-    defaultMap->addCountry("D");
-    defaultMap->addCountry("E");
+    defaultMap->addCountry((char*)"A");
+    defaultMap->addCountry((char*)"B");
+    defaultMap->addCountry((char*)"C");
+    defaultMap->addCountry((char*)"D");
+    defaultMap->addCountry((char*)"E");
     
     //because we know the order in which they are pushed, we
     //know their indexes

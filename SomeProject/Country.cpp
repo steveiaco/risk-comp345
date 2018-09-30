@@ -1,22 +1,6 @@
 #include <string.h>
 #include "Country.h"
 
-class Country{
-    private:
-        int troops;
-        int numberOfOwnerPlayer;
-        char *name;
-        std::vector<Country*> neighborCountries;
-
-    public:
-        Country(char *nameOfCountry);
-        int getTroops() const;
-        int getOwner() const;
-        char * getName() const;
-        std::vector<Country*> getNeighborCountries() const;
-        void setNeighborCountry(Country* country);
-};
-
 Country::Country(char *nameOfCountry){
             troops = 0;
             numberOfOwnerPlayer = 0; //0 is not assigned to a player!!

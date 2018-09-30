@@ -11,6 +11,6 @@ class Country{
         int getTroops() const{ return troops;};//inline?
         int getOwner() const{ return numberOfOwnerPlayer;};//inline?
         char * getName() const{ return name;};//inline?
-        std::vector<Country*> getNeighborCountries();//good for attacking to know neighbors
+        std::vector<Country*> getNeighborCountries() const;//good for attacking to know neighbors
         void setNeighborCountry(Country* nameCountry);
 };
