@@ -13,9 +13,9 @@ class Country{
 
     public:
         Country(char *nameOfCountry);
-        int getTroops() const;//inline?
-        int getOwner() const;//inline?
-        char * getName() const;//inline?
+        int getTroops() const;
+        int getOwner() const;
+        char * getName() const;
         std::vector<Country*> getNeighborCountries() const;//good for attacking to know neighbors
         void setNeighborCountry(Country* nameCountry);
 };

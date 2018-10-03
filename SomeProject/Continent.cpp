@@ -17,7 +17,7 @@ char* Continent::getContinentName() const{
 
 Country* Continent::getCountry(char *nameCountry){ //returns null if no result
     if (!listCountries.empty()){
-        return NULL;
+        return nullptr;
     }
 
     for(int i=0;i<listCountries.size();i++){
@@ -25,7 +25,7 @@ Country* Continent::getCountry(char *nameCountry){ //returns null if no result
             return listCountries[i];
         }//if you need to dereference listCountries use (*listCountries)[index]
     }
-    return NULL;
+    return nullptr;
 }
 
 //only used when developping the map
