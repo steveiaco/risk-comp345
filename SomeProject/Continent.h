@@ -1,3 +1,6 @@
+#ifndef Continent_H
+#define Continent_H
+
 #include "Country.h"
 #include <vector>
 
@@ -15,3 +18,5 @@ class Continent{
         Country* getCountry(char *nameCountry);
         void addCountry(Country* country);
 };
+
+#endif

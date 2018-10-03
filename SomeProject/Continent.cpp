@@ -7,11 +7,11 @@ Continent::Continent(char* nameContinent){
     strncpy(name, nameContinent,len);
 }
 
-inline std::vector<Country*> Continent::getCountries() const{
+std::vector<Country*> Continent::getCountries() const{
     return listCountries;
 }
 
-inline char* Continent::getContinentName() const{
+char* Continent::getContinentName() const{
     return name;
 }
 

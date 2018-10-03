@@ -47,6 +47,10 @@ std::vector<Country*> Map::getCountriesOwnedBy(short playerNumber){
     return selectCountries;
 }
 
+std::vector<Country*> Map::getCountries(){
+    return this->countries;
+}
+
 Map* Map::createDefaultMap(){
     //basic test map
         //E

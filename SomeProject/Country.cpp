@@ -10,20 +10,20 @@ Country::Country(char *nameOfCountry){
             //https://www.ibm.com/support/knowledgecenter/en/SS2LWA_12.1.0/com.ibm.xlcpp121.bg.doc/language_ref/cplr035.html
 }
 
-inline int Country::getTroops() const{
-    return troops;
+int Country::getTroops() const{
+    return this->troops;
 }
 
-inline int Country::getOwner() const{
-    return numberOfOwnerPlayer;
+int Country::getOwner() const{
+    return this->numberOfOwnerPlayer;
 }
 
-inline char* Country::getName() const{
-    return name;
+char* Country::getName() const{
+    return this->name;
 }
 
 std::vector<Country*> Country::getNeighborCountries() const{
-    return neighborCountries;
+    return this->neighborCountries;
 }
 
 void Country::setNeighborCountry(Country* country){

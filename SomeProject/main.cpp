@@ -8,11 +8,11 @@ int main(){
     for(int i=0;i<some.size();i++){
         std::cout << some[i]->getName() <<std::endl;
         for(int j=0;j< some[i]->getNeighborCountries().size();j++){
-            std::cout <<some[i]->getNeighborCountries()[j] << " ";
+            std::cout <<some[i]->getNeighborCountries()[j]->getName() << " ";
         }
         std::cout << std::endl;
     }
-    
+
 
     return 0;
 }
