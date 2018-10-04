@@ -15,6 +15,9 @@ class Country{
         Country(char *nameOfCountry);
         int getTroops() const;
         int getOwner() const;
+        void addTroops(int numberAdded);
+        void removeTroops(int numberRemoved);
+        void changeOwner(int numberOfOwner);
         char * getName() const;
         std::vector<Country*> getNeighborCountries() const;//good for attacking to know neighbors
         void setNeighborCountry(Country* nameCountry);

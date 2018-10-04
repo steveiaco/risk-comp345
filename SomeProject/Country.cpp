@@ -14,8 +14,20 @@ int Country::getTroops() const{
     return this->troops;
 }
 
+void Country::addTroops(int numberAdded){
+    this->troops+=numberAdded;
+}
+
+void Country::removeTroops(int numberRemoved){
+    this->troops-=numberRemoved;
+}
+
 int Country::getOwner() const{
     return this->numberOfOwnerPlayer;
+}
+
+void Country::changeOwner(int numberOfOwner){
+    this->numberOfOwnerPlayer=numberOfOwner;
 }
 
 char* Country::getName() const{
