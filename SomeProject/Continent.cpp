@@ -30,5 +30,10 @@ Country* Continent::getCountry(char *nameCountry){ //returns null if no result
 
 //only used when developping the map
 void Continent::addCountry(Country* country){
-    listCountries.push_back(country);
+    if(country->getIsTaken()==false){
+        listCountries.push_back(country);
+        country->setIsTaken(); //no liberty here because we do not want anyone
+        //to set this parameter back to false
+    }
+        
 }

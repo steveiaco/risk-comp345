@@ -2,12 +2,21 @@
 #include "Country.h"
 
 Country::Country(char *nameOfCountry){
+            isTaken = false;//not assigned to continent
             troops = 0;
             numberOfOwnerPlayer = 0; //0 is not assigned to a player!!
             int len = strlen(nameOfCountry);
             name = new char[len];
             strncpy(name, nameOfCountry,len); //to refer to this country, name applied (must be less than 20 char).
             //https://www.ibm.com/support/knowledgecenter/en/SS2LWA_12.1.0/com.ibm.xlcpp121.bg.doc/language_ref/cplr035.html
+}
+
+bool Country::getIsTaken() const{
+    return this->isTaken;
+}
+
+void Country::setIsTaken(){
+    this->isTaken = true;
 }
 
 int Country::getTroops() const{

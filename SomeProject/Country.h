@@ -9,12 +9,15 @@ class Country{
         int troops;
         int numberOfOwnerPlayer;
         char *name;
+        bool isTaken;
         std::vector<Country*> neighborCountries;
 
     public:
         Country(char *nameOfCountry);
         int getTroops() const;
         int getOwner() const;
+        bool getIsTaken() const;
+        void setIsTaken();
         void addTroops(int numberAdded);
         void removeTroops(int numberRemoved);
         void changeOwner(int numberOfOwner);
