@@ -1,6 +1,9 @@
 #include "Player.h"
 #include "Country.h"
 #include "Continent.h"
+#include "Player.h"
+#include "Hand.h"
+//#include "Dice.h"
 #include <iostream>
 #include <string>
 #include <set>
@@ -28,4 +31,23 @@ bool Player::removeCountry(Country* country) {
 
 bool Player::removeContinent(Continent* continent) {
 	return continentsOwned.erase(continent);
+}
+
+int Player::exchange() {
+	return playerHand.exchange();
+}
+
+void Player::reinforce()
+{
+	//unimplemented
+}
+
+void Player::attack()
+{
+	//unimplemented
+}
+
+void Player::fortify()
+{
+	//unimplemented
 }

@@ -5,6 +5,7 @@ class Player;
 
 #include "Country.h"
 #include "Continent.h"
+#include "Hand.h"
 #include <string>
 #include <set>
 using namespace std;
@@ -15,6 +16,7 @@ private:
 	string name;
 	set<Country*> countriesOwned;
 	set<Continent*> continentsOwned;
+	Hand playerHand;
 
 public:
 	//Constructors
@@ -30,6 +32,10 @@ public:
 	bool removeContinent(Continent* continent);
 
 	//Utility
+	void reinforce(); //count number of countries / 3, count how many continents owned
+	void attack();
+	void fortify();
+	int exchange()
 };
 
 #endif
