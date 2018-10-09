@@ -1,22 +1,23 @@
-#include "pch.h"
+#include "Player.h"
 #include "Hand.cpp"
 //include "Dice.cpp"
 
 
-class Player {
-private:
-	Hand* playerHand = new Hand();
+int Player::exchange() {
+	return playerHand.exchange();
+}
 
-public:
-	void reinforce() {
+void Player::reinforce()
+{
+	//unimplemented
+}
 
-	}
+void Player::attack()
+{
+	//unimplemented
+}
 
-	void attack() {
-
-	}
-
-	void fortify() {
-
-	}
-};
+void Player::fortify()
+{
+	//unimplemented
+}

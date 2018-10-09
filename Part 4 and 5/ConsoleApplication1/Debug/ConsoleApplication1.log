@@ -1,2 +1,37 @@
 ﻿  ConsoleApplication1.cpp
-  ConsoleApplication1.vcxproj -> C:\Users\Steven\Google Drive\School\F18\COMP345\Risk Project\ConsoleApplication1\Debug\ConsoleApplication1.exe
+c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\card.cpp(5): error C2011: 'Card': 'class' type redefinition
+  c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\card.cpp(5): note: see declaration of 'Card'
+c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\hand.cpp(19): error C2027: use of undefined type 'Card'
+  c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\card.cpp(5): note: see declaration of 'Card'
+c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\consoleapplication1.cpp(18): error C2027: use of undefined type 'Card'
+  c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\card.cpp(5): note: see declaration of 'Card'
+c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\consoleapplication1.cpp(18): error C2065: 'Infantry': undeclared identifier
+c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\consoleapplication1.cpp(19): error C2027: use of undefined type 'Card'
+  c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\card.cpp(5): note: see declaration of 'Card'
+c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\consoleapplication1.cpp(19): error C2065: 'Artillery': undeclared identifier
+c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\consoleapplication1.cpp(20): error C2027: use of undefined type 'Card'
+  c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\card.cpp(5): note: see declaration of 'Card'
+c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\consoleapplication1.cpp(20): error C2065: 'Cavalry': undeclared identifier
+c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\consoleapplication1.cpp(21): error C2027: use of undefined type 'Card'
+  c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\card.cpp(5): note: see declaration of 'Card'
+c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\consoleapplication1.cpp(21): error C2065: 'Infantry': undeclared identifier
+c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\consoleapplication1.cpp(23): error C2027: use of undefined type 'Card'
+  c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\card.cpp(5): note: see declaration of 'Card'
+c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\consoleapplication1.cpp(24): error C2027: use of undefined type 'Card'
+  c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\card.cpp(5): note: see declaration of 'Card'
+c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\consoleapplication1.cpp(25): error C2027: use of undefined type 'Card'
+  c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\card.cpp(5): note: see declaration of 'Card'
+c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\consoleapplication1.cpp(26): error C2027: use of undefined type 'Card'
+  c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\card.cpp(5): note: see declaration of 'Card'
+c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\consoleapplication1.cpp(28): error C2664: 'void Deck::addCard(Card)': cannot convert argument 1 from 'Card' to 'Card'
+  c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\consoleapplication1.cpp(28): note: use of undefined type 'Card'
+  c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\card.cpp(5): note: see declaration of 'Card'
+c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\consoleapplication1.cpp(29): error C2664: 'void Deck::addCard(Card)': cannot convert argument 1 from 'Card' to 'Card'
+  c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\consoleapplication1.cpp(29): note: use of undefined type 'Card'
+  c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\card.cpp(5): note: see declaration of 'Card'
+c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\consoleapplication1.cpp(30): error C2664: 'void Deck::addCard(Card)': cannot convert argument 1 from 'Card' to 'Card'
+  c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\consoleapplication1.cpp(30): note: use of undefined type 'Card'
+  c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\card.cpp(5): note: see declaration of 'Card'
+c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\consoleapplication1.cpp(31): error C2664: 'void Deck::addCard(Card)': cannot convert argument 1 from 'Card' to 'Card'
+  c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\consoleapplication1.cpp(31): note: use of undefined type 'Card'
+  c:\users\steven\google drive\school\f18\comp345\risk project\risk-comp345\part 4 and 5\consoleapplication1\card.cpp(5): note: see declaration of 'Card'
