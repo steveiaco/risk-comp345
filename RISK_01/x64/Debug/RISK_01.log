@@ -1,2 +1,0 @@
-﻿Y:\Program Files (x86)\Visual Studio Community 2017\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (RISK_04_05.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  Map.cpp
