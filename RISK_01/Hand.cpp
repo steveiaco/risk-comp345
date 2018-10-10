@@ -10,6 +10,7 @@ Hand::Hand() {
 }
 
 void Hand::giveCard(Card card) {
+	//>5 cards must call exchange
 	hand.push_back(card);
 }
 
