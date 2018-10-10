@@ -2,7 +2,7 @@
 
 
 std::vector<Card> hand;
-static int timesExchanged;
+int Hand::timesExchanged;
 
 
 Hand::Hand() {
@@ -44,5 +44,6 @@ int Hand::exchange() {
 		break;
 	}
 
+	timesExchanged++;
 	return armies;
 }

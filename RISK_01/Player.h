@@ -35,7 +35,7 @@ public:
 	void reinforce(); //count number of countries / 3, count how many continents owned
 	void attack();
 	void fortify();
-	int exchange()
+	int exchange();
 };
 
 #endif

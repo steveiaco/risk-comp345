@@ -100,7 +100,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
@@ -159,9 +159,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Card.cpp" />
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Main_4.cpp" />
     <ClCompile Include="Deck.cpp" />
     <ClCompile Include="Hand.cpp" />
+    <ClCompile Include="Main_5.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

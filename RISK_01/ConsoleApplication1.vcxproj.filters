@@ -47,7 +47,10 @@
     <ClCompile Include="Player.cpp">
       <Filter>Source Files\Part 4</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp">
+    <ClCompile Include="Main_4.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Main_5.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

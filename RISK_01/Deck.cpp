@@ -30,7 +30,7 @@ void Deck::addCardList(std::vector<Card> inCards) { //append card list to deck
 Card* Deck::draw() {//returns a random Card object from the deck, and removes said card from the deck
 
 	//first, lets get the size of the deck
-	int size = cards.size();
+	size_t size = cards.size();
 
 	if (size == 0) {
 		std::cerr << "Error: Deck has no cards or has not been initialized.";
