@@ -28,6 +28,7 @@ public:
 
 	//Accssors
 	string getName() const;
+	int getValue() const;
 
 	//Utility
 	void display(string lspace) const;
