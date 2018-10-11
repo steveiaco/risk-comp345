@@ -7,11 +7,12 @@
 using namespace std;
 
 Country::Country(string name, Continent* continent) {
-	continent->addCountry(this);
+	continent->addCountry(this); //problematic
 	this->continent = continent;
 	this->occupant = NULL;
 	this->troopCount = 0;
 	this->name = name;
+
 }
 
 void Country::display(string lspace) const {

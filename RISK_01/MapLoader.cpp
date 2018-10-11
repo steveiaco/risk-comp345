@@ -51,12 +51,16 @@ Map* MapLoader::readMapFile(std::string mapName) {
 
 		//Construct countries
 		for (std::string s : countries) {
+
 			std::stringstream ss(s);
+
 			//We will need each country's name and continent. The first two values assigned to continent are the x and y coordinates of the country, we are not keeping those values, they are replaced by the continent once we reach it.
 			std::string name;
 			std::string continent;
 			std::getline(ss, name, ','); std::getline(ss, continent, ','); std::getline(ss, continent, ','); std::getline(ss, continent, ',');
-			map->addCountry(new Country(name, map->getContinent(continent)));
+			std::cout << continent;
+			map->addCountry(new Country(name, map->getContinent(continent))); //tracked the bug to this line in code, in the new Country(name, continent) call
+
 		}
 
 		//Link countries
@@ -79,7 +83,6 @@ Map* MapLoader::readMapFile(std::string mapName) {
 		else
 			return map;
 
-		std::cout << "im here";
 
 	}
 	//Catch io errors
