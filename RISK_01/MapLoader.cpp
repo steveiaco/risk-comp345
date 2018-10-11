@@ -58,7 +58,6 @@ Map* MapLoader::readMapFile(std::string mapName) {
 			std::string name;
 			std::string continent;
 			std::getline(ss, name, ','); std::getline(ss, continent, ','); std::getline(ss, continent, ','); std::getline(ss, continent, ',');
-			std::cout << continent;
 			map->addCountry(new Country(name, map->getContinent(continent))); //tracked the bug to this line in code, in the new Country(name, continent) call
 
 		}
