@@ -132,11 +132,12 @@ void Player::reinforce(Country* toReinforce, int numTroops) {
 }
 void Player::attack(Country* attackFrom, Country* attackTo) //which country attack from and to.. 
 {
+	//we will check if attackFrom is a neighbor of attackTo
 	if (!(attackFrom->isNeighbor(attackTo)))
 		throw invalid_argument("Countries are not neighbors.");
 	
-	//we will check if attackFrom is a neighbor of attackTo
-		
+	//
+	
 }
 
 void Player::fortify(Country* moveFrom, Country* moveTo, int numberOfTroops) //move troops from one country to another
