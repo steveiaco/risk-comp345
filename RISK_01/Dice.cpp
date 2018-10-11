@@ -5,18 +5,19 @@ using namespace std;
 #include "Dice.h"
 
 
-static int totalRolls;
+static int Dice::totalRolls;
 int stats[6];
 int lastRoll[] = { 0,0,0 };
 
-void Roll()
+void Dice::Roll()
 {
-	lastRoll = { 0,0,0 };
+	for (int i = 0; i < 3; i++)
+		lastRoll[i] = 0;
 	int nbRolls;
 	int totalOfDices = 0; // Necessary if we want to display total of the Roll
 
 
-	cout << "How many dices do you wish to roll (1, 2 or 3)?\n";
+	cout << "How many die do you wish to roll (1, 2 or 3)?\n";
 	cin >> nbRolls;
 
 
@@ -25,7 +26,7 @@ void Roll()
 
 	for (int x = 0; x < nbRolls; x++)
 	{
-		int randomNum = RandomDice();
+		int randomNum = randomDice();
 
 
 		lastRoll[x] = randomNum;
@@ -38,7 +39,7 @@ void Roll()
 	}
 }
 
-void Stats()
+void Dice::Stats()
 {
 	for (int x = 0; x <= 5; x++)
 	{
@@ -47,13 +48,13 @@ void Stats()
 }
 
 
-int* GetLastRoll()
+int* Dice::GetLastRoll()
 {
 	return lastRoll; // returns a pointer, right?
 }
 
 
-int RandomDice()
+int Dice::randomDice()
 {
 	const int n = 5;
 	int remainder = RAND_MAX % n;

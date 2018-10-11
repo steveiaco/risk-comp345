@@ -1,5 +1,5 @@
 #include "Player.h"
-
+/*
 int main()
 {
 
@@ -9,4 +9,4 @@ int main()
 	Map map(); //default map
 	
 
-}
+}*/

@@ -2,9 +2,9 @@
 class Dice
 {
 public:
-        void Roll();
-        void Stats();
-int* GetLastRoll();
+    void Roll();
+    void Stats();
+	int* GetLastRoll();
 private:
-        int RandomDice();
+    int randomDice();
 };
