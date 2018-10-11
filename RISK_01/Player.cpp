@@ -3,7 +3,6 @@
 #include <iostream>
 #include <string> 
 #include <set>
-using namespace std;
 
 Player::Player(string name) {
 	this->name = name;
@@ -41,6 +40,7 @@ void Player::printCountriesOwned() //iterate through all countries and print the
 	}
 }
 
+/**
 Country* Player::queryOwnedCountry() //promts the user to select a country until they enter a valid input, finds that valid country and returns a pointer to it.
 {
 
@@ -70,8 +70,8 @@ Country* Player::queryOwnedCountry() //promts the user to select a country until
 
 	return returnedCountry;
 }
-
-
+**/
+/**
 void Player::reinforce() //count number of countries player owns, divide by 3 + value of all continents player owns
 {
 	//count countries, we'll assume the number of countries owned will never surpass the int limit
@@ -118,7 +118,18 @@ void Player::reinforce() //count number of countries player owns, divide by 3 + 
 
 
 }
+**/
 
+void Player::reinforce(Country* toReinforce, int numTroops) {
+
+	//check whether the passed country is owned by current player
+	if (!ownsCountry(toReinforce))
+		throw invalid_argument("The player does not own this country!"); //throw an exception if trying to modify a country not owned by that player
+	else {
+		toReinforce->addTroops(numTroops); //add troops
+	}
+
+}
 void Player::attack(Country* attackFrom, Country* attackTo) //which country attack from and to.. 
 {
 	if (!(attackFrom->isNeighbor(attackTo)))
@@ -128,9 +139,16 @@ void Player::attack(Country* attackFrom, Country* attackTo) //which country atta
 		
 }
 
-void Player::fortify(Country* moveFrom, Country* moveTo) //move troops from one country to another
+void Player::fortify(Country* moveFrom, Country* moveTo, int numberOfTroops) //move troops from one country to another
 {
-	//unimplemented
+	
 }
 
+bool Player::ownsCountry(Country * country)
+{
+	if (countriesOwned.count(country))
+		return true;
+	else
+		return false;
+}
 

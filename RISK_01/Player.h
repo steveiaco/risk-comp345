@@ -7,7 +7,7 @@ class Player;
 #include "Continent.h"
 #include "Player.h"
 #include "Hand.h"
-#include "Dice.h"
+//#include "Dice.h"
 #include "Map.h"
 #include <string>
 #include <set>
@@ -21,7 +21,7 @@ private:
 	set<Continent*> continentsOwned;
 	Hand playerHand;
 	
-	Country* queryOwnedCountry(); //queries the user for a name, attempts to find the country who's name is equal to that string and returns it
+	//Country* queryOwnedCountry(); //queries the user for a name, attempts to find the country who's name is equal to that string and returns it
 
 public:
 	//Constructors
@@ -37,11 +37,12 @@ public:
 	bool removeContinent(Continent* continent);
 
 	//Utility
-	void reinforce(); //count number of countries / 3, count how many continents owned
+	void reinforce(Country* toReenforce, int numTroops); //count number of countries / 3, count how many continents owned
 	void attack(Country* attackFrom, Country* attackTo);
-	void fortify(Country* moveFrom, Country* moveTo);
+	void fortify(Country* moveFrom, Country* moveTo, int numberOfTroops);
 	int exchange();
 	void printCountriesOwned();
+	bool ownsCountry(Country* country);
 
 	
 };
