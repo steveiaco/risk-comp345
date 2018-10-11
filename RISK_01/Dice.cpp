@@ -7,22 +7,14 @@ using namespace std;
 
 static int Dice::totalRolls;
 int stats[6];
-int lastRoll[] = { 0,0,0 };
 
-void Dice::Roll()
+ Dice::Dice() {
+	 Roll(3);
+}
+
+void Dice::Roll(int nbRolls)
 {
-	for (int i = 0; i < 3; i++)
-		lastRoll[i] = 0;
-	int nbRolls;
 	int totalOfDices = 0; // Necessary if we want to display total of the Roll
-
-
-	cout << "How many die do you wish to roll (1, 2 or 3)?\n";
-	cin >> nbRolls;
-
-
-	//int *lastRoll = new int[nbRolls];  // REALLY NOT SURE HERE NEED HELP
-
 
 	for (int x = 0; x < nbRolls; x++)
 	{
@@ -53,8 +45,7 @@ int* Dice::GetLastRoll()
 	return lastRoll; // returns a pointer, right?
 }
 
-
-int Dice::randomDice()
+int Dice::RandomDice()
 {
 	const int n = 5;
 	int remainder = RAND_MAX % n;

@@ -1,10 +1,14 @@
-﻿#pragma once
+﻿#ifndef DICE_H
+#define DICE_H
 class Dice
 {
 public:
-    void Roll();
-    void Stats();
-	int* GetLastRoll();
+		std::array<int, 3> lastRoll = {0,0,0};
+        void Roll(int NumRolls);
+        void Stats();
+		int* GetLastRoll();
 private:
-    int randomDice();
+        int RandomDice();
 };
+
+#endif
