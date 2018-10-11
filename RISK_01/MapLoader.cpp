@@ -18,6 +18,7 @@ Map* MapLoader::readMapFile(std::string mapName) {
 
 	try { //Check for IO errors
 		inFile.open(mapName + "\\" + mapName + ".map");
+
 		if (!inFile.good()) //If named map DNE, throw invalid argument exception. Explain why.
 			throw std::invalid_argument(mapName + " does not exist.");
 
@@ -77,6 +78,9 @@ Map* MapLoader::readMapFile(std::string mapName) {
 			throw std::invalid_argument(mapName + " is invalid!\nSome continents/countries are out of reach!");
 		else
 			return map;
+
+		std::cout << "im here";
+
 	}
 	//Catch io errors
 	catch (std::ifstream::failure e) {

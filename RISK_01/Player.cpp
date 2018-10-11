@@ -1,7 +1,7 @@
 #include "Player.h"
 
 #include <iostream>
-#include <string>
+#include <string> 
 #include <set>
 using namespace std;
 
@@ -36,7 +36,7 @@ int Player::exchange() {
 void Player::reinforce() //count number of countries player owns, divide by 3 + value of all continents player owns
 {
 	//count countries, we'll assume the number of countries owned will never surpass the int limit
-	int troopsFromCountries = countriesOwned.size / 3;
+	int troopsFromCountries = countriesOwned.size() / 3;
 	int troopsFromContinents = 0;
 
 	for (Continent* continent : continentsOwned) {
@@ -55,12 +55,12 @@ void Player::reinforce() //count number of countries player owns, divide by 3 + 
 
 		//iterate through all countries and print their name
 		for (Country* country : countriesOwned) {
-			std:cout << country->getName() << endl;
+			std::cout << country->getName() << " - " << country->getTroops() << " troops" << endl;
 		}
 
 		while (troopsAvailable > 0) {
 
-			std::cout << "You currently have " << troopsAvailable << " troops available." << endl;
+			std::cout << "You currently have " << troopsAvailable << " troop(s) available." << endl;
 			Country* returnedCountry;
 			bool inputValid = false;
 			do {
@@ -69,7 +69,7 @@ void Player::reinforce() //count number of countries player owns, divide by 3 + 
 
 				//get country name from user
 				string selectedCountry;
-				std:cin >> selectedCountry;
+				std::cin >> selectedCountry;
 
 				//validate the input
 				try { 
@@ -86,9 +86,15 @@ void Player::reinforce() //count number of countries player owns, divide by 3 + 
 			int inputNumberOfTroops = -1;
 			do {
 				//if we're here, it means we found a valid country, we can ask the user for a number of troops
-				cout << "How many troops would you like to place on " << returnedCountry->getName << ": ";
-				cin >> 
-			} while (inputNumberOfTroops >= 0 && inputNumberOfTroops <= troopsAvailable);
+				cout << "How many troops would you like to place on " << returnedCountry->getName() << ": ";
+				cin >> inputNumberOfTroops;
+			} while (inputNumberOfTroops <= 0 && inputNumberOfTroops >= troopsAvailable);
+
+			//decrement available troops by number of troops deployed
+			troopsAvailable -= inputNumberOfTroops;
+
+			//increment number of troops on specified country
+			returnedCountry->addTroops(inputNumberOfTroops);
 
 		}
 	}
@@ -96,12 +102,12 @@ void Player::reinforce() //count number of countries player owns, divide by 3 + 
 
 }
 
-void Player::attack()
+void Player::attack() //which country attack from and to.. 
 {
 	//unimplemented
 }
 
-void Player::fortify()
+void Player::fortify() //move troops from one country to another
 {
 	//unimplemented
 }

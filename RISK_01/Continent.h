@@ -27,6 +27,7 @@ public:
 
 	//Accssors
 	std::string getName() const;
+	int getValue() const;
 
 	//Utility
 	void display(std::string lspace) const;

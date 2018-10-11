@@ -70,7 +70,7 @@ set<Country*> Country::getReachable(set<Country*> reachableList) const{
 
 set<Country*> Country::getReachableForPlayer(set<Country*> reachableList) const {
 	for (Country* neighbor : neighborList)
-		if (neighbor->getOccupant = occupant && reachableList.insert(neighbor).second)
+		if (neighbor->getOccupant() == occupant && reachableList.insert(neighbor).second)
 			reachableList = neighbor->getReachableForPlayer(reachableList);
 	return reachableList;
 }
