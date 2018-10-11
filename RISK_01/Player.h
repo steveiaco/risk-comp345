@@ -20,6 +20,8 @@ private:
 	set<Country*> countriesOwned;
 	set<Continent*> continentsOwned;
 	Hand playerHand;
+	
+	Country* queryOwnedCountry(); //queries the user for a name, attempts to find the country who's name is equal to that string and returns it
 
 public:
 	//Constructors
@@ -36,10 +38,12 @@ public:
 
 	//Utility
 	void reinforce(); //count number of countries / 3, count how many continents owned
-	void attack();
-	void fortify();
-	Country* countryExists(string input); //checks a string against a list of countries, attempts to find the country who's name is equal to that string and returns it
+	void attack(Country* attackFrom, Country* attackTo);
+	void fortify(Country* moveFrom, Country* moveTo);
 	int exchange();
+	void printCountriesOwned();
+
+	
 };
 
 #endif

@@ -33,6 +33,45 @@ int Player::exchange() {
 	return playerHand.exchange();
 }
 
+void Player::printCountriesOwned() //iterate through all countries and print their name along with troop number
+
+{
+	for (Country* country : countriesOwned) {
+		std::cout << country->getName() << " - " << country->getTroops() << " troops" << endl;
+	}
+}
+
+Country* Player::queryOwnedCountry() //promts the user to select a country until they enter a valid input, finds that valid country and returns a pointer to it.
+{
+
+	Country* returnedCountry;
+	bool inputValid = false;
+
+	do {
+
+		std::cout << "Enter the name of an owned country you would like to select: ";
+
+		//get country name from user
+		string selectedCountry;
+		std::cin >> selectedCountry;
+
+		//validate the input
+		try {
+			returnedCountry = Map::contains(selectedCountry, countriesOwned);
+		}
+		catch (std::invalid_argument e) {
+			std::cout << e.what();
+			inputValid = false;
+		}
+
+		inputValid = true; //if we get here, means no exception was thrown, therefore a match was found
+
+	} while (!inputValid);
+
+	return returnedCountry;
+}
+
+
 void Player::reinforce() //count number of countries player owns, divide by 3 + value of all continents player owns
 {
 	//count countries, we'll assume the number of countries owned will never surpass the int limit
@@ -46,42 +85,20 @@ void Player::reinforce() //count number of countries player owns, divide by 3 + 
 	int troopsAvailable = troopsFromContinents + troopsFromCountries;
 
 	if (troopsAvailable == 0) {
-		std::cerr << "Error: Player does not own any countries";
+		std::cerr << "Error: Player does not own any countries.";
 		return;
 	}
 	else {
 
 		std::cout << "Time to place troops... here are the countries " << getName() << "owns." << endl;
 
-		//iterate through all countries and print their name
-		for (Country* country : countriesOwned) {
-			std::cout << country->getName() << " - " << country->getTroops() << " troops" << endl;
-		}
+		printCountriesOwned();
 
 		while (troopsAvailable > 0) {
 
 			std::cout << "You currently have " << troopsAvailable << " troop(s) available." << endl;
-			Country* returnedCountry;
-			bool inputValid = false;
-			do {
-
-				std::cout << "Enter the name of the country you would like to select: ";
-
-				//get country name from user
-				string selectedCountry;
-				std::cin >> selectedCountry;
-
-				//validate the input
-				try { 
-					returnedCountry = countryExists(selectedCountry); 
-				}
-				catch (std::invalid_argument e) {
-					inputValid = false;
-				}
-
-				inputValid = true; //if we get here, means no exception was thrown, therefore a match was found
-
-			} while (!inputValid);
+			
+			Country* returnedCountry = queryOwnedCountry();
 
 			int inputNumberOfTroops = -1;
 			do {
@@ -102,17 +119,18 @@ void Player::reinforce() //count number of countries player owns, divide by 3 + 
 
 }
 
-void Player::attack() //which country attack from and to.. 
+void Player::attack(Country* attackFrom, Country* attackTo) //which country attack from and to.. 
+{
+	if (!(attackFrom->isNeighbor(attackTo)))
+		throw invalid_argument("Countries are not neighbors.");
+	
+	//we will check if attackFrom is a neighbor of attackTo
+		
+}
+
+void Player::fortify(Country* moveFrom, Country* moveTo) //move troops from one country to another
 {
 	//unimplemented
 }
 
-void Player::fortify() //move troops from one country to another
-{
-	//unimplemented
-}
 
-Country* Player::countryExists(string input)
-{
-	return Map::contains(input, countriesOwned);
-}

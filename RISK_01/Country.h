@@ -35,6 +35,7 @@ public:
 	void display(std::string lspace) const;
 	std::set<Country*> getReachable(std::set<Country*> reachableList) const;
 	std::set<Country*> getReachableForPlayer(std::set<Country*> reachableList) const;
+	bool isNeighbor(Country* country) const;
 };
 
 #endif

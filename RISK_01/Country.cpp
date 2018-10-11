@@ -75,3 +75,11 @@ set<Country*> Country::getReachableForPlayer(set<Country*> reachableList) const 
 			reachableList = neighbor->getReachableForPlayer(reachableList);
 	return reachableList;
 }
+
+bool Country::isNeighbor(Country * country) const
+{
+	if (neighborList.count(country))
+		return true;
+	else
+		return false;
+}
