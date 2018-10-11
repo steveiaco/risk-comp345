@@ -32,6 +32,7 @@ public:
 	//Utility
 	void display() const;
 	bool validate() const;
+	static Country* contains(string countryName, set<Country*> countryList);
 };
 
 #endif

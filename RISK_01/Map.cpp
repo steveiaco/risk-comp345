@@ -80,3 +80,12 @@ Map::Map() : Map("Default Map"){
 	addContinent(contA);
 	addContinent(contB);
 }
+
+Country* Map::contains(string countryName, set<Country*> countryList)
+{
+	for (Country* country : countryList) {
+		if (country->getName == countryName)
+			return country;
+	}
+	throw std::invalid_argument("Name not found within country list.");
+}

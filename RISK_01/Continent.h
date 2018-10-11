@@ -34,6 +34,7 @@ public:
 	void display(string lspace) const;
 	set<Continent*> getReachable(set<Continent*> reachableList) const;
 	void update();
+	
 };
 
 #endif
