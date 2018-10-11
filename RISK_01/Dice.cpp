@@ -5,7 +5,7 @@ using namespace std;
 #include "Dice.h"
 
 
-static int totalRolls;
+static int Dice::totalRolls;
 int stats[6];
 
  Dice::Dice() {
@@ -16,11 +16,9 @@ void Dice::Roll(int nbRolls)
 {
 	int totalOfDices = 0; // Necessary if we want to display total of the Roll
 
-
-
 	for (int x = 0; x < nbRolls; x++)
 	{
-		int randomNum = RandomDice();
+		int randomNum = randomDice();
 
 
 		lastRoll[x] = randomNum;
@@ -46,7 +44,6 @@ int* Dice::GetLastRoll()
 {
 	return lastRoll; // returns a pointer, right?
 }
-
 
 int Dice::RandomDice()
 {

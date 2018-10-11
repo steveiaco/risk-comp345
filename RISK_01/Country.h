@@ -12,8 +12,8 @@ class Country {
 
 private:
 	std::string name;
-	Continent* continent;
-	Player* occupant;
+	Continent* continent = NULL;
+	Player* occupant = NULL;
 	int troopCount;
 	std::set<Country*> neighborList;
 
