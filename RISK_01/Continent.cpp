@@ -70,10 +70,6 @@ string Continent::getName() const{
 	return name;
 }
 
-int Continent::getValue() const {
-	return value;
-}
-
 set<Continent*> Continent::getReachable(set<Continent*> reachableList) const {
 	for (Continent* neighbor : neighborList)
 		if (reachableList.insert(neighbor).second)

@@ -5,12 +5,11 @@ class MapLoader;
 
 #include "Map.h"
 #include <string>
-using namespace std;
 
 class MapLoader {
 
 public:
-	static Map* readMapFile(string);
+	static Map* readMapFile(std::string);
 
 };
 

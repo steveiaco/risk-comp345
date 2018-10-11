@@ -1,3 +1,5 @@
+// Reads in map files and creates corresponding maps. Is utility class (members are static).
+
 #include "Map.h"
 #include "MapLoader.h"
 #include <iostream>
@@ -6,121 +8,107 @@
 #include <sstream>
 #include <vector>
 #include <exception>
-using namespace std;
 
-static Map* readMapFile(string mapName) {
+//Creates a map object for the map with the passed name.
+Map* MapLoader::readMapFile(std::string mapName) {
+	//Create a blank map
 	Map* map = new Map(mapName);
-	ifstream inFile;
-	vector<string> fields;
+	std::ifstream inFile;
+	bool allSections = false; //Keep track of whether or not the map file contains all four sections
 
-	try {
-		//Check if named map exists
-		inFile.open("C:\\Users\\sende\\source\\repos\\RISK_01\\" + mapName + "\\" + mapName + ".map");
-		if (!inFile.good())
+	try { //Check for IO errors
+		inFile.open(mapName + "\\" + mapName + ".map");
+		if (!inFile.good()) //If named map DNE, throw invalid argument exception. Explain why.
 			throw std::invalid_argument(mapName + " does not exist.");
 
-		//Start reading map file in line by line
-		string line;
+		//Read map file in line by line
+		std::string line;
 		//Reach the [Map] part of the file
-		do {
-			getline(inFile, line);
-		} while (0 != line.compare("[Map]"));
-
+		while (std::getline(inFile, line) && 0 != line.compare("[Map]")) {}
 		//Continue to [Continents] part of map file
-		do {
-			getline(inFile, line);
-		} while (0 != line.compare("[Continents]"));
-		getline(inFile, line);
+		while (std::getline(inFile, line) && 0 != line.compare("[Continents]")) {}
 
 		//Continue to [Territories] part of map file
-		do {
-			//Create continents
-			string name;
-			string value;
-			stringstream ss(line);
-			if (getline(ss, name, '=') && getline(ss, value)) {
-				map->addContinent(new Continent(name, stoi(value)));
-			}
-			getline(inFile, line);
-		} while (0 != line.compare("[Territories]"));
-		getline(inFile, line);
+		while (std::getline(inFile, line) && 0 != line.compare("[Territories]")) { //Read continents
+			std::string name, value;
+			std::stringstream ss(line); //We will need to split each line here around the equals sign. We will process each line through a string stream to do so.
+			if (std::getline(ss, name, '=') && std::getline(ss, value)) //Take only the lines with at least two arguments (the non-blank lines)
+				map->addContinent(new Continent(name, std::stoi(value)));
+		}
 
+		std::vector<string> countries;
 		//Continue to end of map file
-		vector<string> countries;
-		do {
-			//Read countries
+		while (std::getline(inFile, line)) {
+			//Read and store country construction parameters (we will need to do two passes over them: one for constructing them and one for linking them via neighbor parameter)
 			if(!line.empty())
 				countries.push_back(line);
-		} while (getline(inFile, line));
+			allSections = true;
+		}
 
-		//Create countries
-		for (string s : countries) {
-			stringstream ss(s);
+		if (!allSections)
+			throw std::invalid_argument(mapName + " is invalid!\nSome sections do not exist!");
 
-			string name;
-			string continent;
-			getline(ss, name, ',');
-			getline(ss, continent, ',');
-			getline(ss, continent, ',');
-			getline(ss, continent, ',');
-
+		//Construct countries
+		for (std::string s : countries) {
+			std::stringstream ss(s);
+			//We will need each country's name and continent. The first two values assigned to continent are the x and y coordinates of the country, we are not keeping those values, they are replaced by the continent once we reach it.
+			std::string name;
+			std::string continent;
+			std::getline(ss, name, ','); std::getline(ss, continent, ','); std::getline(ss, continent, ','); std::getline(ss, continent, ',');
 			map->addCountry(new Country(name, map->getContinent(continent)));
 		}
 
 		//Link countries
-		for (string s : countries) {
-			stringstream ss(s);
-
-			string name;
-			string neighbor;
-
-			getline(ss, name, ',');
+		for (std::string s : countries) {
+			std::stringstream ss(s);
+			//Get country by name
+			std::string name;
+			std::getline(ss, name, ',');
 			Country* country = map->getCountry(name);
-
-			getline(ss, neighbor, ',');
-			getline(ss, neighbor, ',');
-			getline(ss, neighbor, ',');
+			//Get country neighbors and add them
+			std::string neighbor;
+			getline(ss, neighbor, ','); getline(ss, neighbor, ','); getline(ss, neighbor, ','); //Skip over x/y coords and continent name
 			while(getline(ss, neighbor, ','))
-				map->getCountry(name)->addNeighbor(map->getCountry(neighbor));
+				country->addNeighbor(map->getCountry(neighbor));
 		}
 
 		//Validate map
 		if (!map->validate())
-			throw invalid_argument(mapName + " is invalid!\nSome continents/countries are out of reach!");
+			throw std::invalid_argument(mapName + " is invalid!\nSome continents/countries are out of reach!");
 		else
 			return map;
 	}
 	//Catch io errors
 	catch (std::ifstream::failure e) {
-		cout << "Exception opening/reading/closing file\n";
+		std::cout << "Exception opening/reading/closing file\n";
 	}
 	return NULL;
 }
 
 int main() {
+	cout << "=======================================\n";
+	cout << "              RISK V0_01               \n";
+	cout << "=======================================\n";
+
+	//Keep trying to get map until a valid map is returned
 	Map* map = NULL;
-
-	//Get map name
-	string mapName;
-	cout << "Enter name of map to load: ";
-	cin >> mapName;
-	cout << endl;
-
-	//Get map
-	while (map == NULL)
+	while (map == NULL) {
+		//Get map name
+		std::string mapName;
+		std::cout << "Enter name of map to load: ";
+		std::getline(std::cin, mapName); std::cout << std::endl;
 		try {
-			map = readMapFile(mapName);
+			map = MapLoader::readMapFile(mapName);
 		}
-		//Catch invalid maps
-		catch (invalid_argument& e) {
-			cout << e.what() << endl;
-			cout << "Enter name of map to load: ";
-			cin >> mapName;
-			cout << endl;
+		catch (std::invalid_argument& e) { //Catch invalid maps
+			std::cout << e.what() << std::endl;
 		}
+	}
 
 	//Display map
 	map->display();
-
-	cin >> mapName;
+	//Keep terminal open until user is done
+	cout << "Enter some string to exit.";
+	std::string stall;
+	cin >> stall;
 }

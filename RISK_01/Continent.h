@@ -7,34 +7,31 @@ class Continent;
 #include "Player.h"
 #include <string>
 #include <set>
-using namespace std;
 
 class Continent {
 
 private:
-	string name;
+	std::string name;
 	Player* occupant;
 	int value;
-	set<Country*> countryList;
-	set<Continent*> neighborList;
+	std::set<Country*> countryList;
+	std::set<Continent*> neighborList;
 
 public:
 	//Constructors
-	Continent(string name, int value);
+	Continent(std::string name, int value);
 
 	//Mutators
 	void addCountry(Country* country);
 	void addNeighbor(Continent* neighbor);
 
 	//Accssors
-	string getName() const;
-	int getValue() const;
+	std::string getName() const;
 
 	//Utility
-	void display(string lspace) const;
-	set<Continent*> getReachable(set<Continent*> reachableList) const;
+	void display(std::string lspace) const;
+	std::set<Continent*> getReachable(std::set<Continent*> reachableList) const;
 	void update();
-	
 };
 
 #endif
