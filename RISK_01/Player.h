@@ -10,6 +10,7 @@ class Player;
 #include "Dice.h"
 #include "Map.h"
 #include <string>
+#include <vector>
 #include <set>
 
 class Player {
@@ -23,6 +24,10 @@ private:
 	//Country* queryOwnedCountry(); //queries the user for a name, attempts to find the country who's name is equal to that string and returns it
 
 public:
+
+	//Attributes
+	Dice* dice = &Dice();
+
 	//Constructors
 	Player(std::string name);
 

@@ -34,6 +34,8 @@ public:
 	int addTroops(int troopsToAdd);
 	/**Add a neighboring country to neighborList. Ensure that neighbor also has this country as its own neighbor (edges must all be bidirectional). If neighbor belongs to a different continent, link the continents by defining them as neighbors.**/
 	void addNeighbor(Country* neighbor);
+	/**Changes the occupant**/
+	void changeOccupant(Player* newOccupant);
 
 	//Accessors
 	/**Get name of country**/
@@ -44,6 +46,8 @@ public:
 	Player* getOccupant() const;
 	/**Get continent that country belongs to**/
 	Continent* getContinent() const;
+	/**Remove x troops from the country**/
+	int removeTroops(int troopsToRemove);
 
 	//Utility
 	/**Display details regarding country (occupant, neighbors, troops holding country, continent). Accepts a parameter for specifying left-space indentation (this is mainly used for displaying country within a list of countries).**/

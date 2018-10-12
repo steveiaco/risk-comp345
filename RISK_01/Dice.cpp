@@ -1,10 +1,11 @@
 ﻿#include "Dice.h"
 
-std::list<int> Dice::roll(int nbRolls)
+/**The roll method takes in a number between [1,3] and returns a list of dice roll results whose length is equal to said number.*/
+std::vector<int> Dice::roll(int nbRolls)
 {
 	int totalOfDices = 0; // Necessary if we want to display total of the Roll
 
-	std::list<int> rolls;
+	std::vector<int> rolls;
 
 	for (int x = 0; x < nbRolls; x++)
 	{
@@ -14,7 +15,7 @@ std::list<int> Dice::roll(int nbRolls)
 		totalRolls++;					//Incrementing Totall rolls, used to calculate stats
 		totalOfDices += nbRolls;
 	}
-	rolls.sort();
+	sortIntVector(&rolls);
 
 	return rolls;
 }
@@ -32,11 +33,14 @@ int Dice::randomDice() //Method to generate random value from 1 to 6
 	return ((rand() % 6) + 1);
 }
 
-int main() {
-	Dice* dicetest = &Dice();
+void Dice::sortIntVector(std::vector<int>* toSort)
+{
+	for(int i = 0 ; i <= toSort->size() ; i++)
+		for(int j = i; j <= toSort->size() ; j++)
+			if ((*toSort)[j] > (*toSort)[i]) { //then swap
+				int temp = (*toSort)[i];
+				(*toSort)[i] = (*toSort)[j];
+				(*toSort)[j] = temp;
+			}
 
-	std::list<int> test = dicetest->roll(3);
-
-	for (std::list<int>::iterator it = test.begin(); it != test.end(); ++it)
-		std::cout << *it;
 }

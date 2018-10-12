@@ -1,8 +1,5 @@
 #include "Player.h"
 
-#include <iostream>
-#include <string> 
-#include <set>
 
 Player::Player(std::string name) {
 	this->name = name;
@@ -134,6 +131,9 @@ void Player::reinforce(Country* toReinforce, int numTroops) {
 void Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice, int numDefenderDice) //which country attack from and to.. 
 {
 
+	Player* defender = attackTo->getOccupant;
+	Player* attacker = attackFrom->getOccupant;
+
 	//we will check if attackFrom is owned by the calling object
 	if (!ownsCountry(attackFrom))
 		throw std::invalid_argument("Country is not owned.");
@@ -142,9 +142,51 @@ void Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice,
 	if (!(attackFrom->isNeighbor(attackTo)))
 		throw std::invalid_argument("Countries are not neighbors.");
 
+	//check whether dice input is valid
+	if (!(numAttackerDice < 1 && numAttackerDice > 3))
+		throw std::invalid_argument("Wrong number of attacker dice thrown.");
 
+	if (!(numDefenderDice < 1 && numDefenderDice > 2))
+		throw std::invalid_argument("Wrong number of defender dice thrown.");
+
+	//check whether player has enough troops for the specific roll
+	if (!(attackFrom->getTroops + 1 >= numAttackerDice))
+		throw std::invalid_argument("Attacker does not have enough troops for that number of dice.");
+
+	if (!(attackTo->getTroops >= numDefenderDice))
+		throw std::invalid_argument("Defender does not have enough troops for that number of dice.");
+
+
+	//roll the dice for the attacker
+	std::vector<int> attackerRolled = dice->roll(numAttackerDice);
+
+	//roll the dice for the defender
+	std::vector<int> defenderRolled = defender->dice->roll(numDefenderDice);
+
+	//check how many dice we must compare (the smallest number between numAttackerDice and numDefenderDice)
+	int numDiceToCompare = (numAttackerDice >= numDefenderDice) ? numDefenderDice : numAttackerDice;
 	
+	for (int i = 0; i < numDiceToCompare; i++) {
+		if (defenderRolled[i] >= attackerRolled[i]) {
+			//defender wins the roll, meaning attacker loses 1 troop
+			//the attacker cannot go under 1 troop therefore we will not check this condition as it was already checked above
+			attackFrom->removeTroops(1);
+		}
+		else {
+			//attacker wins the roll, meaning defender loses 1 troop
+			if (attackTo->removeTroops(1) == 0) {
+				//meaning the defender has lost their country
+				defender->removeCountry(attackTo);
+				attackTo->changeOccupant(attacker);
+				this->addCountry(attackTo);
+				break;
+			}
+			//else move on
 
+		}
+			
+	}
+	
 
 
 
