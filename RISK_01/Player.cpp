@@ -26,13 +26,13 @@ bool Player::removeContinent(Continent* continent) {
 }
 
 int Player::exchange() {
-	return playerHand.exchange();
+	return playerHand->exchange();
 }
 
 void Player::printCountriesOwned() //iterate through all countries and print their name along with troop number
 {
 	for (Country* country : countriesOwned) {
-		country->display("  ");
+		std::cout << country->getName << " - " << country->getTroops << " troops.";
 	}
 }
 

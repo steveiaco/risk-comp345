@@ -11,7 +11,7 @@ class Dice {
 private:
 	/****/
 	void sortIntVector(std::vector<int>* toSort);
-	int totalRolls;
+	int totalRolls = 0;
 	int randomDice();
 	int stats[6] = { 0,0,0,0,0,0 };
 
