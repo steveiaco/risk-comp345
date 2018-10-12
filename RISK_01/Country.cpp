@@ -45,6 +45,7 @@ void Country::changeOccupant(Player * newOccupant)
 	this->occupant = newOccupant;
 	newOccupant->addCountry(this);
 }
+
 /**Add a neighboring country to neighborList. Ensure that neighbor also has this country as its own neighbor (edges must all be bidirectional). If neighbor belongs to a different continent, link the continents by defining them as neighbors.**/
 void Country::addNeighbor(Country* neighbor) {
 	if (neighborList.insert(neighbor).second) { //Try adding neighbor to neighborList. If it is not already in the list, this country will not be in its list. Add this country to the neighboring country's list of neighbors.
