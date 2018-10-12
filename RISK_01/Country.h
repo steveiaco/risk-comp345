@@ -46,8 +46,7 @@ public:
 	Player* getOccupant() const;
 	/**Get continent that country belongs to**/
 	Continent* getContinent() const;
-	/**Remove x troops from the country**/
-	int removeTroops(int troopsToRemove);
+
 
 	//Utility
 	/**Display details regarding country (occupant, neighbors, troops holding country, continent). Accepts a parameter for specifying left-space indentation (this is mainly used for displaying country within a list of countries).**/

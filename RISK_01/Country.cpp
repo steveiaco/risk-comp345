@@ -27,24 +27,22 @@ int Country::getTroops() const {
 }
 
 //Mutators
-/**Add troopsToAdd troops to country. Return number of troops holding country.**/
+/**Add or remove (negative number) troopsToAdd troops to country. Return number of troops holding country.**/
 int Country::addTroops(int troopsToAdd) {
+
+	if (troopCount + troopsToAdd < 0)
+		throw std::invalid_argument("Failed to remove troops, cannot have negative troops.");
+
 	troopCount += troopsToAdd;
 	return troopCount;
 }
-/**Remove troopsToRemove troops from the country. Returns the new number of troops contained within the country**/
-int Country::removeTroops(int troopsToRemove)
-{
-	if (troopCount - troopsToRemove < 0)
-		throw std::invalid_argument("Failed to remove troops, cannot have negative troops.");
 
-	troopCount -= troopsToRemove;
-	return troopCount;
-}
 /**Changes the occupant**/
 void Country::changeOccupant(Player * newOccupant)
 {
+	this->occupant->removeCountry(this);
 	this->occupant = newOccupant;
+	newOccupant->addCountry(this);
 }
 /**Add a neighboring country to neighborList. Ensure that neighbor also has this country as its own neighbor (edges must all be bidirectional). If neighbor belongs to a different continent, link the continents by defining them as neighbors.**/
 void Country::addNeighbor(Country* neighbor) {

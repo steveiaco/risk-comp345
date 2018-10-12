@@ -170,15 +170,13 @@ void Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice,
 		if (defenderRolled[i] >= attackerRolled[i]) {
 			//defender wins the roll, meaning attacker loses 1 troop
 			//the attacker cannot go under 1 troop therefore we will not check this condition as it was already checked above
-			attackFrom->removeTroops(1);
+			attackFrom->addTroops(-1);
 		}
 		else {
 			//attacker wins the roll, meaning defender loses 1 troop
-			if (attackTo->removeTroops(1) == 0) {
+			if (attackTo->addTroops(-1) == 0) {
 				//meaning the defender has lost their country
-				defender->removeCountry(attackTo);
 				attackTo->changeOccupant(attacker);
-				this->addCountry(attackTo);
 				break;
 			}
 			//else move on
@@ -194,7 +192,23 @@ void Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice,
 
 void Player::fortify(Country* moveFrom, Country* moveTo, int numberOfTroops) //move troops from one country to another
 {
-	
+	//first we check if this player owns both of these countries
+	if (!(this->ownsCountry(moveFrom) && this->ownsCountry(moveTo)))
+		throw std::invalid_argument("Both countries are not owned by this player");
+
+	//next condition to check is whether the countries are neighbors
+	if (!(moveFrom->isNeighbor(moveTo)))
+		throw std::invalid_argument("Selected countries are not neighbors.");
+
+	//next condition to check is whether the origin country has enough troops for the action. keep in mind, a country must always have at least one army of troops on it at all times.
+	if (moveFrom->getTroops() < numberOfTroops + 1)
+		throw std::invalid_argument("The origin country does not have enough troops to perform this action.");
+
+	//if these conditions are satisfied, then we can move onto the actual move operation
+	moveFrom->removeTroops(numberOfTroops); //first we remove numberOfTroops from the origin country
+	moveTo->addTroops(numberOfTroops); //then we add this number to the destination country
+
+
 }
 
 bool Player::ownsCountry(Country * country)
