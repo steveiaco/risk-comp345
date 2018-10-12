@@ -6,7 +6,7 @@ std::vector<int> Dice::roll(int nbRolls)
 	int totalOfDices = 0; // Necessary if we want to display total of the Roll
 
 	std::vector<int> rolls;
-
+	
 	for (int x = 0; x < nbRolls; x++)
 	{
 		int generated = randomDice();
