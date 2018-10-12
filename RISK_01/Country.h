@@ -5,37 +5,57 @@ class Country;
 
 #include "Continent.h"
 #include "Player.h"
+#include <iostream>
 #include <string>
 #include <set>
 
+/**Defines a country as per the rules of risk. Countries are nodes on a map that players can take in their attempts to seize control of routes and continents. Moreover, every three countries owned yields 3 more troops per turn for the player.*/
 class Country {
 
 private:
-	std::string name;
-	Continent* continent = NULL;
+	/**Name of country**/
+	std::string name = NULL;
+	/**Pointer to player occupying the country (defaults to NULL)**/
 	Player* occupant = NULL;
-	int troopCount;
+	/**Pointer to continent to which the country belongs (country can only belong to one continent at a time). ANY FUNCTION THAT MODIFIES THIS VALUE SHOULD ALSO MAKE APPROPRIATE MODIFICATIONS TO THE INVOLVED CONTINENTS.**/
+	Continent* continent = NULL;
+	/**Number of troops holding country for occupant**/
+	int troopCount = 0;
+	/**Set of neighbors to country. We use set because we should not have duplicates and the order of the neighbors is of no significance.**/
 	std::set<Country*> neighborList;
 
 public:
 	//Constructors
+	/**Parametrized constructor. Creates a country named name that belongs to continent pointed to by continent. Ensures that country is made a member of countryList for specified continent. This constructor is used in mapLoader. Neighbors to the country will be added once all countries have be created. Player occupying country will be determined at game start.**/
 	Country(std::string name, Continent* continent);
 
 	//Mutators
-	int addTroops(int troopsToAdd);
+	/**Add troopsToAdd troops to country**/
+	inline int addTroops(int troopsToAdd);
+	/**Add a neighboring country to neighborList. Ensure that neighbor also has this country as its own neighbor (edges must all be bidirectional). If neighbor belongs to a different continent, link the continents by defining them as neighbors.**/
 	void addNeighbor(Country* neighbor);
-	std::string getName() const;
 
 	//Accessors
-	int getTroops() const;
-	Player* getOccupant() const;
-	Continent* getContinent() const;
+	/**Get name of country*/
+	inline std::string getName() const;
+	/**Get number of troops holding country*/
+	inline int getTroops() const;
+	/**Get player occupying country*/
+	inline Player* getOccupant() const;
+	/**Get continent that country belongs to*/
+	inline Continent* getContinent() const;
 
 	//Utility
-	void display(std::string lspace) const;
+	/**Display details regarding country (occupant, neighbors, troops holding country, continent). Accepts a parameter for specifying left-space indentation (this is mainly used for displaying country within a list of countries).*/
+	void display(std::string lspace = "") const;
+	/**Get the countries reachable from this country. Does not check if neighboring countries are owned by the same player. Just checks for neighbors. Good for checking if maps are complete during validation.*/
 	std::set<Country*> getReachable(std::set<Country*> reachableList) const;
-	std::set<Country*> getReachableForPlayer(std::set<Country*> reachableList) const;
+	/**Get the countries reachable from this country without crossing foreign borders. Checks if neighboring countries are occupied by the same player. Good for checking if occupant can fortify from this country to another and vice versa.**/
+	std::set<Country*> getReachableForOccupant(std::set<Country*> reachableList) const;
+	/**Check if country is neighbor of another country. Good for checking if attacks are valid.*/
 	bool isNeighbor(Country* country) const;
+	/**Given a set of countries, get a country specified by name from the set (if it is a set member). Throw an exception otherwise.**/
+	static Country* getCountryFromSet(std::string countryName, std::set<Country*> countryList);
 };
 
 #endif

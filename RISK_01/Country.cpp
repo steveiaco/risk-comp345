@@ -1,85 +1,86 @@
 #include "Country.h"
-#include "Continent.h"
-#include "Player.h"
-#include <iostream>
-#include <string>
-#include <set>
-using namespace std;
 
+//Constructors
+/**Parametrized constructor. Creates a country named name that belongs to continent pointed to by continent. Ensures that country is made a member of countryList for specified continent. This constructor is used in mapLoader. Neighbors to the country will be added once all countries have be created. Player occupying country will be determined at game start.**/
 Country::Country(string name, Continent* continent) {
-	continent->addCountry(this); //problematic
+	continent->addCountry(this); //Add this country to the list of countries within its continent. This call must be made before the country attribute is changed from NULL or it will yield an exception.
 	this->continent = continent;
-	this->occupant = NULL;
-	this->troopCount = 0;
 	this->name = name;
-
 }
 
-void Country::display(string lspace) const {
-	//Display country name and occupant
-	cout << lspace + "  " + name + " (" << ((occupant == NULL) ? "NA" : occupant->getName()) + "): \n";
-
-	//Display number of troops holding country and the continent where it is located
-	cout << lspace + "    " + "Troops: " << troopCount << endl;
-	cout << lspace + "    " + "Continent: " + continent->getName() << endl;
-
-	//Display country's neighbors
-	cout << lspace + "    " << "Neighbors: ";
-	for (Country* neighbor : neighborList) {
-		cout << neighbor->getName() << ", ";
-	}
-	cout << endl;
-}
-
+//Accessors
+/**Get name of country*/
 string Country::getName() const {
 	return name;
 }
-
+/**Get player occupying country*/
 Player* Country::getOccupant() const {
 	return occupant;
 }
-
+/**Get continent that country belongs to*/
 Continent* Country::getContinent() const {
 	return continent;
 }
-
+/**Get number of troops holding country*/
 int Country::getTroops() const {
 	return troopCount;
 }
 
+//Mutators
+/**Add troopsToAdd troops to country. Return number of troops holding country.**/
 int Country::addTroops(int troopsToAdd) {
 	troopCount += troopsToAdd;
 	return troopCount;
 }
-
+/**Add a neighboring country to neighborList. Ensure that neighbor also has this country as its own neighbor (edges must all be bidirectional). If neighbor belongs to a different continent, link the continents by defining them as neighbors.**/
 void Country::addNeighbor(Country* neighbor) {
-	//Add neighbor only if neighbor is not already in set
-	if (neighborList.find(neighbor) == neighborList.end()) {
-		neighborList.insert(neighbor);
+	if (neighborList.insert(neighbor).second) { //Try adding neighbor to neighborList. If it is not already in the list, this country will not be in its list. Add this country to the neighboring country's list of neighbors.
 		neighbor->addNeighbor(this);
-		if (continent != neighbor->continent)
+		if (continent != neighbor->continent) //If the two countries belong to different continents, connect their continents.
 			continent->addNeighbor(neighbor->continent);
 	}
 }
 
-set<Country*> Country::getReachable(set<Country*> reachableList) const{
-	for (Country* neighbor : neighborList)
-		if(reachableList.insert(neighbor).second)
-			reachableList = neighbor->getReachable(reachableList);
+//Utility
+/**Display details regarding country (occupant, neighbors, troops holding country, continent). Accepts a parameter for specifying left-space indentation (this is mainly used for displaying country within a list of countries).*/
+void Country::display(string lspace) const {
+	//Display country name and occupant
+	std::cout << lspace + "  " + name + " (" << ((occupant == NULL) ? "NA" : occupant->getName()) + "): \n";
+
+	//Display number of troops holding country and the continent where it is located
+	std::cout << lspace + "    " + "Troops: " << troopCount << std::endl;
+	std::cout << lspace + "    " + "Continent: " + continent->getName() << std::endl;
+
+	//Display country's neighbors
+	std::cout << lspace + "    " << "Neighbors: ";
+	for (Country* neighbor : neighborList) std::cout << neighbor->getName() << ", ";
+	std::cout << endl;
+}
+/**Get the countries reachable from this country. Does not check if neighboring countries are owned by the same player. Just checks for neighbors. Good for checking if maps are complete during validation.*/
+std::set<Country*> Country::getReachable(std::set<Country*> reachableList) const{
+	for (Country* neighbor : neighborList) //Add the country's neighbors to the set of reachable countries
+		if (reachableList.insert(neighbor).second) //Check if the neighbor has already been added to the set of reachable countries (it might be the nieghbor of a previously added country too)
+			reachableList = neighbor->getReachable(reachableList); //If country has not previously been added to list, add that country's neighbors to list using recursion. The base case is reached when all of a country's neighbors are already in the list.
 	return reachableList;
 }
-
-set<Country*> Country::getReachableForPlayer(set<Country*> reachableList) const {
-	for (Country* neighbor : neighborList)
-		if (neighbor->getOccupant() == occupant && reachableList.insert(neighbor).second)
-			reachableList = neighbor->getReachableForPlayer(reachableList);
+/**Get the countries reachable from this country without crossing foreign borders. Checks if neighboring countries are occupied by the same player. Good for checking if occupant can fortify from this country to another and vice versa.**/
+set<Country*> Country::getReachableForOccupant(set<Country*> reachableList) const {
+	for (Country* neighbor : neighborList) //Add the country's neighbors to the set of reachable countries if they have the saem occupant.
+		if (neighbor->getOccupant() == occupant && reachableList.insert(neighbor).second) //Check if the nieghboring country has the saem occupant. Check if the neighbor has already been added to the set of reachable countries (it might be the nieghbor of a previously added country too)
+			reachableList = neighbor->getReachableForOccupant(reachableList); //If country has not previously been added to list, add that country's neighbors to list using recursion. The base case is reached when all of a country's neighbors are already in the list.
 	return reachableList;
 }
-
-bool Country::isNeighbor(Country * country) const
-{
+/**Check if country is neighbor of another country. Good for checking if attacks are valid.*/
+bool Country::isNeighbor(Country * country) const {
 	if (neighborList.count(country))
 		return true;
 	else
 		return false;
+}
+/**Given a set of countries, get a country specified by name from the set (if it is a set member). Throw an exception otherwise.**/
+Country* Country::getCountryFromSet(string countryName, set<Country*> countryList) {
+	for (Country* country : countryList)
+		if (countryName.compare(country->name) == 0)
+			return country;
+	throw std::invalid_argument(countryName + " is not a valid option.");
 }
