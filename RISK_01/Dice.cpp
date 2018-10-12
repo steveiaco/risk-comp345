@@ -1,11 +1,12 @@
 ﻿#include "Dice.h"
 
+Dice::Dice() {
+}
+
 /**The roll method takes in a number between [1,3] and returns a list of dice roll results whose length is equal to said number.*/
 std::vector<int> Dice::roll(int nbRolls)
 {
-	int totalOfDices = 0; // Necessary if we want to display total of the Roll
-
-	std::vector<int> rolls;
+	std::vector<int> rolls = *new std::vector<int>();
 	
 	for (int x = 0; x < nbRolls; x++)
 	{
@@ -13,9 +14,8 @@ std::vector<int> Dice::roll(int nbRolls)
 		rolls.push_back(generated);		//Put the rolled value in the listt
 		stats[generated-1]++;			//incrementing the stats value
 		totalRolls++;					//Incrementing Totall rolls, used to calculate stats
-		totalOfDices += nbRolls;
 	}
-	sortIntVector(&rolls);
+	std::sort(rolls.begin(), rolls.end());
 
 	return rolls;
 }

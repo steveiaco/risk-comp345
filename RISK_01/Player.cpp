@@ -3,6 +3,7 @@
 
 Player::Player(std::string name) {
 	this->name = name;
+	this->dice = new Dice();
 }
 
 std::string Player::getName() const {
@@ -85,10 +86,10 @@ bool Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice,
 
 
 	//roll the dice for the attacker
-	std::vector<int> attackerRolled = dice->roll(numAttackerDice);
+	std::vector<int> attackerRolled = this->getRoll(numAttackerDice);
 
 	//roll the dice for the defender
-	std::vector<int> defenderRolled = defender->dice->roll(numDefenderDice);
+	std::vector<int> defenderRolled = defender->getRoll(numDefenderDice);
 	
 	//check how many dice we must compare (the smallest number between numAttackerDice and numDefenderDice)
 	int numDiceToCompare = (numAttackerDice >= numDefenderDice) ? numDefenderDice : numAttackerDice;
@@ -145,5 +146,9 @@ bool Player::ownsCountry(Country * country)
 		return true;
 	else
 		return false;
+}
+
+std::vector<int> Player::getRoll(int numRolls) {
+	return dice->roll(numRolls);
 }
 

@@ -20,13 +20,11 @@ private:
 	std::set<Country*> countriesOwned;
 	std::set<Continent*> continentsOwned;
 	Hand playerHand;
+	Dice* dice;
 	
 	//Country* queryOwnedCountry(); //queries the user for a name, attempts to find the country who's name is equal to that string and returns it
 
 public:
-
-	//Attributes
-	Dice* dice = &Dice();
 
 	//Constructors
 	Player(std::string name);
@@ -47,8 +45,7 @@ public:
 	int	exchange();
 	void printCountriesOwned();
 	bool ownsCountry(Country* country);
-
-	
+	std::vector<int> getRoll(int NumRolls);
 };
 
 #endif

@@ -107,7 +107,7 @@ Map* MapLoader::readMapFile(std::string mapName) {
 	}
 	//Catch io errors
 	catch (std::ifstream::failure e) {
-		std::cout << "Exception opening/reading/closing file\n";
+		std::cout << "Exception opening/reading/closing file.\n";
 	}
 	return NULL;
 }

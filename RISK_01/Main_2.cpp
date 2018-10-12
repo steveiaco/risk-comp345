@@ -6,7 +6,7 @@
 /*
 int main() {
 	std::cout << "=======================================\n";
-	std::cout << "              RISK V0_01               \n";
+	std::cout << "            RISK TEST PART 2           \n";
 	std::cout << "=======================================\n";
 
 	//Keep trying to get map until a valid map is returned
