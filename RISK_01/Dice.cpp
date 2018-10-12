@@ -35,12 +35,11 @@ int Dice::randomDice() //Method to generate random value from 1 to 6
 
 void Dice::sortIntVector(std::vector<int>* toSort)
 {
-	for(int i = 0 ; i <= toSort->size() ; i++)
-		for(int j = i; j <= toSort->size() ; j++)
+	for(int i = 0; i < toSort->size(); i++)
+		for(int j = i; j < toSort->size(); j++)
 			if ((*toSort)[j] > (*toSort)[i]) { //then swap
 				int temp = (*toSort)[i];
 				(*toSort)[i] = (*toSort)[j];
 				(*toSort)[j] = temp;
 			}
-
 }
