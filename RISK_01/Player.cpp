@@ -50,7 +50,7 @@ void Player::reinforce(Country* toReinforce, int numTroops) {
 /**Method that handles attacking and defending mechanics, implementing dice rolls and their comparisons. Takes in the country to attack from, country to attack to, how many dice the attacker rolls [1,2]
 and how many dice the defender rolls [1,3]. If the attacker wins the attack, numAttackerDice number of troops will be automatically moved into the defending country. Implementation of moving more troops than this
 will be done within the driver.**/
-void Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice, int numDefenderDice)
+bool Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice, int numDefenderDice)
 {
 	//Player object for the defending country.
 	Player* defender = attackTo->getOccupant();
@@ -61,15 +61,19 @@ void Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice,
 	if (!ownsCountry(attackFrom))
 		throw std::invalid_argument("Country is not owned.");
 
+	//we will check if attackTo is owned by the calling object
+	if (!ownsCountry(attackTo))
+		throw std::invalid_argument("Country to attack is owned by the attacker.");
+
 	//we will check if attackFrom is a neighbor of attackTo
 	if (!(attackFrom->isNeighbor(attackTo)))
 		throw std::invalid_argument("Countries are not neighbors.");
 
 	//check whether dice input is valid
-	if (!(numAttackerDice < 1 && numAttackerDice > 3))
+	if (numAttackerDice < 1 || numAttackerDice > 3)
 		throw std::invalid_argument("Wrong number of attacker dice thrown.");
 
-	if (!(numDefenderDice < 1 && numDefenderDice > 2))
+	if (numDefenderDice < 1 || numDefenderDice > 2)
 		throw std::invalid_argument("Wrong number of defender dice thrown.");
 
 	//check whether player has enough troops for the specific roll
@@ -85,7 +89,7 @@ void Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice,
 
 	//roll the dice for the defender
 	std::vector<int> defenderRolled = defender->dice->roll(numDefenderDice);
-
+	
 	//check how many dice we must compare (the smallest number between numAttackerDice and numDefenderDice)
 	int numDiceToCompare = (numAttackerDice >= numDefenderDice) ? numDefenderDice : numAttackerDice;
 	
@@ -102,16 +106,15 @@ void Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice,
 				attackTo->changeOccupant(attacker);
 				attackFrom->addTroops(-numAttackerDice);
 				attackTo->addTroops(numAttackerDice);
-				break;
+				return 1;
 			}
 			//else move on
 
 		}
 			
 	}
-	
 
-
+	return 0;
 
 }
 
