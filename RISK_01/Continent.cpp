@@ -71,7 +71,7 @@ void Continent::update() {
 		occupant->addContinent(this);
 }
 /**Get continents reachable from a given continent. We will implement this method using recursion and a flood fill type of algorithm. Does not check that continents are occupied by th same player. Used for validating that continent maps are fully connected.*/
-unordered_set<Continent*> Continent::getReachable(unordered_set<Continent*> reachableList) const {
+std::unordered_set<Continent*> Continent::getReachable(std::unordered_set<Continent*> reachableList) const {
 	for (Continent* neighbor : neighborList) //Add the continent's neighbors to the set of reachable continent
 		if (reachableList.insert(neighbor).second) //Check if the neighbor has already been added to the set of reachable continent (it might be the neighbor of a previously added continent too)
 			reachableList = neighbor->getReachable(reachableList); //If continent has not previously been added to list, add that continent's neighbors to list using recursion. The base case is reached when all of a continent's neighbors are already in the list.
