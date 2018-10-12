@@ -37,86 +37,6 @@ void Player::printCountriesOwned() //iterate through all countries and print the
 	}
 }
 
-/**
-Country* Player::queryOwnedCountry() //promts the user to select a country until they enter a valid input, finds that valid country and returns a pointer to it.
-{
-
-	Country* returnedCountry;
-	bool inputValid = false;
-
-	do {
-
-		std::cout << "Enter the name of an owned country you would like to select: ";
-
-		//get country name from user
-		string selectedCountry;
-		std::cin >> selectedCountry;
-
-		//validate the input
-		try {
-			returnedCountry = Map::contains(selectedCountry, countriesOwned);
-		}
-		catch (std::invalid_argument e) {
-			std::cout << e.what();
-			inputValid = false;
-		}
-
-		inputValid = true; //if we get here, means no exception was thrown, therefore a match was found
-
-	} while (!inputValid);
-
-	return returnedCountry;
-}
-**/
-/**
-void Player::reinforce() //count number of countries player owns, divide by 3 + value of all continents player owns
-{
-	//count countries, we'll assume the number of countries owned will never surpass the int limit
-	int troopsFromCountries = countriesOwned.size() / 3;
-	int troopsFromContinents = 0;
-
-	for (Continent* continent : continentsOwned) {
-		troopsFromContinents += continent->getValue();
-	}
-
-	int troopsAvailable = troopsFromContinents + troopsFromCountries;
-
-	if (troopsAvailable == 0) {
-		std::cerr << "Error: Player does not own any countries.";
-		return;
-	}
-	else {
-
-		std::cout << "Time to place troops... here are the countries " << getName() << "owns." << endl;
-
-		printCountriesOwned();
-
-		while (troopsAvailable > 0) {
-
-			std::cout << "You currently have " << troopsAvailable << " troop(s) available." << endl;
-			
-			Country* returnedCountry = queryOwnedCountry();
-
-			int inputNumberOfTroops = -1;
-			do {
-				//if we're here, it means we found a valid country, we can ask the user for a number of troops
-				cout << "How many troops would you like to place on " << returnedCountry->getName() << ": ";
-				cin >> inputNumberOfTroops;
-			} while (inputNumberOfTroops <= 0 && inputNumberOfTroops >= troopsAvailable);
-
-			//decrement available troops by number of troops deployed
-			troopsAvailable -= inputNumberOfTroops;
-
-			//increment number of troops on specified country
-			returnedCountry->addTroops(inputNumberOfTroops);
-
-		}
-	}
-
-
-}
-**/
-
 void Player::reinforce(Country* toReinforce, int numTroops) {
 
 	//check whether the passed country is owned by current player
@@ -131,8 +51,8 @@ void Player::reinforce(Country* toReinforce, int numTroops) {
 void Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice, int numDefenderDice) //which country attack from and to.. 
 {
 
-	Player* defender = attackTo->getOccupant;
-	Player* attacker = attackFrom->getOccupant;
+	Player* defender = attackTo->getOccupant();
+	Player* attacker = attackFrom->getOccupant();
 
 	//we will check if attackFrom is owned by the calling object
 	if (!ownsCountry(attackFrom))
@@ -150,10 +70,10 @@ void Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice,
 		throw std::invalid_argument("Wrong number of defender dice thrown.");
 
 	//check whether player has enough troops for the specific roll
-	if (!(attackFrom->getTroops + 1 >= numAttackerDice))
+	if (!(attackFrom->getTroops() + 1 >= numAttackerDice))
 		throw std::invalid_argument("Attacker does not have enough troops for that number of dice.");
 
-	if (!(attackTo->getTroops >= numDefenderDice))
+	if (!(attackTo->getTroops() >= numDefenderDice))
 		throw std::invalid_argument("Defender does not have enough troops for that number of dice.");
 
 
@@ -205,7 +125,7 @@ void Player::fortify(Country* moveFrom, Country* moveTo, int numberOfTroops) //m
 		throw std::invalid_argument("The origin country does not have enough troops to perform this action.");
 
 	//if these conditions are satisfied, then we can move onto the actual move operation
-	moveFrom->removeTroops(numberOfTroops); //first we remove numberOfTroops from the origin country
+	moveFrom->addTroops(-numberOfTroops); //first we remove numberOfTroops from the origin country
 	moveTo->addTroops(numberOfTroops); //then we add this number to the destination country
 
 
