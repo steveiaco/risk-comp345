@@ -1,14 +1,19 @@
 ﻿#ifndef DICE_H
 #define DICE_H
+
+#include <list>
+#include <array>
+#include <iostream>
 class Dice
 {
 public:
-		std::array<int, 3> lastRoll = {0,0,0};
-        void Roll(int NumRolls);
-        void Stats();
-		int* GetLastRoll();
+        std::list<int> roll(int NumRolls);
+        void printPercentages();
 private:
-        int RandomDice();
+		int totalRolls;
+        int randomDice();
+		int stats[6] = { 0,0,0,0,0,0 };
+
 };
 
 #endif
