@@ -48,10 +48,14 @@ void Player::reinforce(Country* toReinforce, int numTroops) {
 
 }
 
-void Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice, int numDefenderDice) //which country attack from and to.. 
+/**Method that handles attacking and defending mechanics, implementing dice rolls and their comparisons. Takes in the country to attack from, country to attack to, how many dice the attacker rolls [1,2]
+and how many dice the defender rolls [1,3]. If the attacker wins the attack, numAttackerDice number of troops will be automatically moved into the defending country. Implementation of moving more troops than this
+will be done within the driver.**/
+void Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice, int numDefenderDice)
 {
-
+	//Player object for the defending country.
 	Player* defender = attackTo->getOccupant();
+	//Player object for the attacking country.
 	Player* attacker = attackFrom->getOccupant();
 
 	//we will check if attackFrom is owned by the calling object
@@ -97,6 +101,8 @@ void Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice,
 			if (attackTo->addTroops(-1) == 0) {
 				//meaning the defender has lost their country
 				attackTo->changeOccupant(attacker);
+				attackFrom->addTroops(-numAttackerDice);
+				attackTo->addTroops(numAttackerDice);
 				break;
 			}
 			//else move on
