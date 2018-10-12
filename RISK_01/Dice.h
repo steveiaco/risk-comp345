@@ -5,6 +5,8 @@
 #include <array>
 #include <iostream>
 #include <cstdlib>
+#include <stdlib.h>     /* srand, rand */
+#include <time.h>       /* time */
 
 class Dice {
 

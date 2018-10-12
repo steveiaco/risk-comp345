@@ -34,7 +34,7 @@ int Player::exchange() {
 void Player::printCountriesOwned() //iterate through all countries and print their name along with troop number
 {
 	for (Country* country : countriesOwned) {
-		std::cout << country->getName << " - " << country->getTroops << " troops.";
+		std::cout << country->getName() << " - " << country->getTroops() << " troops." << std::endl;
 	}
 }
 
@@ -64,7 +64,7 @@ bool Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice,
 		throw std::invalid_argument("Country is not owned.");
 
 	//we will check if attackTo is owned by the calling object
-	if (!ownsCountry(attackTo))
+	if (ownsCountry(attackTo))
 		throw std::invalid_argument("Country to attack is owned by the attacker.");
 
 	//we will check if attackFrom is a neighbor of attackTo
@@ -88,9 +88,17 @@ bool Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice,
 
 	//roll the dice for the attacker
 	std::vector<int> attackerRolled = this->getRoll(numAttackerDice);
+	std::cout << "Attacker rolled: ";
+
+	for (int i : attackerRolled)
+		std::cout << "[" << i << "]";
 
 	//roll the dice for the defender
 	std::vector<int> defenderRolled = defender->getRoll(numDefenderDice);
+	std::cout << "Defender rolled: ";
+
+	for (int i : defenderRolled)
+		std::cout << "[" << i << "]";
 	
 	//check how many dice we must compare (the smallest number between numAttackerDice and numDefenderDice)
 	int numDiceToCompare = (numAttackerDice >= numDefenderDice) ? numDefenderDice : numAttackerDice;

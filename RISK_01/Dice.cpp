@@ -1,6 +1,7 @@
 ﻿#include "Dice.h"
 
 Dice::Dice() {
+	srand(time(NULL));
 }
 
 /**The roll method takes in a number between [1,3] and returns a list of dice roll results whose length is equal to said number.*/
