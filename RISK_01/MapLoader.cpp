@@ -57,7 +57,7 @@ Map* MapLoader::readMapFile(std::string mapName) {
 				throw std::invalid_argument(line + " is not a valid continent definition.");
 		}
 
-		std::vector<string> countries;
+		std::vector<std::string> countries;
 		//Continue to end of map file
 		while (std::getline(inFile, line)) {
 			//Read and store country construction parameters (we will need to do two passes over them: one for constructing them and one for linking them via neighbor parameter)

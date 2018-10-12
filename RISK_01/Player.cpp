@@ -4,11 +4,11 @@
 #include <string> 
 #include <set>
 
-Player::Player(string name) {
+Player::Player(std::string name) {
 	this->name = name;
 }
 
-string Player::getName() const {
+std::string Player::getName() const {
 	return name;
 }
 
@@ -36,7 +36,7 @@ void Player::printCountriesOwned() //iterate through all countries and print the
 
 {
 	for (Country* country : countriesOwned) {
-		std::cout << country->getName() << " - " << country->getTroops() << " troops" << endl;
+		std::cout << country->getName() << " - " << country->getTroops() << " troops" << std::endl;
 	}
 }
 
@@ -124,20 +124,30 @@ void Player::reinforce(Country* toReinforce, int numTroops) {
 
 	//check whether the passed country is owned by current player
 	if (!ownsCountry(toReinforce))
-		throw invalid_argument("The player does not own this country!"); //throw an exception if trying to modify a country not owned by that player
+		throw std::invalid_argument("The player does not own this country!"); //throw an exception if trying to modify a country not owned by that player
 	else {
 		toReinforce->addTroops(numTroops); //add troops
 	}
 
 }
-void Player::attack(Country* attackFrom, Country* attackTo) //which country attack from and to.. 
+
+void Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice, int numDefenderDice) //which country attack from and to.. 
 {
+
+	//we will check if attackFrom is owned by the calling object
+	if (!ownsCountry(attackFrom))
+		throw std::invalid_argument("Country is not owned.");
+
 	//we will check if attackFrom is a neighbor of attackTo
 	if (!(attackFrom->isNeighbor(attackTo)))
-		throw invalid_argument("Countries are not neighbors.");
+		throw std::invalid_argument("Countries are not neighbors.");
+
+
 	
-	//
-	
+
+
+
+
 }
 
 void Player::fortify(Country* moveFrom, Country* moveTo, int numberOfTroops) //move troops from one country to another

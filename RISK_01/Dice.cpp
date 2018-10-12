@@ -30,3 +30,11 @@ int Dice::randomDice()
 	return ((rand() % 6) + 1);
 }
 
+int main() {
+	Dice* dicetest = &Dice();
+
+	std::list<int> test = dicetest->roll(3);
+
+	for (std::list<int>::iterator it = test.begin(); it != test.end(); ++it)
+		std::cout << *it;
+}

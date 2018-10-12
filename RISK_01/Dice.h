@@ -4,6 +4,7 @@
 #include <list>
 #include <array>
 #include <iostream>
+#include <cstdlib>
 class Dice
 {
 public:
