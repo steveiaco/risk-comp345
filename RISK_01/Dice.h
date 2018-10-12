@@ -4,23 +4,27 @@
 #include <vector>
 #include <array>
 #include <iostream>
-#include <cstdlib>
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 
 class Dice {
 
 private:
-	/****/
-	void sortIntVector(std::vector<int>* toSort);
+	/**Keep count of total number of rolls made (for use in statistics)**/
 	int totalRolls = 0;
-	int randomDice();
+	/**Keep count of total number of rolls made (for use in statistics)**/
 	int stats[6] = {0,0,0,0,0,0};
 
 public:
+	//Constructors
+	/**Create a standard set of dice**/
 	Dice();
-    std::vector<int> roll(int NumRolls);
-    void printPercentages();
+
+	//Utility
+	/**Return a sorted vector of nbRolls random numbers between 1 and 6. Update the stats for this set of dice. Check that numRolls is not less than 1 or greater than 3.**/
+    std::vector<int> roll(int numRolls);
+	/**Display stats regarding numbers rolled.**/
+    void display() const;
 };
 
 #endif

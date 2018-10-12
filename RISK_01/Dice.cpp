@@ -1,47 +1,30 @@
 ﻿#include "Dice.h"
 
+//Constructors
+/**Create a standard set of dice**/
 Dice::Dice() {
 	srand(time(NULL));
 }
 
-/**The roll method takes in a number between [1,3] and returns a list of dice roll results whose length is equal to said number.*/
-std::vector<int> Dice::roll(int nbRolls)
-{
-
-	std::vector<int> rolls = *new std::vector<int>(); //we must delete this vector after use
-	
-	for (int x = 0; x < nbRolls; x++)
-	{
-		int generated = randomDice();
-		rolls.push_back(generated);		//Put the rolled value in the listt
-		stats[generated-1]++;			//incrementing the stats value
-		totalRolls++;					//Incrementing Totall rolls, used to calculate stats
+//Utility
+/**Return a sorted vector of nbRolls random numbers between 1 and 6. Update the stats for this set of dice. Check that numRolls is not less than 1 or greater than 3.**/
+std::vector<int> Dice::roll(int nbRolls) {
+	//This is where we will store the numbers rolled
+	std::vector<int> rolls = *new std::vector<int>();
+	//Generate a random number between 1 and 6, add it to the vector of numbers to return and increase the tally for that number in stats
+	for (int x = 0; x < nbRolls; x++) {
+		int generated = (rand() % 6) + 1; 
+		rolls.push_back(generated);
+		stats[generated-1]++;
 	}
-	std::sort(rolls.begin(), rolls.end());
-
+	//Sort numbers rolled
+	std::sort(rolls.begin(), rolls.end(), [](const int a, const int b) -> bool { return a > b; });
+	//Add to total rolls, used to calculate stats
+	totalRolls+=nbRolls;				
 	return rolls;
 }
-
-void Dice::printPercentages()			//Prints the percentage value of all 6 dice value rolles
-{
+/**Display stats regarding numbers rolled.**/
+void Dice::display() const {
 	for (int x = 0; x <= 5; x++)
-	{
 		std::cout << "You have rolled the value " << (x + 1) << ": " << stats[x] << " times. This represents " << ((double)stats[x] / totalRolls * 100) << "% of all your rolls.";
-	}
-}
-
-int Dice::randomDice() //Method to generate random value from 1 to 6
-{
-	return ((rand() % 6) + 1);
-}
-
-void Dice::sortIntVector(std::vector<int>* toSort)
-{
-	for(size_t i = 0; i < toSort->size(); i++)
-		for(size_t j = i; j < toSort->size(); j++)
-			if ((*toSort)[j] > (*toSort)[i]) { //then swap
-				int temp = (*toSort)[i];
-				(*toSort)[i] = (*toSort)[j];
-				(*toSort)[j] = temp;
-			}
 }
