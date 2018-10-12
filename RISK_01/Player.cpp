@@ -30,10 +30,9 @@ int Player::exchange() {
 }
 
 void Player::printCountriesOwned() //iterate through all countries and print their name along with troop number
-
 {
 	for (Country* country : countriesOwned) {
-		std::cout << country->getName() << " - " << country->getTroops() << " troops" << std::endl;
+		country->display("  ");
 	}
 }
 

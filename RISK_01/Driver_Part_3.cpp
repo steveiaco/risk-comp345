@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Dice.h"
 
-
+/*
 int main() {
 	
 	Dice dice1;
@@ -11,7 +11,7 @@ int main() {
 	//Dice 1
 	std::cout << "How many dices do you want to roll for dice1? (1,2 or 3)";
 	std::cin >> nbRolls;
-	std::list<int> rollsDice1 = dice1.roll(nbRolls);
+	std::vec<int> rollsDice1 = dice1.roll(nbRolls);
 
 	for (auto x : rollsDice1)
 		std::cout << x;
@@ -28,4 +28,4 @@ int main() {
 
 	dice2.printPercentages();
 	return 0;
-}
+}*/

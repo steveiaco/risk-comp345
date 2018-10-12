@@ -40,7 +40,8 @@ int Country::addTroops(int troopsToAdd) {
 /**Changes the occupant**/
 void Country::changeOccupant(Player * newOccupant)
 {
-	this->occupant->removeCountry(this);
+	if (this->occupant != NULL)
+		this->occupant->removeCountry(this);
 	this->occupant = newOccupant;
 	newOccupant->addCountry(this);
 }

@@ -3,7 +3,7 @@
 #include <iostream>
 #include <exception>
 #include <string>
-
+/*
 int main() {
 	std::cout << "=======================================\n";
 	std::cout << "              RISK V0_01               \n";
@@ -27,4 +27,4 @@ int main() {
 
 	//Display map
 	map->display();
-}
+}*/
