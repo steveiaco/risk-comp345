@@ -20,6 +20,7 @@ private:
 	std::set<Country*> countriesOwned;
 	std::set<Continent*> continentsOwned;
 	Hand* playerHand = new Hand();
+
 	
 	//Country* queryOwnedCountry(); //queries the user for a name, attempts to find the country who's name is equal to that string and returns it
 
@@ -47,8 +48,7 @@ public:
 	int	exchange();
 	void printCountriesOwned();
 	bool ownsCountry(Country* country);
-
-	
+	std::vector<int> getRoll(int NumRolls);
 };
 
 #endif
