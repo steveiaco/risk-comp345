@@ -13,6 +13,8 @@ std::list<int> Dice::roll(int nbRolls)
 		totalOfDices += nbRolls;
 	}
 	rolls.sort();
+
+	return rolls;
 }
 
 void Dice::printPercentages()
