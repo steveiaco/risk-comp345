@@ -19,7 +19,8 @@ private:
 	std::string name;
 	std::set<Country*> countriesOwned;
 	std::set<Continent*> continentsOwned;
-	Hand* playerHand = new Hand();
+	Hand* playerHand;
+	Dice* dice;
 
 	
 	//Country* queryOwnedCountry(); //queries the user for a name, attempts to find the country who's name is equal to that string and returns it
@@ -27,7 +28,6 @@ private:
 public:
 
 	//Attributes
-	Dice* dice = new Dice();
 
 	//Constructors
 	Player(std::string name);
