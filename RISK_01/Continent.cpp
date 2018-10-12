@@ -40,14 +40,14 @@ void Continent::display(std::string lspace) const {
 	std::cout << lspace + name + " (" + ((occupant == NULL) ? "NA" : occupant->getName()) + "): \n";
 
 	//Display continent neighbors
-	cout << lspace + "  " + "Neighbors: ";
-	for (Continent* neighbor : neighborList) cout << neighbor->getName() << ", ";
-	cout << endl;
+	std::cout << lspace + "  " + "Neighbors: ";
+	for (Continent* neighbor : neighborList) std::cout << neighbor->getName() << ", ";
+	std::cout << std::endl;
 
 	//Display continent countries
-	cout << lspace + "  " + "Countries: \n";
+	std::cout << lspace + "  " + "Countries: \n";
 	for (Country* country : countryList) country->display(lspace + "  ");
-	cout << endl;
+	std::cout << std::endl;
 }
 /**Most continent attributes will never change once map is loaded. However, player posessing the continent could change whenever posession of a country in the continent changes. This method is called when a country in the continent changes posession to calculate wheter or not the occupant has changed and make appropriate changes for the previous/new occupant and the continent itself.*/
 void Continent::update() {

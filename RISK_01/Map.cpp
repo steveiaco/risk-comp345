@@ -2,7 +2,7 @@
 
 //Constructors
 /**Constructs a map with the name name. Continent and Country graph start empty. We will fill them up later as the continents/countries are created and linked together. Good for loading a map from a file.*/
-Map::Map(string name) {
+Map::Map(std::string name) {
 	this->name = name;
 }
 /**Constructs a default diamond-shaped map. Good for testing purposes.**/
@@ -53,21 +53,21 @@ Country* Map::getCountry(std::string name) const {
 	for (Country* country : countryList)
 		if (country->getName().compare(name) == 0)
 			return country;
-	throw invalid_argument("Country " + name + " is undefined.");
+	throw std::invalid_argument("Country " + name + " is undefined.");
 }
 /**Get a continnt from the list of continents in the map by name. Return an exception if the continent does not exist within the map.**/
 Continent* Map::getContinent(std::string name) const {
 	for (Continent* continent : continentList)
 		if (continent->getName().compare(name) == 0)
 			return continent;
-	throw invalid_argument("Continent " + name + " is undefined.");
+	throw std::invalid_argument("Continent " + name + " is undefined.");
 }
 
 //Utility
 /**Display the name of the map and a list of its continents (with their included countries) to the user.**/
 void Map::display() const {
 	//Display map's name
-	cout << name + ": \n";
+	std::cout << name + ": \n";
 	//Display continents in country
 	for (Continent* continent : continentList)
 		continent->display("  ");
@@ -80,14 +80,10 @@ bool Map::validate() const{
 
 	//Check if all countries are reachable from one country. If so, all countries are connected. Do same for continents. Return false otherwise.
 	Country* rootCountry = *countryList.begin();
-	std::unordered_set<Country*> connectedList;
-	connectedList = rootCountry->getReachable(*new unordered_set<Country*>);
-	if (countryList != connectedList)
+	if (countryList != rootCountry->getReachable(*new std::unordered_set<Country*>))
 		return false;
 	Continent* rootContinent = *continentList.begin();
-	std::unordered_set<Continent*> connectedList2;
-	connectedList2 = rootContinent->getReachable(*new unordered_set<Continent*>);
-	if (continentList != connectedList2)
+	if (continentList != rootContinent->getReachable(*new std::unordered_set<Continent*>))
 		return false;
 
 	//If you have not yet returned false, return true.

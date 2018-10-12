@@ -2,7 +2,7 @@
 
 //Constructors
 /**Parametrized constructor. Creates a country named name that belongs to continent pointed to by continent. Ensures that country is made a member of countryList for specified continent. This constructor is used in mapLoader. Neighbors to the country will be added once all countries have be created. Player occupying country will be determined at game start.**/
-Country::Country(string name, Continent* continent) {
+Country::Country(std::string name, Continent* continent) {
 	continent->addCountry(this); //Add this country to the list of countries within its continent. This call must be made before the country attribute is changed from NULL or it will yield an exception.
 	this->continent = continent;
 	this->name = name;
@@ -10,7 +10,7 @@ Country::Country(string name, Continent* continent) {
 
 //Accessors
 /**Get name of country*/
-string Country::getName() const {
+std::string Country::getName() const {
 	return name;
 }
 /**Get player occupying country*/
@@ -43,7 +43,7 @@ void Country::addNeighbor(Country* neighbor) {
 
 //Utility
 /**Display details regarding country (occupant, neighbors, troops holding country, continent). Accepts a parameter for specifying left-space indentation (this is mainly used for displaying country within a list of countries).*/
-void Country::display(string lspace) const {
+void Country::display(std::string lspace) const {
 	//Display country name and occupant
 	std::cout << lspace + "  " + name + " (" << ((occupant == NULL) ? "NA" : occupant->getName()) + "): \n";
 
@@ -54,7 +54,7 @@ void Country::display(string lspace) const {
 	//Display country's neighbors
 	std::cout << lspace + "    " << "Neighbors: ";
 	for (Country* neighbor : neighborList) std::cout << neighbor->getName() << ", ";
-	std::cout << endl;
+	std::cout << std::endl;
 }
 /**Get the countries reachable from this country. Does not check if neighboring countries are owned by the same player. Just checks for neighbors. Good for checking if maps are complete during validation.*/
 std::unordered_set<Country*> Country::getReachable(std::unordered_set<Country*> reachableList) const{

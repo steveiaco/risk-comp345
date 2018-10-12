@@ -4,7 +4,7 @@
 #include <exception>
 #include <string>
 
-int main() {
+/*int main() {
 	std::cout << "=======================================\n";
 	std::cout << "              RISK V0_01               \n";
 	std::cout << "=======================================\n";
@@ -27,4 +27,4 @@ int main() {
 
 	//Display map
 	map->display();
-}
+} */
