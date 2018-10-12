@@ -1,6 +1,5 @@
 #include <iostream>
 #include "Dice.h"
-
 /*
 int main() {
 	
@@ -11,7 +10,7 @@ int main() {
 	//Dice 1
 	std::cout << "How many dices do you want to roll for dice1? (1,2 or 3)";
 	std::cin >> nbRolls;
-	std::vec<int> rollsDice1 = dice1.roll(nbRolls);
+	std::vector<int> rollsDice1 = dice1.roll(nbRolls);
 
 	for (auto x : rollsDice1)
 		std::cout << x;
@@ -21,7 +20,7 @@ int main() {
 	//Dice 2
 	std::cout << "How many dices do you want to roll for dice2? (1,2 or 3)";
 	std::cin >> nbRolls;
-	std::list<int> rollsDice2 = dice2.roll(nbRolls);
+	std::vector<int> rollsDice2 = dice2.roll(nbRolls);
 
 	for (auto x : rollsDice2)
 		std::cout << x;

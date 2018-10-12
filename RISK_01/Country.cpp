@@ -40,10 +40,11 @@ int Country::addTroops(int troopsToAdd) {
 /**Changes the occupant**/
 void Country::changeOccupant(Player * newOccupant)
 {
-	if (this->occupant != NULL)
+	if (this->occupant != NULL) //If country had a previous occupant, remove this country from their posession
 		this->occupant->removeCountry(this);
 	this->occupant = newOccupant;
-	newOccupant->addCountry(this);
+	newOccupant->addCountry(this); //Add country to player's posession
+	this->continent->update(); //Update continent (check if posession has changed
 }
 
 /**Add a neighboring country to neighborList. Ensure that neighbor also has this country as its own neighbor (edges must all be bidirectional). If neighbor belongs to a different continent, link the continents by defining them as neighbors.**/
