@@ -42,7 +42,7 @@ public:
 
 	//Utility
 	void reinforce(Country* toReinforce, int numTroops); //count number of countries / 3, count how many continents owned
-	void attack(Country* attackFrom, Country* attackTo, int numAttackerDice, int numDefenderDice);
+	bool attack(Country* attackFrom, Country* attackTo, int numAttackerDice, int numDefenderDice);
 	void fortify(Country* moveFrom, Country* moveTo, int numberOfTroops);
 	int	exchange();
 	void printCountriesOwned();
