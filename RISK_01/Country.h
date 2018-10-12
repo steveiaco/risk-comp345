@@ -31,19 +31,19 @@ public:
 
 	//Mutators
 	/**Add troopsToAdd troops to country**/
-	inline int addTroops(int troopsToAdd);
+	int addTroops(int troopsToAdd);
 	/**Add a neighboring country to neighborList. Ensure that neighbor also has this country as its own neighbor (edges must all be bidirectional). If neighbor belongs to a different continent, link the continents by defining them as neighbors.**/
 	void addNeighbor(Country* neighbor);
 
 	//Accessors
 	/**Get name of country*/
-	inline std::string getName() const;
+	std::string getName() const;
 	/**Get number of troops holding country*/
-	inline int getTroops() const;
+	int getTroops() const;
 	/**Get player occupying country*/
-	inline Player* getOccupant() const;
+	Player* getOccupant() const;
 	/**Get continent that country belongs to*/
-	inline Continent* getContinent() const;
+	Continent* getContinent() const;
 
 	//Utility
 	/**Display details regarding country (occupant, neighbors, troops holding country, continent). Accepts a parameter for specifying left-space indentation (this is mainly used for displaying country within a list of countries).*/

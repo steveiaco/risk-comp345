@@ -32,3 +32,11 @@ int Dice::randomDice() //Method to generate random value from 1 to 6
 	return ((rand() % 6) + 1);
 }
 
+int main() {
+	Dice* dicetest = &Dice();
+
+	std::list<int> test = dicetest->roll(3);
+
+	for (std::list<int>::iterator it = test.begin(); it != test.end(); ++it)
+		std::cout << *it;
+}
