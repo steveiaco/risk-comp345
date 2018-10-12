@@ -23,10 +23,8 @@ void Dice::printPercentages()
 	}
 }
 
-
 int Dice::randomDice()
 {
-	int max = 6;
 	return ((rand() % 6) + 1);
 }
 
