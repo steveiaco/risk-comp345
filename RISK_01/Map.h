@@ -8,16 +8,16 @@ class Map;
 #include "Continent.h"
 #include <iostream>
 #include <string>
-#include <set>
+#include <unordered_set>
 
 /**Defines a map. Maps will be stored as two undirected graphs. One graph will be made up of countries connected according to whether or not they are neighbors. The other graph will be comprised of continents. Continents will be connected if their countries are connected.**/
 class Map {
 
 private:
 	/**Stores the list of continents in the continent graph. Connections between continents are stored within the continent class as a list of neighbors. Could be empty if map has no continents (despite being very boring).**/
-	std::set<Continent*> continentList;
+	std::unordered_set<Continent*> continentList;
 	/**Stores the list of countries in the country graph. Connections between countries are stored within the country class as a list of neighbors. Could be empty if map has no countries (despite being very boring).**/
-	std::set<Country*> countryList;
+	std::unordered_set<Country*> countryList;
 	/**Name of the map. Map will usually share the name of the file from which it was loaded (if it is loaded from a file).**/
 	std::string name;
 

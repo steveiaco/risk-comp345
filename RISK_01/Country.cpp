@@ -57,14 +57,14 @@ void Country::display(string lspace) const {
 	std::cout << endl;
 }
 /**Get the countries reachable from this country. Does not check if neighboring countries are owned by the same player. Just checks for neighbors. Good for checking if maps are complete during validation.*/
-std::set<Country*> Country::getReachable(std::set<Country*> reachableList) const{
+std::unordered_set<Country*> Country::getReachable(std::unordered_set<Country*> reachableList) const{
 	for (Country* neighbor : neighborList) //Add the country's neighbors to the set of reachable countries
 		if (reachableList.insert(neighbor).second) //Check if the neighbor has already been added to the set of reachable countries (it might be the nieghbor of a previously added country too)
 			reachableList = neighbor->getReachable(reachableList); //If country has not previously been added to list, add that country's neighbors to list using recursion. The base case is reached when all of a country's neighbors are already in the list.
 	return reachableList;
 }
 /**Get the countries reachable from this country without crossing foreign borders. Checks if neighboring countries are occupied by the same player. Good for checking if occupant can fortify from this country to another and vice versa.**/
-set<Country*> Country::getReachableForOccupant(set<Country*> reachableList) const {
+std::unordered_set<Country*> Country::getReachableForOccupant(unordered_set<Country*> reachableList) const {
 	for (Country* neighbor : neighborList) //Add the country's neighbors to the set of reachable countries if they have the saem occupant.
 		if (neighbor->getOccupant() == occupant && reachableList.insert(neighbor).second) //Check if the nieghboring country has the saem occupant. Check if the neighbor has already been added to the set of reachable countries (it might be the nieghbor of a previously added country too)
 			reachableList = neighbor->getReachableForOccupant(reachableList); //If country has not previously been added to list, add that country's neighbors to list using recursion. The base case is reached when all of a country's neighbors are already in the list.
@@ -78,7 +78,7 @@ bool Country::isNeighbor(Country * country) const {
 		return false;
 }
 /**Given a set of countries, get a country specified by name from the set (if it is a set member). Throw an exception otherwise.**/
-Country* Country::getCountryFromSet(string countryName, set<Country*> countryList) {
+Country* Country::getCountryFromSet(string countryName, unordered_set<Country*> countryList) {
 	for (Country* country : countryList)
 		if (countryName.compare(country->name) == 0)
 			return country;

@@ -53,14 +53,14 @@ Country* Map::getCountry(std::string name) const {
 	for (Country* country : countryList)
 		if (country->getName().compare(name) == 0)
 			return country;
-	throw invalid_argument("Country " + name + " is undefined!");
+	throw invalid_argument("Country " + name + " is undefined.");
 }
 /**Get a continnt from the list of continents in the map by name. Return an exception if the continent does not exist within the map.**/
 Continent* Map::getContinent(std::string name) const {
 	for (Continent* continent : continentList)
 		if (continent->getName().compare(name) == 0)
 			return continent;
-	throw invalid_argument("Continent " + name + " is undefined!");
+	throw invalid_argument("Continent " + name + " is undefined.");
 }
 
 //Utility
@@ -80,10 +80,14 @@ bool Map::validate() const{
 
 	//Check if all countries are reachable from one country. If so, all countries are connected. Do same for continents. Return false otherwise.
 	Country* rootCountry = *countryList.begin();
-	if (countryList != rootCountry->getReachable(*new set<Country*>))
+	std::unordered_set<Country*> connectedList;
+	connectedList = rootCountry->getReachable(*new unordered_set<Country*>);
+	if (countryList != connectedList)
 		return false;
 	Continent* rootContinent = *continentList.begin();
-	if (continentList != rootContinent->getReachable(*new set<Continent*>))
+	std::unordered_set<Continent*> connectedList2;
+	connectedList2 = rootContinent->getReachable(*new unordered_set<Continent*>);
+	if (continentList != connectedList2)
 		return false;
 
 	//If you have not yet returned false, return true.

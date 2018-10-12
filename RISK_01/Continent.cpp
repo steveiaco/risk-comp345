@@ -18,15 +18,14 @@ void Continent::addCountry(Country* country) {
 }
 /**Add a neighbor to the continent. Makes sure that neighboring continent also has this continent added as neighbor (all edges should be bidirectional).*/
 void Continent::addNeighbor(Continent* neighbor) {
-	if (neighborList.count(neighbor)) {//Add neighbor only if neighbor is not already added.
-		neighborList.insert(neighbor);
+	if (neighborList.insert(neighbor).second) {//Add neighbor only if neighbor is not already added.
 		neighbor->addNeighbor(this); //Make sure that this country is a neighbor of the added neighbor (edges must be bidirectional)
 	}
 }
 
 //Accessors
 /**Get name of continent*/
-string Continent::getName() const {
+std::string Continent::getName() const {
 	return name;
 }
 /**Get value of continent*/
@@ -36,9 +35,9 @@ int Continent::getValue() const {
 
 //Utility
 /**Display details regarding continent (occupant, countries, neighbors, value). Accepts a parameter for specifying left-space indentation (this is mainly used for displaying continent within a list of continents).*/
-void Continent::display(string lspace) const {
+void Continent::display(std::string lspace) const {
 	//Display continent name and occupant
-	std::cout << lspace + name + " (" + ((occupant == NULL) ? "NA" : "oi"/*occupant->getName()*/) + "): \n";
+	std::cout << lspace + name + " (" + ((occupant == NULL) ? "NA" : occupant->getName()) + "): \n";
 
 	//Display continent neighbors
 	cout << lspace + "  " + "Neighbors: ";
@@ -56,7 +55,7 @@ void Continent::update() {
 	Player* prevOccupant = occupant;
 
 	//If occupancy has changed, find new occupant
-	std::set<Country*>::iterator i = countryList.begin();
+	std::unordered_set<Country*>::iterator i = countryList.begin();
 	occupant = (*i)->getOccupant();
 	//Iff an element in country list has an occupant different from the first element, continent is not occupied by any single player. Otherwise, continent is occupied by player who occupies first country (in addition to all others).
 	for (; i != countryList.end(); i++)
@@ -72,7 +71,7 @@ void Continent::update() {
 		occupant->addContinent(this);
 }
 /**Get continents reachable from a given continent. We will implement this method using recursion and a flood fill type of algorithm. Does not check that continents are occupied by th same player. Used for validating that continent maps are fully connected.*/
-set<Continent*> Continent::getReachable(set<Continent*> reachableList) const {
+unordered_set<Continent*> Continent::getReachable(unordered_set<Continent*> reachableList) const {
 	for (Continent* neighbor : neighborList) //Add the continent's neighbors to the set of reachable continent
 		if (reachableList.insert(neighbor).second) //Check if the neighbor has already been added to the set of reachable continent (it might be the neighbor of a previously added continent too)
 			reachableList = neighbor->getReachable(reachableList); //If continent has not previously been added to list, add that continent's neighbors to list using recursion. The base case is reached when all of a continent's neighbors are already in the list.

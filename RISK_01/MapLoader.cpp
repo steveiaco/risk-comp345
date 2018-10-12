@@ -99,7 +99,7 @@ Map* MapLoader::readMapFile(std::string mapName) {
 
 		//Validate map
 		if (!map->validate())
-			throw std::invalid_argument("Some continents/countries are out of reach!");
+			throw std::invalid_argument("Some continents/countries are out of reach.");
 		else
 			return map;
 
