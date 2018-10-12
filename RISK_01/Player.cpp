@@ -88,18 +88,20 @@ bool Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice,
 
 	//roll the dice for the attacker
 	std::vector<int> attackerRolled = this->getRoll(numAttackerDice);
-	std::cout << "Attacker rolled: ";
+	std::cout << std::endl << "Attacker rolled: ";
 
 	for (int i : attackerRolled)
 		std::cout << "[" << i << "]";
 
 	//roll the dice for the defender
 	std::vector<int> defenderRolled = defender->getRoll(numDefenderDice);
-	std::cout << "Defender rolled: ";
+	std::cout << std::endl << "Defender rolled: ";
 
 	for (int i : defenderRolled)
 		std::cout << "[" << i << "]";
 	
+	std::cout << std::endl;
+
 	//check how many dice we must compare (the smallest number between numAttackerDice and numDefenderDice)
 	int numDiceToCompare = (numAttackerDice >= numDefenderDice) ? numDefenderDice : numAttackerDice;
 	
