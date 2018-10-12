@@ -1,30 +1,50 @@
 #include <iostream>
 #include "Dice.h"
-/*
+
 int main() {
 	
 	Dice dice1;
 	Dice dice2;
 	int nbRolls;
+	std::vector<int> rollsDice;
+	bool rollSuccessful = false;
 
 	//Dice 1
-	std::cout << "How many dices do you want to roll for dice1? (1,2 or 3)";
-	std::cin >> nbRolls;
-	std::vector<int> rollsDice1 = dice1.roll(nbRolls);
+	while (rollSuccessful == false)
+		try {
+			std::cout << "How many dice do you want to roll for dice1? (Try a value out of range if you want to test that feature)\n";
+			std::cin >> nbRolls;
+			std::vector<int> rollsDice = dice1.roll(nbRolls);
+			rollSuccessful = true;
+		}
+		catch (std::invalid_argument& e) {
+			std::cout << e.what() << "\nTry again.\n\n";
+		}
 
-	for (auto x : rollsDice1)
-		std::cout << x;
+	std::cout << "Values rolled: \n";
+	for (int x : rollsDice)
+		std::cout << "hi" << std::endl;
 
-	dice1.printPercentages();
+	dice1.display();
+	rollSuccessful = false;
 
 	//Dice 2
-	std::cout << "How many dices do you want to roll for dice2? (1,2 or 3)";
-	std::cin >> nbRolls;
-	std::vector<int> rollsDice2 = dice2.roll(nbRolls);
+	while (rollSuccessful == false)
+		try {
+		std::cout << "How many dice do you want to roll for dice1? (Try a value out of range if you want to test that feature)\n";
+		std::cin >> nbRolls;
+		std::vector<int> rollsDice = dice2.roll(nbRolls);
+		rollSuccessful = true;
+	}
+	catch (std::invalid_argument& e) {
+		std::cout << e.what() << "\nTry again.\n\n";
+	}
 
-	for (auto x : rollsDice2)
-		std::cout << x;
+	std::cout << "\nValues rolled: \n";
+	for (int x : rollsDice)
+		std::cout << x << std::endl;
 
-	dice2.printPercentages();
+	dice2.display();
+
 	return 0;
-}*/
+}
