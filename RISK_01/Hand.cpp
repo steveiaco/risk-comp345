@@ -51,9 +51,13 @@ std::unordered_set<Card*> Hand::canExchange() const {
 				break;
 		}
 	//Add the first element of every set to toRet. If toRet ends up with 3 elements, it contains one of each type.
-	toRet.insert(*infantry.begin());
-	toRet.insert(*cavalry.begin());
-	toRet.insert(*artillery.begin());
+	if (infantry.size() != 0)
+		toRet.insert(*infantry.begin());
+	if (cavalry.size() != 0)
+		toRet.insert(*cavalry.begin());
+	if (artillery.size() != 0)
+		toRet.insert(*artillery.begin());
+
 	if (toRet.size() == 3)
 		return toRet;
 	else
@@ -66,7 +70,7 @@ int Hand::exchange() {
 	//Check if the players either has a minimum of 3 identical cards, or 3 unique cards
 	if (toExchange.size() != 3)
 		throw std::invalid_argument("You can not exchange your cards.\nYou need three cards of different or identical troop type to exchange.");
-	for (Card* card : hand)
+	for (Card* card : toExchange)
 		hand.erase(card);
 	//Add one to times excahnged and return the appropriate number of armies. Armies recieved should be 5 for the first exchange and 5 more for each additional exchange.
 	return (++timesExchanged * 5);

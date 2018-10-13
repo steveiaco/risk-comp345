@@ -1,11 +1,4 @@
-#include "Map.h"
 #include "MapLoader.h"
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <sstream>
-#include <vector>
-#include <exception>
 
 /**
 	Read a .map file. Build the map described by the file and return a pointer to it. If map is invalid, ensure that an exception is thrown specifying why.

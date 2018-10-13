@@ -1,5 +1,4 @@
 #include "Deck.h"
-#include "Map.h"
 
 //Constructor
 /**Default constructor. Creates an empty deck for testing**/
