@@ -17,6 +17,8 @@ public:
 	//Constructors
 	/**Create a deck for a given map (a card will be added for each country in map, cards troop types will be evenly distributed)**/
 	Deck(Map* map);
+	/**Default constructor. Creates an empty deck for testing.**/
+	Deck();
 
 	//Mutators
 	/**Add card to deck. Returns exception if card is already in deck.**/
@@ -25,6 +27,8 @@ public:
 	//Utility
 	/**Draw a card from the deck. Remove it from set of cards and return it.**/
 	Card* draw();
+	/**Display contents of deck.**/
+	void display() const;
 };
 
 #endif

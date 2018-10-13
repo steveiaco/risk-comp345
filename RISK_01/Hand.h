@@ -3,21 +3,23 @@
 
 #include "Card.h"
 #include <iostream>
-#include <vector>
+#include <unordered_set>
 
 
 class Hand {
 
 private:
-
-	//we will use an array list to make the size of the hand expandable and reducable
+	/**Cards in hand**/
 	std::vector<Card*> hand;
+	/**Number of times a player has exchanged cards**/
 	static int timesExchanged;
 
 public:
-
+	//Constructor
+	/**Default constructor. Creates an empty hand.**/
 	Hand();
-	void giveCard(Card* card);
+	/**Add card to hand.**/
+	void addCard(Card* card);
 	int exchange();
 	void display();
 };

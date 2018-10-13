@@ -1,6 +1,11 @@
 #include "Deck.h"
 
 //Constructor
+/**Default constructor. Creates an empty deck for testing**/
+Deck::Deck() {
+
+}
+
 /**Creates a deck for a give map**/
 Deck::Deck(Map* map) {
 	srand(time(NULL));
@@ -30,5 +35,11 @@ Card* Deck::draw() {
 	Card* toReturn = *it;
 	cards.erase(toReturn);
 	return toReturn;
+}
+/**Display contents of deck.**/
+void Deck::display() const{
+	std::cout << "Deck contains the following cards: \n";
+	for (Card* card : cards)
+		card->display("  ");
 }
 
