@@ -17,7 +17,7 @@ public:
 	TroopType type;
 	Card();
 	Card(TroopType newType);
-	void toString();
+	void display();
 
 };
 #endif

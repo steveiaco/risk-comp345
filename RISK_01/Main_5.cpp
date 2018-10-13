@@ -1,12 +1,9 @@
 #include "Player.h"
-/*
+#include "Deck.h"
+/**
 int main()
 {
 
-	string mapName;
-	mapName = "map name here";
-
-	Map map(); //default map
 	std::vector<int> test(5);
 
 	Deck* manualDeck = new Deck();
@@ -31,4 +28,5 @@ int main()
 		std::cout << player1.exchange();
 	}
 
-}*/
+}
+**/

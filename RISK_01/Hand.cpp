@@ -1,7 +1,6 @@
 #include "Hand.h"
 
 
-std::vector<Card> hand;
 int Hand::timesExchanged;
 
 
@@ -9,7 +8,7 @@ Hand::Hand() {
 	timesExchanged = 0;
 }
 
-void Hand::giveCard(Card card) {
+void Hand::giveCard(Card* card) {
 	//>5 cards must call exchange
 	hand.push_back(card);
 }
@@ -46,4 +45,15 @@ int Hand::exchange() {
 
 	timesExchanged++;
 	return armies;
+}
+
+void Hand::display()
+{
+	int index = 1;
+	for (Card* card : hand) {
+		std::cout << "Card " << index << ": ";
+		card->display();
+		std::cout << std::endl;
+		index++;
+	}
 }

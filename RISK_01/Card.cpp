@@ -9,8 +9,7 @@ Card::Card(TroopType newType) {
 	type = newType;
 }
 
-
-void Card::toString() { //just testing
+void Card::display() {
 	std::string toRet;
 	switch (type) {
 	case 0: toRet = "Infantry";
@@ -21,6 +20,6 @@ void Card::toString() { //just testing
 		break;
 	}
 
-	std::cout << "I am " << toRet << std::endl;
+	std::cout << toRet;
 }
 

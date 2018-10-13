@@ -11,14 +11,15 @@ class Hand {
 private:
 
 	//we will use an array list to make the size of the hand expandable and reducable
-	std::vector<Card> hand;
+	std::vector<Card*> hand;
 	static int timesExchanged;
 
 public:
 
 	Hand();
-	void giveCard(Card card);
+	void giveCard(Card* card);
 	int exchange();
+	void display();
 };
 
 #endif
