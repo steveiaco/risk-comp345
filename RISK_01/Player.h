@@ -47,8 +47,10 @@ public:
 	void fortify(Country* moveFrom, Country* moveTo, int numberOfTroops);
 	int	exchange();
 	void printCountriesOwned();
+	void printDiceStatistics();
 	bool ownsCountry(Country* country);
 	std::vector<int> getRoll(int NumRolls);
+
 };
 
 #endif
