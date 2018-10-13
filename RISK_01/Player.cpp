@@ -167,3 +167,12 @@ void Player::printDiceStatistics()
 {
 	dice->display();
 }
+
+void Player::addCard(Card * card)
+{
+	playerHand->giveCard(card);
+}
+
+void Player::displayHand() {
+	playerHand->display();
+}

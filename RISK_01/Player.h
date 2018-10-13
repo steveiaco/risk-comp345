@@ -9,6 +9,7 @@ class Player;
 #include "Hand.h"
 #include "Dice.h"
 #include "Map.h"
+#include "Card.h"
 #include <string>
 #include <vector>
 #include <set>
@@ -34,8 +35,10 @@ public:
 
 	//Accessors
 	std::string getName() const;
+	void displayHand();
 
 	//Mutators
+	void addCard(Card* card);
 	void addCountry(Country* country);
 	void addContinent(Continent* continent);
 	bool removeCountry(Country* country);
