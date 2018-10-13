@@ -7,6 +7,11 @@ Card::Card(Country* country, TroopType troopType) {
 	this->type = troopType;
 }
 
+TroopType Card::getType()
+{
+	return type;
+}
+
 
 //Utility
 //Display card details.

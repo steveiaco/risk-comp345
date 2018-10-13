@@ -1,10 +1,17 @@
 #include "Country.h"
+#include "Player.h"
 
 //Constructors
 /**Parametrized constructor. Creates a country named name that belongs to continent pointed to by continent. Ensures that country is made a member of countryList for specified continent. This constructor is used in mapLoader. Neighbors to the country will be added once all countries have be created. Player occupying country will be determined at game start.**/
 Country::Country(std::string name, Continent* continent) {
 	continent->addCountry(this); //Add this country to the list of countries within its continent. This call must be made before the country attribute is changed from NULL or it will yield an exception.
 	this->continent = continent;
+	this->name = name;
+}
+
+/*Used for testing*/
+Country::Country(std::string name)
+{
 	this->name = name;
 }
 

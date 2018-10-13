@@ -1,7 +1,9 @@
 #ifndef CARD_H
 #define CARD_H
 
-#include "country.h"
+class Card;
+
+#include "Country.h"
 #include <string>
 #include <iostream>
 
@@ -21,6 +23,8 @@ public:
 	//Construct a card for country country with troop type troopType.
 	Card(Country* country, TroopType troopType);
 
+	//Getter
+	TroopType getType();
 	//Utility
 	//Display card details.
 	void display(std::string lspace = "") const;

@@ -170,7 +170,7 @@ void Player::printDiceStatistics()
 
 void Player::addCard(Card * card)
 {
-	playerHand->giveCard(card);
+	playerHand->addCard(card);
 }
 
 void Player::displayHand() {

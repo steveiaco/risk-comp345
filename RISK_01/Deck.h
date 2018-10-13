@@ -1,6 +1,8 @@
 #ifndef DECK_H
 #define DECK_H
 
+class Deck;
+
 #include "Card.h"
 #include <iostream>
 #include <unordered_set>

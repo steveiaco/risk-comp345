@@ -3,7 +3,6 @@
 
 class Map;
 
-#include "Map.h"
 #include "Country.h"
 #include "Continent.h"
 #include "Deck.h"

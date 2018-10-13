@@ -1,6 +1,8 @@
 ﻿#ifndef DICE_H
 #define DICE_H
 
+class Dice;
+
 #include <vector>
 #include <array>
 #include <iostream>
