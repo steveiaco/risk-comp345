@@ -163,3 +163,7 @@ std::vector<int> Player::getRoll(int numRolls) {
 	return dice->roll(numRolls);
 }
 
+void Player::printDiceStatistics()
+{
+	dice->display();
+}
