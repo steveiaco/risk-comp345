@@ -24,6 +24,5 @@ public:
 	//Utility
 	//Display card details.
 	void display(std::string lspace = "") const;
->>>>>>> 370d851e3d102637f68ee610c2a36b54a07c3d4a
 };
 #endif
