@@ -60,36 +60,26 @@ int Hand::exchange() {
 
 	if (hasThreeIdenticalCards) { //this covers the case where there are both three identical cards and three unique cards, and where there are only three identical cards (hasThreeIdenticalCards && hasThreeDifferentCards) || hasThreeIdenticalCards
 		//find the three identical card type
-
+		TroopType toCompare;
 		//if we must remove 3 identical infantry cards
 		if (numInfantry >= 3) {
-			int count = 0; //number of cards removed
-			for(int i = 0; i < hand.size() && count < 3; i++)
-				if (hand[i]->getType() == TroopType::Infantry) {
-					hand.erase(hand.begin() + i);
-					count++;
-				}
+			toCompare = Infantry;
 		}
-
 		//if we must remove 3 identical artillery cards
 		else if (numArtillery >= 3) {
-			int count = 0; //number of cards removed
-			for (int i = 0; i < hand.size() && count < 3; i++)
-				if (hand[i]->getType() == TroopType::Artillery) {
-					hand.erase(hand.begin() + i);
-					count++;
-				}
+			toCompare = Artillery;
 		}
-
 		//if we must remove 3 identical cavalry cards
 		else if (numCavalry >= 3) {
-			int count = 0; //number of cards removed
-			for (int i = 0; i < hand.size() && count < 3; i++)
-				if (hand[i]->getType() == TroopType::Cavalry) {
-					hand.erase(hand.begin() + i);
-					count++;
-				}
+			toCompare = Cavalry;
 		}
+
+		int count = 0; //number of cards removed
+		for (int i = 0; i < hand.size() && count < 3; i++)
+			if (hand[i]->getType() == toCompare) {
+				hand.erase(hand.begin() + i);
+				count++;
+			}
 
 	}
 

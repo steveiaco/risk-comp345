@@ -104,7 +104,7 @@ int main()
 	std::cout << "\nHand 3:" << std::endl;
 	hand3->display();
 	std::cout << "\nHand 4:" << std::endl;
-	hand3->display();
+	hand4->display();
 
 		
 
