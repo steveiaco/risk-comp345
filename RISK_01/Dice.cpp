@@ -28,6 +28,7 @@ std::vector<int> Dice::roll(int nbRolls) {
 }
 /**Display stats regarding numbers rolled.**/
 void Dice::display() const {
+	std::cout << "You have rolled these dice " << totalRolls << " times.\n\n";
 	for (int x = 0; x <= 5; x++)
 		std::cout << "You have rolled the value " << (x + 1) << ": " << stats[x] << " times.\n\tThis represents " << ((double)stats[x] / totalRolls * 100) << "% of all your rolls.\n";
 }
