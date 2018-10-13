@@ -5,10 +5,10 @@
 #include <string>
 #include <iostream>
 
+/**Possible troop types**/
+enum TroopType { Infantry = 0, Artillery = 1, Cavalry = 2 };  //0=infantry, 1=artillery, 2=cavalry
+
 class Card {
-	
-	/**Possible troop types**/
-	enum TroopType { Infantry, Artillery, Cavalry };  //0=infantry, 1=artillery, 2=cavalry
 
 private:
 	/**Country associated to card**/

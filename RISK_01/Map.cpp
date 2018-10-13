@@ -89,3 +89,11 @@ bool Map::validate() const{
 	//If you have not yet returned false, return true.
 	return true;
 }
+/**Populate a deck of cards using countries from map.**/
+void Map::populateDeck(Deck* deck) const {
+	//We will keep count of every card added. For every card added, we will iterate between TroopTypes such that the three types are evenly distributed.
+	int keepCount = 0;
+	//Troop types must be evenly distributed abong cards
+	for (Country* country : countryList)
+		deck->addCard(new Card(country, static_cast<TroopType>(keepCount%3)));
+}

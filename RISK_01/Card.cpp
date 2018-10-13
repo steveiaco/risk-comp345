@@ -20,6 +20,6 @@ void Card::display(std::string lspace) const {
 		break;
 	}
 
-	std::cout << "Card for " << country->getName() << " of " << toRet << " type." << std::endl;
+	std::cout << lspace << "Card for " << country->getName() << " of " << toRet << " type." << std::endl;
 }
 

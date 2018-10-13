@@ -6,6 +6,8 @@ class Map;
 #include "Map.h"
 #include "Country.h"
 #include "Continent.h"
+#include "Deck.h"
+#include "Card.h"
 #include <iostream>
 #include <string>
 #include <unordered_set>
@@ -45,6 +47,8 @@ public:
 	void display() const;
 	/**Validate a map. This means checking if the map's countries are fully connected (ie checking if there is a path from each country to the rest of the countries). We do not need to check for things like whether or not each country belongs to one continent and whether or not country neighbors exist because this sort of thing is already checked elsewhere in the code.**/
 	bool validate() const;
+	/**Populate a deck of cards using countries from map.**/
+	void populateDeck(Deck* deck) const;
 };
 
 #endif
