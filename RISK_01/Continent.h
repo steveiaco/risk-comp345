@@ -1,10 +1,9 @@
 #ifndef CONTINENT
 #define CONTINENT
 
-class Continent;
+class Country;
+class Player;
 
-#include "Country.h"
-#include "Player.h"
 #include <iostream>
 #include <string>
 #include <unordered_set>

@@ -1,7 +1,6 @@
 #ifndef PLAYER
 #define PLAYER
 
-class Player;
 
 #include "Country.h"
 #include "Continent.h"

@@ -1,4 +1,5 @@
 #include "Country.h"
+#include "Player.h"
 
 //Constructors
 /**Parametrized constructor. Creates a country named name that belongs to continent pointed to by continent. Ensures that country is made a member of countryList for specified continent. This constructor is used in mapLoader. Neighbors to the country will be added once all countries have be created. Player occupying country will be determined at game start.**/

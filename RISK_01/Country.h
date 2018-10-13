@@ -1,13 +1,13 @@
 #ifndef COUNTRY
 #define COUNTRY
 
-class Country;
 
 #include "Continent.h"
-#include "Player.h"
 #include <iostream>
 #include <string>
 #include <unordered_set>
+
+class Player;
 
 /**Defines a country as per the rules of risk. Countries are nodes on a map that players can take in their attempts to seize control of routes and continents. Moreover, every three countries owned yields 3 more troops per turn for the player.*/
 class Country {

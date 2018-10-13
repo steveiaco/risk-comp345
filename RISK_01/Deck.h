@@ -7,6 +7,8 @@
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 
+class Map;
+
 class Deck {
 
 private:

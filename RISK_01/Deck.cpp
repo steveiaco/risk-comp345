@@ -1,4 +1,5 @@
 #include "Deck.h"
+#include "Map.h"
 
 //Constructor
 /**Creates a deck for a give map**/
