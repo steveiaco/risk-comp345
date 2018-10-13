@@ -65,7 +65,7 @@ bool Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice,
 
 	//we will check if attackTo is owned by the calling object
 	if (ownsCountry(attackTo))
-		throw std::invalid_argument("Country to attack is owned by the attacker.");
+		throw std::invalid_argument("Countries are owned by the saem player.");
 
 	//we will check if attackFrom is a neighbor of attackTo
 	if (!(attackFrom->isNeighbor(attackTo)))
