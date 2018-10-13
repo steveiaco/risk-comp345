@@ -4,6 +4,37 @@
 int Hand::timesExchanged;
 
 
+int Hand::countInfantry()
+{
+	int count = 0;
+	for (Card* card : hand)
+		if (card->getType() == TroopType::Infantry)
+			count++;
+	return count;
+}
+
+int Hand::countArtillery()
+{
+	int count = 0;
+	for (Card* card : hand)
+		if (card->getType() == TroopType::Artillery)
+			count++;
+	return count;
+}
+
+int Hand::countCavalry()
+{
+	int count = 0;
+	for (Card* card : hand)
+		if (card->getType() == TroopType::Cavalry)
+			count++;
+	return count;
+}
+
+void Hand::giveHandTo(Hand * hand)
+{
+}
+
 Hand::Hand() {
 	timesExchanged = 0;
 }
@@ -17,7 +48,9 @@ int Hand::exchange() {
 
 	int armies;
 
-	//must implement the checks for number of cards, returning cards to the deck.. etc...
+	//check if the players either has a minimum of 3 identical cards, or 3 unique cards
+	if (!(countInfantry() >= 3 || countArtillery() >= 3 || countCavalry() >= 3) || !(countInfantry() >= 1 && countArtillery() >= 1 && countCavalry() >= 1))
+		throw std::invalid_argument("You do not have three identical cards or three cards from differents sets.");
 
 	switch (timesExchanged) {
 	case 0: armies = 4; //first set traded
