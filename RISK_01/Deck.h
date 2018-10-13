@@ -17,6 +17,7 @@ private:
 
 public:
 	//Constructors
+	Deck();
 	/**Create a deck for a given map (a card will be added for each country in map, cards troop types will be evenly distributed)**/
 	Deck(Map* map);
 
@@ -27,6 +28,7 @@ public:
 	//Utility
 	/**Draw a card from the deck. Remove it from set of cards and return it.**/
 	Card* draw();
+	void display();
 };
 
 #endif

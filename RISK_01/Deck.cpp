@@ -8,6 +8,11 @@ Deck::Deck(Map* map) {
 	map->populateDeck(this);
 }
 
+/*Used for testing*/
+Deck::Deck() {
+	srand(time(NULL));
+}
+
 //Mutator
 /**Add card to deck. Returns exception if card is already in deck.**/
 void Deck::addCard(Card* card) {
@@ -31,5 +36,15 @@ Card* Deck::draw() {
 	Card* toReturn = *it;
 	cards.erase(toReturn);
 	return toReturn;
+}
+
+void Deck::display()
+{
+	int index = 1;
+	for (Card* card : cards) {
+		std::cout << "Card " << index << ": ";  
+		card->display();
+		index++;
+	}
 }
 

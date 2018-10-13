@@ -9,6 +9,12 @@ Country::Country(std::string name, Continent* continent) {
 	this->name = name;
 }
 
+/*Used for testing*/
+Country::Country(std::string name)
+{
+	this->name = name;
+}
+
 //Accessors
 /**Get name of country*/
 std::string Country::getName() const {

@@ -47,10 +47,63 @@ void Hand::giveCard(Card* card) {
 int Hand::exchange() {
 
 	int armies;
+	int numInfantry = countInfantry();
+	int numArtillery = countArtillery();
+	int numCavalry = countCavalry();
+
+	bool hasThreeIdenticalCards = (numInfantry >= 3 || numArtillery >= 3 || numCavalry >= 3);
+	bool hasThreeDifferentCards = (numInfantry >= 1 && numArtillery >= 1 && numCavalry >= 1);
 
 	//check if the players either has a minimum of 3 identical cards, or 3 unique cards
-	if (!(countInfantry() >= 3 || countArtillery() >= 3 || countCavalry() >= 3) || !(countInfantry() >= 1 && countArtillery() >= 1 && countCavalry() >= 1))
-		throw std::invalid_argument("You do not have three identical cards or three cards from differents sets.");
+	if (!hasThreeIdenticalCards && !hasThreeDifferentCards)
+		throw std::invalid_argument("You do not have three identical nor unique cards.");
+
+	if (hasThreeIdenticalCards) { //this covers the case where there are both three identical cards and three unique cards, and where there are only three identical cards (hasThreeIdenticalCards && hasThreeDifferentCards) || hasThreeIdenticalCards
+		//find the three identical card type
+
+		//if we must remove 3 identical infantry cards
+		if (numInfantry >= 3) {
+			int count = 0; //number of cards removed
+			for(int i = 0; i < hand.size() && count < 3; i++)
+				if (hand[i]->getType() == TroopType::Infantry) {
+					hand.erase(hand.begin() + i);
+					count++;
+				}
+		}
+
+		//if we must remove 3 identical artillery cards
+		else if (numArtillery >= 3) {
+			int count = 0; //number of cards removed
+			for (int i = 0; i < hand.size() && count < 3; i++)
+				if (hand[i]->getType() == TroopType::Artillery) {
+					hand.erase(hand.begin() + i);
+					count++;
+				}
+		}
+
+		//if we must remove 3 identical cavalry cards
+		else if (numCavalry >= 3) {
+			int count = 0; //number of cards removed
+			for (int i = 0; i < hand.size() && count < 3; i++)
+				if (hand[i]->getType() == TroopType::Cavalry) {
+					hand.erase(hand.begin() + i);
+					count++;
+				}
+		}
+
+	}
+
+	if (hasThreeDifferentCards) {
+		//we must iterate and remove one card of each type
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < hand.size(); j++)
+				if (hand[j]->getType() == static_cast<TroopType>(i)) {
+					hand.erase(hand.begin() + j);
+					break;
+				}
+		}
+	}
+
 
 	switch (timesExchanged) {
 	case 0: armies = 4; //first set traded
@@ -86,7 +139,6 @@ void Hand::display()
 	for (Card* card : hand) {
 		std::cout << "Card " << index << ": ";
 		card->display();
-		std::cout << std::endl;
 		index++;
 	}
 }
