@@ -1,16 +1,15 @@
 #include "Card.h"
 
-
-Card::Card() { //default constructor
-	type = Infantry;
+//Constructor
+//Construct a card for country country with troop type troopType.
+Card::Card(Country* country, TroopType troopType) {
+	this->country = country;
+	this->type = troopType;
 }
 
-Card::Card(TroopType newType) {
-	type = newType;
-}
-
-
-void Card::toString() { //just testing
+//Utility
+//Display card details.
+void Card::display(std::string lspace) const {
 	std::string toRet;
 	switch (type) {
 	case 0: toRet = "Infantry";
@@ -21,6 +20,6 @@ void Card::toString() { //just testing
 		break;
 	}
 
-	std::cout << "I am " << toRet << std::endl;
+	std::cout << "Card for " << country->getName() << " of " << toRet << " type." << std::endl;
 }
 

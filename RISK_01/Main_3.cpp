@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Dice.h"
-
+/*
 int main() {
 	
 	Dice dice1;
@@ -58,4 +58,4 @@ int main() {
 	dice3.display();
 
 	return 0;
-}
+}*/
