@@ -37,9 +37,9 @@ public:
 
 	//Accessors
 	/**Get name of continent*/
-	inline std::string getName() const;
+	std::string getName() const;
 	/**Get value of continent*/
-	inline int getValue() const;
+	int getValue() const;
 
 	//Utility
 	/**Display details regarding continent (occupant, countries, neighbors, value). Accepts a parameter for specifying left-space indentation (this is mainly used for displaying continent within a list of continents).*/

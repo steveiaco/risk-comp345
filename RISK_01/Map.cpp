@@ -5,30 +5,8 @@
 Map::Map(std::string name) {
 	this->name = name;
 }
-/**Constructs a default diamond-shaped map. Good for testing purposes.**/
-Map::Map() : Map("Default Map") {
-	//Create Continents
-	Continent* contA = new Continent("Left", 1);
-	Continent* contB = new Continent("Right", 4);
-	//Create Countries
-	Country* a = new Country("a", contA);
-	Country* b = new Country("b", contB);
-	Country* c = new Country("c", contB);
-	Country* d = new Country("d", contB);
-	Country* e = new Country("e", contB);
-	//Link Countries/Continents
-	a->addNeighbor(b);
-	c->addNeighbor(b);
-	d->addNeighbor(b);
-	e->addNeighbor(b);
-	//Add Continents/Countries to Map
-	addCountry(a);
-	addCountry(b);
-	addCountry(c);
-	addCountry(d);
-	addCountry(e);
-	addContinent(contA);
-	addContinent(contB);
+
+Map::Map(){
 }
 
 //Mutators
@@ -82,10 +60,13 @@ bool Map::validate() const{
 	Country* rootCountry = *countryList.begin();
 	if (countryList != rootCountry->getReachable(*new std::unordered_set<Country*>))
 		return false;
+	
+	std::cout<<"Countries can all reach each other"<<std::endl;
 	Continent* rootContinent = *continentList.begin();
 	if (continentList != rootContinent->getReachable(*new std::unordered_set<Continent*>))
 		return false;
 
+	std::cout<<"Continents are connected subgraphs"<<std::endl;
 	//If you have not yet returned false, return true.
 	return true;
 }
@@ -97,3 +78,123 @@ void Map::populateDeck(Deck* deck) const {
 	for (Country* country : countryList)
 		deck->addCard(new Card(country, static_cast<TroopType>(keepCount%3)));
 }
+
+/**Constructs a default diamond-shaped map. Good for testing purposes.**/
+void Map::getValidMap(){
+  //Create Continents
+	Continent* contA = new Continent("Left", 1);
+	Continent* contB = new Continent("Right", 4);
+	//Create Countries
+	Country* a = new Country("a", contA);
+	Country* b = new Country("b", contB);
+	Country* c = new Country("c", contB);
+	Country* d = new Country("d", contB);
+	Country* e = new Country("e", contB);
+	//Link Countries/Continents
+	a->addNeighbor(b);
+	c->addNeighbor(b);
+	d->addNeighbor(b);
+	e->addNeighbor(b);
+	//Add Continents/Countries to Map
+	addCountry(a);
+	addCountry(b);
+	addCountry(c);
+	addCountry(d);
+	addCountry(e);
+	addContinent(contA);
+	addContinent(contB);
+  
+  }
+  
+  void Map::getBrokenMap(){
+  //checks if can attain each country in map=false
+  //Create Continents
+	Continent* contA = new Continent("Left", 1);
+	Continent* contB = new Continent("Right", 4);
+	//Create Countries
+	Country* a = new Country("a", contA);
+	Country* b = new Country("b", contB);
+	Country* c = new Country("c", contB);
+	Country* d = new Country("d", contB);
+	Country* e = new Country("e", contB);
+	//Link Countries/Continents
+	a->addNeighbor(b);
+	//c->addNeighbor(b);
+	d->addNeighbor(b);
+	e->addNeighbor(b);
+	//Add Continents/Countries to Map
+	addCountry(a);
+	addCountry(b);
+	addCountry(c);
+	addCountry(d);
+	addCountry(e);
+	addContinent(contA);
+	addContinent(contB);
+  
+  }
+  
+  void Map::getBrokenMap2(){
+  //checks if each country has continent=false
+  //Create Continents
+	Continent* contA = new Continent("Left", 1);
+	Continent* contB = new Continent("Right", 4);
+	//Create Countries
+	Country* a = new Country("a", contA);
+	Country* b = new Country("b", contB);
+	Country* c = new Country("c", NULL);//notice the null: does not belong to continent
+	Country* d = new Country("d", NULL);
+	Country* e = new Country("e", contB);
+	//Link Countries/Continents
+	a->addNeighbor(b);
+	c->addNeighbor(b);
+	d->addNeighbor(b);
+	e->addNeighbor(b);
+	//Add Continents/Countries to Map
+	addCountry(a);
+	addCountry(b);
+	addCountry(c);
+	addCountry(d);
+	addCountry(e);
+	addContinent(contA);
+	addContinent(contB);
+  
+  }
+  
+  void Map::getBrokenMap3(){
+  //to know if the program recognizes that contA is not a connected subgraph
+  //Create Continents
+	Continent* contA = new Continent("Left", 1);
+	Continent* contB = new Continent("Right", 4);
+	//Create Countries
+	Country* a = new Country("a", contA);
+	Country* b = new Country("b", contB);
+	Country* c = new Country("c", contB);
+	Country* d = new Country("d", contB);
+	Country* e = new Country("e", contB);
+	Country* f = new Country("f", contA);
+	//Link Countries/Continents
+	a->addNeighbor(b);
+	c->addNeighbor(b);
+	d->addNeighbor(b);
+	e->addNeighbor(b);
+	f->addNeighbor(e);
+	//Add Continents/Countries to Map
+	addCountry(a);
+	addCountry(b);
+	addCountry(c);
+	addCountry(d);
+	addCountry(e);
+	addCountry(f);
+	addContinent(contA);
+	addContinent(contB);
+  
+  }
+
+
+  bool Map::isCountriesAssignedToContinent(){
+  		for (Country* country : countryList){
+  			if(country->getContinent()==NULL)
+  				return false;
+  		}
+  		return true;
+  }

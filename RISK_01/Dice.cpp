@@ -1,5 +1,5 @@
 ﻿#include "Dice.h"
-
+#include <algorithm>
 //Constructors
 /**Create a standard set of dice**/
 Dice::Dice() {

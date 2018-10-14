@@ -3,6 +3,7 @@
 
 class Map;
 
+#include "Map.h"
 #include "Country.h"
 #include "Continent.h"
 #include "Deck.h"
@@ -48,6 +49,16 @@ public:
 	bool validate() const;
 	/**Populate a deck of cards using countries from map.**/
 	void populateDeck(Deck* deck) const;
+
+	//creates a valid map for testing
+	void getValidMap();
+	//creates three different broken maps for testing
+	void getBrokenMap();
+	void getBrokenMap2();
+	void getBrokenMap3(); //all of these assign to the map object
+	
+	//to check if the country was assigned a continent
+	bool isCountriesAssignedToContinent();
 };
 
 #endif
