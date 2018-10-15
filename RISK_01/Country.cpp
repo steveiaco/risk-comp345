@@ -77,14 +77,12 @@ void Country::display(std::string lspace) const {
 	for (Country* neighbor : neighborList) std::cout << neighbor->getName() << ", ";
 	std::cout << std::endl;
 }
+
 /**Get the countries reachable from this country. Does not check if neighboring countries are owned by the same player. Just checks for neighbors. Good for checking if maps are complete during validation.*/
 std::unordered_set<Country*> Country::getReachable(std::unordered_set<Country*> reachableList) const{
 	for (Country* neighbor : neighborList){ //Add the country's neighbors to the set of reachable countries
-		std::cout<<"ReachableList insert "<<neighbor->getName()<<" with condition "<<reachableList.insert(neighbor).second<<std::endl;
 		if (reachableList.insert(neighbor).second){ //Check if the neighbor has already been added to the set of reachable countries (it might be the nieghbor of a previously added country too)
-			std::cout<<"ReachableList insert "<<neighbor->getName()<<" with condition "<<reachableList.insert(neighbor).second<<std::endl;
 			reachableList = neighbor->getReachable(reachableList); //If country has not previously been added to list, add that country's neighbors to list using recursion. The base case is reached when all of a country's neighbors are already in the list.
-			std::cout<<"ReachableList insert "<<neighbor->getName()<<" with condition "<<reachableList.insert(neighbor).second<<std::endl;
 		}
 	}
 	return reachableList;

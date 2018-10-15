@@ -14,7 +14,7 @@ int main() {
 	std::cout<<"Are all countries assigned to a continent? "
 		<<(isCountries1? true:false) <<std::endl;
 
-	std::cout<<"All countries can only be assigned one continent and it cannot be changed"<<
+	std::cout<<"All countries can only be assigned one continent and it cannot be changed "<<
 		"once it has been set because there is no mutator method for the continent."<<std::endl;
 
 	bool isMapConnected_ContinentConnected = validMap->validate();
@@ -30,13 +30,13 @@ int main() {
 	std::cout<<"Are all countries assigned to a continent? "
 		<<(isCountries1? true:false) <<std::endl;
 
-	std::cout<<"All countries can only be assigned one continent and it cannot be changed"<<
+	std::cout<<"All countries can only be assigned one continent and it cannot be changed "<<
 		"once it has been set because there is no mutator method for the continent."<<std::endl;
 
 	isMapConnected_ContinentConnected = brokenMapOne->validate();
 	std::cout<<"Is the map a connected graph and does each continent a connected subgraph?"<<
 	(isMapConnected_ContinentConnected? true:false)<<std::endl;
-
+	/*
 	Map* brokenMapTwo = new Map();
 	brokenMapTwo->getBrokenMap2();
 
@@ -52,7 +52,7 @@ int main() {
 	isMapConnected_ContinentConnected = brokenMapTwo->validate();
 	std::cout<<"Is the map a connected graph and does each continent a connected subgraph?"<<
 	(isMapConnected_ContinentConnected? true:false)<<std::endl;
-
+	*/
 	Map* brokenMapThree = new Map();
 	brokenMapThree->getBrokenMap3();
 
@@ -62,11 +62,11 @@ int main() {
 	std::cout<<"Are all countries assigned to a continent? "
 		<<(isCountries1? true:false) <<std::endl;
 
-	std::cout<<"All countries can only be assigned one continent and it cannot be changed"<<
+	std::cout<<"All countries can only be assigned one continent and it cannot be changed "<<
 		"once it has been set because there is no mutator method for the continent."<<std::endl;
 
 	isMapConnected_ContinentConnected = brokenMapThree->validate();
 	std::cout<<"Is the map a connected graph and does each continent a connected subgraph?"<<
 	(isMapConnected_ContinentConnected? true:false)<<std::endl;
-
+	
 }

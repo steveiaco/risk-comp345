@@ -59,6 +59,8 @@ public:
 	
 	//to check if the country was assigned a continent
 	bool isCountriesAssignedToContinent();
+
+	bool isConnectedGraph();
 };
 
 #endif

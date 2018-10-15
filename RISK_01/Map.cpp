@@ -1,5 +1,6 @@
 #include "Map.h"
-
+#include <iterator>
+#include <string>
 //Constructors
 /**Constructs a map with the name name. Continent and Country graph start empty. We will fill them up later as the continents/countries are created and linked together. Good for loading a map from a file.*/
 Map::Map(std::string name) {
@@ -79,6 +80,51 @@ void Map::populateDeck(Deck* deck) const {
 		deck->addCard(new Card(country, static_cast<TroopType>(keepCount%3)));
 }
 
+bool Map::isConnectedGraph() {
+	//keeps track of visited nodes
+	int n = countryList.size();
+
+	//graph that shows all the possible connections
+	int graph[n][n];
+	for(int i=0;i<n;i++){
+		
+		std::unordered_set<Country*>::iterator it = countryList.begin();
+		std::advance(it, i);
+		Country* x = *it;
+
+		for(int j=0;j<n;j++){
+
+			if(i==j)
+				graph[i][j]=1;//countries accessible to themselves
+			
+			else{
+				std::unordered_set<Country*>::iterator it2 = countryList.begin();
+				std::advance(it2, j);
+				Country* y = *it2;
+				if(x->isNeighbor(y)){
+					graph[i][j]=2;//shows they are connected
+				}
+			}
+		}
+	}
+
+	std::set<int> indexCountries;
+
+    for (int i = 0; i < n; i++) {
+		
+        for (int j=0; j<n; j++) {
+
+			if(graph[i][j]==2){//this means there is a link btw two diff countries
+				indexCountries.insert(j);
+			}
+		}
+    }
+
+	if(indexCountries.size()==countryList.size())
+		return true;
+    return false;
+}
+
 /**Constructs a default diamond-shaped map. Good for testing purposes.**/
 void Map::getValidMap(){
   //Create Continents
@@ -133,7 +179,7 @@ void Map::getValidMap(){
   
   }
   
-  void Map::getBrokenMap2(){
+  void Map::getBrokenMap2(){//this map does not work because of the NULL
   //checks if each country has continent=false
   //Create Continents
 	Continent* contA = new Continent("Left", 1);
@@ -174,10 +220,10 @@ void Map::getValidMap(){
 	Country* f = new Country("f", contA);
 	//Link Countries/Continents
 	a->addNeighbor(b);
-	c->addNeighbor(b);
-	d->addNeighbor(b);
+	//c->addNeighbor(b);
+	d->addNeighbor(e);
 	e->addNeighbor(b);
-	f->addNeighbor(e);
+	f->addNeighbor(c);
 	//Add Continents/Countries to Map
 	addCountry(a);
 	addCountry(b);
