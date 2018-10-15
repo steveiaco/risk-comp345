@@ -80,51 +80,6 @@ void Map::populateDeck(Deck* deck) const {
 		deck->addCard(new Card(country, static_cast<TroopType>(keepCount%3)));
 }
 
-bool Map::isConnectedGraph() {
-	//keeps track of visited nodes
-	int n = countryList.size();
-
-	//graph that shows all the possible connections
-	int graph[n][n];
-	for(int i=0;i<n;i++){
-		
-		std::unordered_set<Country*>::iterator it = countryList.begin();
-		std::advance(it, i);
-		Country* x = *it;
-
-		for(int j=0;j<n;j++){
-
-			if(i==j)
-				graph[i][j]=1;//countries accessible to themselves
-			
-			else{
-				std::unordered_set<Country*>::iterator it2 = countryList.begin();
-				std::advance(it2, j);
-				Country* y = *it2;
-				if(x->isNeighbor(y)){
-					graph[i][j]=2;//shows they are connected
-				}
-			}
-		}
-	}
-
-	std::set<int> indexCountries;
-
-    for (int i = 0; i < n; i++) {
-		
-        for (int j=0; j<n; j++) {
-
-			if(graph[i][j]==2){//this means there is a link btw two diff countries
-				indexCountries.insert(j);
-			}
-		}
-    }
-
-	if(indexCountries.size()==countryList.size())
-		return true;
-    return false;
-}
-
 /**Constructs a default diamond-shaped map. Good for testing purposes.**/
 void Map::getValidMap(){
   //Create Continents
