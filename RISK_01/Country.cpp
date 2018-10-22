@@ -14,6 +14,9 @@ Country::Country(std::string name)
 	this->name = name;
 }
 
+Country::~Country(){
+	std::cout<<"Object Country is being deleted"<<std::endl;
+}
 //Accessors
 /**Get name of country*/
 std::string Country::getName() const {

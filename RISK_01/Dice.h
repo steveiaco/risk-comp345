@@ -21,7 +21,7 @@ public:
 	//Constructors
 	/**Create a standard set of dice**/
 	Dice();
-
+	~Dice();
 	//Utility
 	/**Return a sorted vector of nbRolls random numbers between 1 and 6. Update the stats for this set of dice. Check that numRolls is not less than 1 or greater than 3.**/
     std::vector<int> roll(int numRolls);

@@ -30,6 +30,7 @@ public:
 	Country(std::string name, Continent* continent);
 	/*Used for testing*/
 	Country(std::string name);
+	~Country();
 	//Mutators
 	/**Add troopsToAdd troops to country**/
 	int addTroops(int troopsToAdd);

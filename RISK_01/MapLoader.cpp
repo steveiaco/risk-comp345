@@ -1,5 +1,9 @@
 #include "MapLoader.h"
 
+MapLoader::~MapLoader(){
+	std::cout<<"Object MapLoader has been deleted"<<std::endl;
+}
+
 /**
 	Read a .map file. Build the map described by the file and return a pointer to it. If map is invalid, ensure that an exception is thrown specifying why.
 

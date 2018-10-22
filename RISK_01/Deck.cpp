@@ -12,6 +12,10 @@ Deck::Deck(Map* map) {
 	map->populateDeck(this);
 }
 
+Deck::~Deck(){
+	std::cout<<"Object Deck has been deleted"<<std::endl;
+}
+
 //Mutator
 /**Add card to deck. Returns exception if card is already in deck.**/
 void Deck::addCard(Card* card) {

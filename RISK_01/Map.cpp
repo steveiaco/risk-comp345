@@ -10,6 +10,10 @@ Map::Map(std::string name) {
 Map::Map(){
 }
 
+Map::~Map(){
+	std::cout<<"Object Map has been deleted"<<std::endl;
+}
+
 //Mutators
 /**Add a country to the map. Note that duplicate countries can not be added because list of countries is a set, however, countries of the same name can be added. To make the user interface easier on the user, we will throw an exception if a country being added has the same name as a country already in the map.*/
 void Map::addCountry(Country* country) {

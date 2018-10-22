@@ -6,6 +6,10 @@ Dice::Dice() {
 	srand(time(NULL));
 }
 
+Dice::~Dice(){
+	std::cout<<"Object Dice has been deleted"<<std::endl;
+}
+
 //Utility
 /**Return a sorted vector of nbRolls random numbers between 1 and 6. Update the stats for this set of dice. Check that numRolls is not less than 1 or greater than 3.**/
 std::vector<int> Dice::roll(int nbRolls) {
