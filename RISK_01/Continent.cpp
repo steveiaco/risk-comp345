@@ -37,6 +37,14 @@ int Continent::getValue() const {
 	return value;
 }
 
+std::unordered_set<Continent*> Continent::getNeighborList(){
+	return neighborList;
+}
+
+std::unordered_set<Country*> Continent::getCountriesFromContinent(){
+	return countryList;
+}
+
 //Utility
 /**Display details regarding continent (occupant, countries, neighbors, value). Accepts a parameter for specifying left-space indentation (this is mainly used for displaying continent within a list of continents).*/
 void Continent::display(std::string lspace) const {

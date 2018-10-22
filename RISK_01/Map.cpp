@@ -61,8 +61,9 @@ bool Map::validate() const{
 	if (countryList.empty() && continentList.empty())
 		return true;
 
+	//Faulty code!!
 	//Check if all countries are reachable from one country. If so, all countries are connected. Do same for continents. Return false otherwise.
-	Country* rootCountry = *countryList.begin();
+	/*Country* rootCountry = *countryList.begin();
 	if (countryList != rootCountry->getReachable(*new std::unordered_set<Country*>))
 		return false;
 	
@@ -71,7 +72,37 @@ bool Map::validate() const{
 	if (continentList != rootContinent->getReachable(*new std::unordered_set<Continent*>))
 		return false;
 
-	std::cout<<"Continents are connected subgraphs"<<std::endl;
+	std::cout<<"Continents can reach each other"<<std::endl;*/
+
+	for(auto elem: continentList){
+
+		std::unordered_set<Country*> neighbors;
+
+		std::unordered_set<Country*> countryInContinent = elem->getCountriesFromContinent();
+
+		if(countryInContinent.size()==1)
+			continue;
+		for(auto elem2: countryInContinent){
+			//get neighbor list of each. If they have a neighbor matching a country
+			//in the continent, then add to neighbor.
+			std::cout<<"Country "<<elem2->getName()<<" has neighbors: "<<std::endl;
+			std::unordered_set<Country*> neighborsOfCountry = elem2->getNeighborCountries();
+
+			for(auto elem3: neighborsOfCountry){
+				if(countryInContinent.find(elem3) != countryInContinent.end()){
+					neighbors.insert(elem3);
+					std::cout<<elem3->getName()<<std::endl;
+				}
+			}
+		}
+
+		if(neighbors.size()!=countryInContinent.size()){
+			return false;
+		}
+	}
+
+	std::cout<<"All continents are subgraphs"<<std::endl;
+
 	//If you have not yet returned false, return true.
 	return true;
 }
@@ -95,8 +126,10 @@ void Map::getValidMap(){
 	Country* c = new Country("c", contB);
 	Country* d = new Country("d", contB);
 	Country* e = new Country("e", contB);
+	Country* f = new Country("f", contA);
 	//Link Countries/Continents
-	a->addNeighbor(b);
+	a->addNeighbor(f);
+	f->addNeighbor(b);
 	c->addNeighbor(b);
 	d->addNeighbor(b);
 	e->addNeighbor(b);

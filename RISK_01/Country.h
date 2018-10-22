@@ -49,6 +49,8 @@ public:
 	/**Get continent that country belongs to**/
 	Continent* getContinent() const;
 
+	std::unordered_set<Country*> getNeighborCountries();
+
 
 	//Utility
 	/**Display details regarding country (occupant, neighbors, troops holding country, continent). Accepts a parameter for specifying left-space indentation (this is mainly used for displaying country within a list of countries).**/

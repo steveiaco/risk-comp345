@@ -35,6 +35,10 @@ int Country::getTroops() const {
 	return troopCount;
 }
 
+std::unordered_set<Country*> Country::getNeighborCountries(){
+	return neighborList;
+}
+
 //Mutators
 /**Add or remove (negative number) troopsToAdd troops to country. Return number of troops holding country.**/
 int Country::addTroops(int troopsToAdd) {
