@@ -61,18 +61,26 @@ bool Map::validate() const{
 	if (countryList.empty() && continentList.empty())
 		return true;
 
-	//Faulty code!!
-	//Check if all countries are reachable from one country. If so, all countries are connected. Do same for continents. Return false otherwise.
-	/*Country* rootCountry = *countryList.begin();
-	if (countryList != rootCountry->getReachable(*new std::unordered_set<Country*>))
+	std::unordered_set<Country*> listOfAccessibleCountries;
+	for(auto elem: countryList){
+		//if only one country it is accessible to itself
+		if(countryList.size()==1){
+			break;
+		}
+		//std::cout<<"Country "<<elem->getName()<<" neighbors: "<<std::endl;
+		std::unordered_set<Country*> neighbors  = elem->getNeighborCountries();
+		for(auto elem2: neighbors){
+			//add all neighbors to the set, unless they are already there
+			listOfAccessibleCountries.insert(elem2);
+			//std::cout<<"Neighbor is "<<elem2->getName()<<std::endl;
+		}
+	}
+	std::cout<<"CountryList size is "<<countryList.size()<<std::endl;
+	if(listOfAccessibleCountries.size()!=countryList.size()){
 		return false;
-	
-	std::cout<<"Countries can all reach each other"<<std::endl;
-	Continent* rootContinent = *continentList.begin();
-	if (continentList != rootContinent->getReachable(*new std::unordered_set<Continent*>))
-		return false;
+	}
 
-	std::cout<<"Continents can reach each other"<<std::endl;*/
+	std::cout<<"All countries are related"<<std::endl;
 
 	for(auto elem: continentList){
 
@@ -85,13 +93,14 @@ bool Map::validate() const{
 		for(auto elem2: countryInContinent){
 			//get neighbor list of each. If they have a neighbor matching a country
 			//in the continent, then add to neighbor.
-			std::cout<<"Country "<<elem2->getName()<<" has neighbors: "<<std::endl;
+			//std::cout<<"Country "<<elem2->getName()<<" has neighbors: "<<std::endl;
 			std::unordered_set<Country*> neighborsOfCountry = elem2->getNeighborCountries();
 
 			for(auto elem3: neighborsOfCountry){
+				//if elem3 is in the continent, add it to the set
 				if(countryInContinent.find(elem3) != countryInContinent.end()){
 					neighbors.insert(elem3);
-					std::cout<<elem3->getName()<<std::endl;
+					//std::cout<<elem3->getName()<<std::endl;
 				}
 			}
 		}
@@ -129,8 +138,11 @@ void Map::getValidMap(){
 	Country* f = new Country("f", contA);
 	//Link Countries/Continents
 	a->addNeighbor(f);
+	a->addNeighbor(c);
+	a->addNeighbor(e);
 	f->addNeighbor(b);
 	c->addNeighbor(b);
+	d->addNeighbor(f);
 	d->addNeighbor(b);
 	e->addNeighbor(b);
 	//Add Continents/Countries to Map
@@ -139,6 +151,7 @@ void Map::getValidMap(){
 	addCountry(c);
 	addCountry(d);
 	addCountry(e);
+	addCountry(f);
 	addContinent(contA);
 	addContinent(contB);
   
@@ -157,7 +170,7 @@ void Map::getValidMap(){
 	Country* e = new Country("e", contB);
 	//Link Countries/Continents
 	a->addNeighbor(b);
-	//c->addNeighbor(b);
+	c->addNeighbor(a);
 	d->addNeighbor(b);
 	e->addNeighbor(b);
 	//Add Continents/Countries to Map
@@ -212,7 +225,7 @@ void Map::getValidMap(){
 	Country* f = new Country("f", contA);
 	//Link Countries/Continents
 	a->addNeighbor(b);
-	//c->addNeighbor(b);
+	c->addNeighbor(b);
 	d->addNeighbor(e);
 	e->addNeighbor(b);
 	f->addNeighbor(c);
