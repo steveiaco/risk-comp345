@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Dice.h"
-/*
+
 int main() {
 	
 	Dice dice1;
@@ -33,7 +33,7 @@ int main() {
 	//Dice 2
 	while (rollSuccessful == false)
 		try {
-			std::cout << "How many dice do you want to roll for dice1? (Try a value out of range if you want to test that feature)\n";
+			std::cout << "How many dice do you want to roll for dice2? (Try a value out of range if you want to test that feature)\n";
 			std::cin >> nbRolls;
 			rollsDice = dice2.roll(nbRolls);
 			rollSuccessful = true;
@@ -52,10 +52,10 @@ int main() {
 
 	//Show that dice are balanced
 	Dice dice3;
-	for (int i = 0; i < 1000; i++)
+	for (int i = 0; i < 10000; i++)
 		rollsDice = dice3.roll(3);
-
+	std::cout << "Rolling dice3 10000 * 3.\n";
 	dice3.display();
 
 	return 0;
-}*/
+}
