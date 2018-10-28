@@ -23,6 +23,10 @@ private:
 	Hand* playerHand;
 	Dice* dice;
 
+	/*
+	int troops;
+	*/
+
 	
 	//Country* queryOwnedCountry(); //queries the user for a name, attempts to find the country who's name is equal to that string and returns it
 
@@ -36,6 +40,9 @@ public:
 	//Accessors
 	std::string getName() const;
 	void displayHand();
+	/*
+	int getTroops() const;
+	*/
 
 	//Mutators
 	void addCard(Card* card);
@@ -43,6 +50,10 @@ public:
 	void addContinent(Continent* continent);
 	bool removeCountry(Country* country);
 	bool removeContinent(Continent* continent);
+
+	/*
+	int setTroops(int value);
+	*/
 
 	//Utility
 	void reinforce(Country* toReinforce, int numTroops); //count number of countries / 3, count how many continents owned
