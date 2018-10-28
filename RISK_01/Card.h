@@ -22,7 +22,7 @@ public:
 	//Constructor
 	//Construct a card for country country with troop type troopType.
 	Card(Country* country, TroopType troopType);
-
+	~Card();
 	//Getter
 	TroopType getType();
 	//Utility

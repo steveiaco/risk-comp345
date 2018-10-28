@@ -7,6 +7,10 @@ Hand::Hand() {
 
 }
 
+Hand::~Hand(){
+	std::cout<<"Object Hand has been deleted"<<std::endl;
+}
+
 //Accessors
 /**Get hand size.**/
 int Hand::getSize() const {
