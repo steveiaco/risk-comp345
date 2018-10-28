@@ -21,6 +21,7 @@ public:
 	Deck(Map* map);
 	/**Default constructor. Creates an empty deck for testing.**/
 	Deck();
+	~Deck();
 
 	//Mutators
 	/**Add card to deck. Returns exception if card is already in deck.**/

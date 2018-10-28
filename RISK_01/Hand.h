@@ -19,6 +19,7 @@ public:
 	//Constructor
 	/**Default constructor. Creates an empty hand.**/
 	Hand();
+	~Hand();
 
 	//Mutators
 	/**Add card to hand.**/

@@ -8,6 +8,10 @@ Continent::Continent(std::string name, int value) {
 	this->occupant = NULL;
 }
 
+Continent::~Continent(){
+	std::cout<<"Object continent has been deleted"<<std::endl;
+}
+
 //Mutators
 /**Add a country to the continent. Checks that country being added is not already assigned to another continent.*/
 void Continent::addCountry(Country* country) {
@@ -31,6 +35,14 @@ std::string Continent::getName() const {
 /**Get value of continent*/
 int Continent::getValue() const {
 	return value;
+}
+
+std::unordered_set<Continent*> Continent::getNeighborList(){
+	return neighborList;
+}
+
+std::unordered_set<Country*> Continent::getCountriesFromContinent(){
+	return countryList;
 }
 
 //Utility

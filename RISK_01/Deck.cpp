@@ -1,4 +1,5 @@
 #include "Deck.h"
+#include <iterator>
 
 //Constructor
 /**Default constructor. Creates an empty deck for testing**/
@@ -9,6 +10,10 @@ Deck::Deck() {
 Deck::Deck(Map* map) {
 	srand(time(NULL));
 	map->populateDeck(this);
+}
+
+Deck::~Deck(){
+	std::cout<<"Object Deck has been deleted"<<std::endl;
 }
 
 //Mutator
@@ -30,7 +35,7 @@ Card* Deck::draw() {
 	int randomIndex = rand()%size;
 	std::unordered_set<Card*>::const_iterator it(cards.begin());
 	// 'advance' the iterator to the random index, remove and return the card at it
-	advance(it, randomIndex);
+	std::advance(it, randomIndex);
 	Card* toReturn = *it;
 	cards.erase(toReturn);
 	return toReturn;

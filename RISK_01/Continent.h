@@ -28,6 +28,7 @@ public:
 	//Constructors
 	/**Define a continent with name name and value value. This is for use when first loading map. Country and neighbor lists will be filled out as countries are loaded in. Occupant will be updated when/if a player takes control of all countries in continent.*/
 	Continent(std::string name, int value);
+	~Continent();
 
 	//Mutators
 	/**Add a country to the continent. Checks that country being added is not already assigned to another continent.*/
@@ -37,9 +38,12 @@ public:
 
 	//Accessors
 	/**Get name of continent*/
-	inline std::string getName() const;
+	std::string getName() const;
 	/**Get value of continent*/
-	inline int getValue() const;
+	int getValue() const;
+
+	std::unordered_set<Continent*> getNeighborList();
+	std::unordered_set<Country*> getCountriesFromContinent();
 
 	//Utility
 	/**Display details regarding continent (occupant, countries, neighbors, value). Accepts a parameter for specifying left-space indentation (this is mainly used for displaying continent within a list of continents).*/

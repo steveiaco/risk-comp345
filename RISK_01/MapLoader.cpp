@@ -1,5 +1,9 @@
 #include "MapLoader.h"
 
+MapLoader::~MapLoader(){
+	std::cout<<"Object MapLoader has been deleted"<<std::endl;
+}
+
 /**
 	Read a .map file. Build the map described by the file and return a pointer to it. If map is invalid, ensure that an exception is thrown specifying why.
 
@@ -23,7 +27,7 @@ Map* MapLoader::readMapFile(std::string mapName) {
 	bool allSections = false; //Keep track of whether or not the map file contains all three sections ([Map], [Continents], and [Territories])
 
 	try { //Check for IO errors
-		inFile.open(mapName + "\\" + mapName + ".map");
+		inFile.open("C:\\Users\\sende\\OneDrive\\Desktop\\Git Repos\\RISK\\local-project\\Debug\\" + mapName + "\\" + mapName + ".map");
 
 		if (!inFile.good()) //If named map DNE, throw invalid argument exception. Explain why.
 			throw std::invalid_argument(mapName + " does not exist.");

@@ -28,6 +28,7 @@ private:
 
 public:
 
+	~Player();
 	//Attributes
 
 	//Constructors
