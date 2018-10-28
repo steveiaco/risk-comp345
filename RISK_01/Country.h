@@ -30,7 +30,6 @@ public:
 	Country(std::string name, Continent* continent);
 	/*Used for testing*/
 	Country(std::string name);
-	~Country();
 	//Mutators
 	/**Add troopsToAdd troops to country**/
 	int addTroops(int troopsToAdd);
@@ -48,8 +47,6 @@ public:
 	Player* getOccupant() const;
 	/**Get continent that country belongs to**/
 	Continent* getContinent() const;
-
-	std::unordered_set<Country*> getNeighborCountries();
 
 
 	//Utility

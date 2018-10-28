@@ -1,9 +1,5 @@
 #include "Card.h"
 
-Card::~Card(){
-	std::cout<<"Object Card has been deleted"<<std::endl;
-}
-
 //Constructor
 //Construct a card for country country with troop type troopType.
 Card::Card(Country* country, TroopType troopType) {

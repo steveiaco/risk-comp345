@@ -1,1 +1,0 @@
-g++ -o a.o Card.cpp Card.h Continent.cpp Continent.h Country.cpp Country.h Deck.cpp Deck.h Dice.cpp Dice.h Hand.cpp Hand.h Main_1.cpp Map.cpp Map.h MapLoader.cpp MapLoader.h Player.cpp Player.h
