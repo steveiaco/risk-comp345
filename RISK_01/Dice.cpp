@@ -1,13 +1,9 @@
 ﻿#include "Dice.h"
-#include <algorithm>
+
 //Constructors
 /**Create a standard set of dice**/
 Dice::Dice() {
 	srand(time(NULL));
-}
-
-Dice::~Dice(){
-	std::cout<<"Object Dice has been deleted"<<std::endl;
 }
 
 //Utility

@@ -1,8 +1,11 @@
 #include "Player.h"
+
 //
 Player::~Player(){
 	std::cout<<"Object Player has been deleted"<<std::endl;
 }
+
+
 
 Player::Player(std::string name) {
 	this->name = name;

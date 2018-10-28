@@ -2,7 +2,7 @@
 #include "Deck.h"
 #include "Map.h"
 #include "Card.h"
-/*
+
 int main()
 {
 	std::cout << "=======================================\n";
@@ -113,6 +113,5 @@ int main()
 	for (int i = 0; i < 10; i++) {
 		std::cout << player1.exchange();
 	}
-	
+	**/
 }
-*/
