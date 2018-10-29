@@ -22,7 +22,7 @@ private:
 	std::set<Continent*> continentsOwned;
 	Hand* playerHand;
 	Dice* dice;
-
+	int troopsLeftForTurn;
 	
 	//Country* queryOwnedCountry(); //queries the user for a name, attempts to find the country who's name is equal to that string and returns it
 
@@ -37,11 +37,13 @@ public:
 	//Accessors
 	std::string getName() const;
 	void displayHand();
+	int getTroopsLeftForTurn() const;
 
 	//Mutators
 	void addCard(Card* card);
 	void addCountry(Country* country);
 	void addContinent(Continent* continent);
+	void setTroopsLeftForTurn(int troops);
 	bool removeCountry(Country* country);
 	bool removeContinent(Continent* continent);
 

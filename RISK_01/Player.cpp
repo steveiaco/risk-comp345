@@ -14,12 +14,20 @@ std::string Player::getName() const {
 	return name;
 }
 
+int Player::getTroopsLeftForTurn() const{
+	return troopsLeftForTurn;
+}
+
 void Player::addCountry(Country* country) {
 	countriesOwned.insert(country);
 }
 
 void Player::addContinent(Continent* continent) {
 	continentsOwned.insert(continent);
+}
+
+void Player::setTroopsLeftForTurn(int troops){
+	troopsLeftForTurn=troops;
 }
 
 bool Player::removeCountry(Country* country) {
