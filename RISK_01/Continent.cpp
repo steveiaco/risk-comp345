@@ -8,7 +8,9 @@ Continent::Continent(std::string name, int value) {
 	this->occupant = NULL;
 }
 
-Continent::~Continent(){
+//Destructor
+/**Continent destructor*/
+Continent::~Continent() {
 	std::cout<<"Object continent has been deleted"<<std::endl;
 }
 
@@ -25,24 +27,6 @@ void Continent::addNeighbor(Continent* neighbor) {
 	if (neighborList.insert(neighbor).second) {//Add neighbor only if neighbor is not already added.
 		neighbor->addNeighbor(this); //Make sure that this country is a neighbor of the added neighbor (edges must be bidirectional)
 	}
-}
-
-//Accessors
-/**Get name of continent*/
-std::string Continent::getName() const {
-	return name;
-}
-/**Get value of continent*/
-int Continent::getValue() const {
-	return value;
-}
-
-std::unordered_set<Continent*> Continent::getNeighborList(){
-	return neighborList;
-}
-
-std::unordered_set<Country*> Continent::getCountriesFromContinent(){
-	return countryList;
 }
 
 //Utility
@@ -88,5 +72,20 @@ std::unordered_set<Continent*> Continent::getReachable(std::unordered_set<Contin
 		if (reachableList.insert(neighbor).second) //Check if the neighbor has already been added to the set of reachable continent (it might be the neighbor of a previously added continent too)
 			reachableList = neighbor->getReachable(reachableList); //If continent has not previously been added to list, add that continent's neighbors to list using recursion. The base case is reached when all of a continent's neighbors are already in the list.
 	return reachableList;
+}
+/**Make sure that continent forms a fully connected subgraph.*/
+bool Continent::validate() const {
+	//Return false if continent is empty (Empty continents are useless and unconnected)
+	if (countryList.empty())
+		return false;
+
+	//Map graph is bidirectional. If all countries within continent can be reached from one country within continent (without leaving continent), then all countries can reach eachother (without leaving continent).
+	Country* rootCountry = *countryList.begin();
+	std::unordered_set<Country*> connectedCountries = std::unordered_set<Country*>();
+	if (countryList != rootCountry->getReachable(connectedCountries))
+		return false;
+
+	//If have not yet returned false, return true.
+	return true;
 }
 

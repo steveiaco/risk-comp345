@@ -19,6 +19,9 @@ public:
 	//Constructor
 	/**Default constructor. Creates an empty hand.**/
 	Hand();
+
+	//Destructor
+	/**Hand destructor*/
 	~Hand();
 
 	//Mutators
@@ -27,7 +30,7 @@ public:
 
 	//Accessors
 	/**Get hand size.**/
-	int getSize() const;
+	inline int getSize() const { return hand.size(); }
 	
 	//Utility
 	/**Display contents of a hand.**/

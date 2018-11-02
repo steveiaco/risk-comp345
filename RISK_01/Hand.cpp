@@ -8,6 +8,9 @@ Hand::Hand() {
 }
 
 Hand::~Hand(){
+	//Delete cards in hand
+	for (Card* card : hand)
+		delete card;
 	std::cout<<"Object Hand has been deleted"<<std::endl;
 }
 
@@ -33,9 +36,9 @@ std::unordered_set<Card*> Hand::canExchange() const {
 	if (hand.size() < 3)
 		return toRet;
 	//Get set of cards of different types. Check for sets of 3 at the same time.
-	std::unordered_set<Card*> infantry = *new std::unordered_set<Card*>();
-	std::unordered_set<Card*> cavalry = *new std::unordered_set<Card*>();
-	std::unordered_set<Card*> artillery = *new std::unordered_set<Card*>();
+	std::unordered_set<Card*> infantry = std::unordered_set<Card*>();
+	std::unordered_set<Card*> cavalry = std::unordered_set<Card*>();
+	std::unordered_set<Card*> artillery = std::unordered_set<Card*>();
 	for (Card* card: hand)
 		switch (card->getType()) {
 			case 0:

@@ -12,27 +12,24 @@ class Player;
 #include "Card.h"
 #include <string>
 #include <vector>
-#include <set>
+#include <unordered_set>
 
 class Player {
 
 private:
 	std::string name;
-	std::set<Country*> countriesOwned;
-	std::set<Continent*> continentsOwned;
-	Hand* playerHand;
+	std::unordered_set<Country*> countriesOwned;
+	std::unordered_set<Continent*> continentsOwned;
+	Hand* hand;
 	Dice* dice;
-
-	
-	//Country* queryOwnedCountry(); //queries the user for a name, attempts to find the country who's name is equal to that string and returns it
 
 public:
 
-	~Player();
-	//Attributes
-
 	//Constructors
 	Player(std::string name);
+
+	//Destructor
+	~Player();
 
 	//Accessors
 	std::string getName() const;

@@ -6,8 +6,8 @@ class Deck;
 #include "Card.h"
 #include <iostream>
 #include <unordered_set>
-#include <stdlib.h>     /* srand, rand */
-#include <time.h>       /* time */
+#include <stdlib.h>
+#include <time.h>
 
 class Deck {
 
@@ -21,6 +21,9 @@ public:
 	Deck(Map* map);
 	/**Default constructor. Creates an empty deck for testing.**/
 	Deck();
+
+	//Destructor
+	/**Deck destructor*/
 	~Deck();
 
 	//Mutators

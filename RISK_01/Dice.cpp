@@ -12,12 +12,12 @@ Dice::~Dice(){
 
 //Utility
 /**Return a sorted vector of nbRolls random numbers between 1 and 6. Update the stats for this set of dice. Check that numRolls is not less than 1 or greater than 3.**/
-std::vector<int> Dice::roll(int nbRolls) {
+std::vector<int> Dice::roll(const int nbRolls) {
 	//Check for invalid number of rolls
 	if (nbRolls < 1 || nbRolls > 3)
 		throw std::invalid_argument("You can only roll between 1 and 3 dice.");
 	//This is where we will store the numbers rolled
-	std::vector<int> rolls = *new std::vector<int>();
+	std::vector<int> rolls = std::vector<int>();
 	//Generate a random number between 1 and 6, add it to the vector of numbers to return and increase the tally for that number in stats
 	for (int x = 0; x < nbRolls; x++) {
 		int generated = (rand() % 6) + 1; 

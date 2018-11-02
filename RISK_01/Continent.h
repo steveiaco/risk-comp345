@@ -28,6 +28,9 @@ public:
 	//Constructors
 	/**Define a continent with name name and value value. This is for use when first loading map. Country and neighbor lists will be filled out as countries are loaded in. Occupant will be updated when/if a player takes control of all countries in continent.*/
 	Continent(std::string name, int value);
+
+	//Destructor
+	/**Continent destructor*/
 	~Continent();
 
 	//Mutators
@@ -38,18 +41,17 @@ public:
 
 	//Accessors
 	/**Get name of continent*/
-	std::string getName() const;
+	inline std::string getName() const {return name};
 	/**Get value of continent*/
-	int getValue() const;
-
-	std::unordered_set<Continent*> getNeighborList();
-	std::unordered_set<Country*> getCountriesFromContinent();
+	inline int getValue() const {return value};
 
 	//Utility
 	/**Display details regarding continent (occupant, countries, neighbors, value). Accepts a parameter for specifying left-space indentation (this is mainly used for displaying continent within a list of continents).*/
 	void display(std::string lspace = "") const;
 	/**Get continents reachable from a given continent. Used for validating that continent maps are fully connected.*/
 	std::unordered_set<Continent*> getReachable(std::unordered_set<Continent*> reachableList) const;
+	/**Make sure that continent forms a fully connected subgraph.*/
+	bool validate() const;
 	/**Most continent attributes will never change once map is loaded. However, player posessing the continent could change whenever posession of a country in the continent changes. This method is called when a country in the continent changes posession to calculate wheter or not the occupant has changed and make appropriate changes for the previous/new occupant and the continent itself.*/
 	void update();
 };

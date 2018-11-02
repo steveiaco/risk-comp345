@@ -1,24 +1,20 @@
 #include "Card.h"
 
-Card::~Card(){
-	std::cout<<"Object Card has been deleted"<<std::endl;
-}
-
 //Constructor
-//Construct a card for country country with troop type troopType.
+/**Construct a card for country country with troop type troopType.*/
 Card::Card(Country* country, TroopType troopType) {
 	this->country = country;
 	this->type = troopType;
 }
 
-TroopType Card::getType()
-{
-	return type;
+//Destructor
+/**Card destructor*/
+Card::~Card() {
+	std::cout << "Object Card has been deleted" << std::endl;
 }
 
-
 //Utility
-//Display card details.
+/**Display card details.*/
 void Card::display(std::string lspace) const {
 	//Translate enum type
 	std::string toRet;

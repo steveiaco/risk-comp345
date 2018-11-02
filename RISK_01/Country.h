@@ -28,28 +28,28 @@ public:
 	//Constructors
 	/**Parametrized constructor. Creates a country named name that belongs to continent pointed to by continent. Ensures that country is made a member of countryList for specified continent. This constructor is used in mapLoader. Neighbors to the country will be added once all countries have be created. Player occupying country will be determined at game start.**/
 	Country(std::string name, Continent* continent);
-	/*Used for testing*/
-	Country(std::string name);
+
+	//Destructor
+	/**Country destructor*/
 	~Country();
+	
 	//Mutators
 	/**Add troopsToAdd troops to country**/
 	int addTroops(int troopsToAdd);
 	/**Add a neighboring country to neighborList. Ensure that neighbor also has this country as its own neighbor (edges must all be bidirectional). If neighbor belongs to a different continent, link the continents by defining them as neighbors.**/
-	void addNeighbor(Country* neighbor);
+	inline void addNeighbor(Country* neighbor);
 	/**Changes the occupant**/
 	void changeOccupant(Player* newOccupant);
 
 	//Accessors
 	/**Get name of country**/
-	std::string getName() const;
+	inline std::string getName() const {return name;}
 	/**Get number of troops holding country**/
-	int getTroops() const;
+	inline int getTroops() const {return troopCount;}
 	/**Get player occupying country**/
-	Player* getOccupant() const;
+	inline Player* getOccupant() const {return occupant;}
 	/**Get continent that country belongs to**/
-	Continent* getContinent() const;
-
-	std::unordered_set<Country*> getNeighborCountries();
+	inline Continent* getContinent() const {return continent;}
 
 
 	//Utility
@@ -59,6 +59,8 @@ public:
 	std::unordered_set<Country*> getReachable(std::unordered_set<Country*> reachableList) const;
 	/**Get the countries reachable from this country without crossing foreign borders. Checks if neighboring countries are occupied by the same player. Good for checking if occupant can fortify from this country to another and vice versa.**/
 	std::unordered_set<Country*> getReachableForOccupant(std::unordered_set<Country*> reachableList) const;
+	/**Get the countries reachable from this country without crossing continent borders. Checks if neighboring countries belong to same continent. Good for checking if continents form connected subgraphs.**/
+	std::unordered_set<Country*> getReachableWithinContinent(std::unordered_set<Country*> reachableList) const;
 	/**Check if country is neighbor of another country. Good for checking if attacks are valid.**/
 	bool isNeighbor(Country* country) const;
 	/**Given a set of countries, get a country specified by name from the set (if it is a set member). Throw an exception otherwise.**/

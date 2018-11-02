@@ -22,9 +22,15 @@ public:
 	//Constructor
 	//Construct a card for country country with troop type troopType.
 	Card(Country* country, TroopType troopType);
+
+	//Destructor
+	/**Card Destructor*/
 	~Card();
+
 	//Getter
-	TroopType getType();
+	/**Returns type of card.*/
+	inline TroopType getType() const { return type; }
+
 	//Utility
 	//Display card details.
 	void display(std::string lspace = "") const;

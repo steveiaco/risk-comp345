@@ -1,13 +1,15 @@
 #include "Player.h"
 
 Player::~Player(){
+	delete dice;
+	delete hand;
 	std::cout<<"Object Player has been deleted"<<std::endl;
 }
 
 Player::Player(std::string name) {
 	this->name = name;
 	this->dice = new Dice();
-	this->playerHand = new Hand();
+	this->hand = new Hand();
 }
 
 std::string Player::getName() const {
@@ -31,7 +33,7 @@ bool Player::removeContinent(Continent* continent) {
 }
 
 int Player::exchange() {
-	return playerHand->exchange();
+	return hand->exchange();
 }
 
 void Player::printCountriesOwned() //iterate through all countries and print their name along with troop number
@@ -42,14 +44,12 @@ void Player::printCountriesOwned() //iterate through all countries and print the
 }
 
 void Player::reinforce(Country* toReinforce, int numTroops) {
-
 	//check whether the passed country is owned by current player
 	if (!ownsCountry(toReinforce))
 		throw std::invalid_argument("The player does not own this country!"); //throw an exception if trying to modify a country not owned by that player
 	else {
 		toReinforce->addTroops(numTroops); //add troops
 	}
-
 }
 
 /**Method that handles attacking and defending mechanics, implementing dice rolls and their comparisons. Takes in the country to attack from, country to attack to, how many dice the attacker rolls [1,2]
@@ -68,7 +68,7 @@ bool Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice,
 
 	//we will check if attackTo is owned by the calling object
 	if (ownsCountry(attackTo))
-		throw std::invalid_argument("Countries are owned by the saem player.");
+		throw std::invalid_argument("Countries are owned by the same player.");
 
 	//we will check if attackFrom is a neighbor of attackTo
 	if (!(attackFrom->isNeighbor(attackTo)))
@@ -121,7 +121,7 @@ bool Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice,
 				attackTo->changeOccupant(attacker);
 				attackFrom->addTroops(-numAttackerDice);
 				attackTo->addTroops(numAttackerDice);
-				return 1;
+				return true;
 			}
 			//else move on
 
@@ -129,7 +129,7 @@ bool Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice,
 			
 	}
 
-	return 0;
+	return false;
 
 }
 
@@ -150,12 +150,9 @@ void Player::fortify(Country* moveFrom, Country* moveTo, int numberOfTroops) //m
 	//if these conditions are satisfied, then we can move onto the actual move operation
 	moveFrom->addTroops(-numberOfTroops); //first we remove numberOfTroops from the origin country
 	moveTo->addTroops(numberOfTroops); //then we add this number to the destination country
-
-
 }
 
-bool Player::ownsCountry(Country * country)
-{
+bool Player::ownsCountry(Country * country) {
 	if (countriesOwned.count(country))
 		return true;
 	else
@@ -166,16 +163,14 @@ std::vector<int> Player::getRoll(int numRolls) {
 	return dice->roll(numRolls);
 }
 
-void Player::printDiceStatistics()
-{
+void Player::printDiceStatistics() {
 	dice->display();
 }
 
-void Player::addCard(Card * card)
-{
-	playerHand->addCard(card);
+void Player::addCard(Card * card) {
+	hand->addCard(card);
 }
 
 void Player::displayHand() {
-	playerHand->display();
+	hand->display();
 }
