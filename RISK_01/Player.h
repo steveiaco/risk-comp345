@@ -34,6 +34,7 @@ public:
 	//Accessors
 	std::string getName() const;
 	void displayHand();
+	int getNumCards();
 
 	//Mutators
 	void addCard(Card* card);
@@ -47,10 +48,15 @@ public:
 	bool attack(Country* attackFrom, Country* attackTo, int numAttackerDice, int numDefenderDice);
 	void fortify(Country* moveFrom, Country* moveTo, int numberOfTroops);
 	int	exchange();
-	void printCountriesOwned();
-	void printDiceStatistics();
-	bool ownsCountry(Country* country);
+	void printCountriesOwned() const;
+	void printDiceStatistics() const;
+	bool ownsCountry(Country* country) const;
 	std::vector<int> getRoll(int NumRolls);
+	int calculateTroopsAwarded() const;
+	bool canExchange() const;
+	bool mustExchange() const;
+	bool printCountriesThatCanAttack() const;
+	bool printAttackableNeighbors(Country* country) const;
 
 };
 
