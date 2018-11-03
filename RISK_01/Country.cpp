@@ -28,7 +28,7 @@ void Country::changeOccupant(Player * newOccupant) {
 		this->occupant->removeCountry(this);
 	this->occupant = newOccupant;
 	newOccupant->addCountry(this); //Add country to player's posession
-	this->continent->update(); //Update continent (check if posession has changed
+	this->continent->update(); //Update continent (check if posession has changed)
 }
 /**Add a neighboring country to neighborList. Ensure that neighbor also has this country as its own neighbor (edges must all be bidirectional). If neighbor belongs to a different continent, link the continents by defining them as neighbors.**/
 void Country::addNeighbor(Country* neighbor) {
@@ -72,7 +72,7 @@ std::unordered_set<Country*> Country::getReachableForOccupant(std::unordered_set
 std::unordered_set<Country*> Country::getReachableWithinContinent(std::unordered_set<Country*> reachableList) const {
 	for (Country* neighbor : neighborList) //Add the country's neighbors to the set of reachable countries if they have the saem occupant.
 		if (neighbor->getContinent() == continent && reachableList.insert(neighbor).second) //Check if the nieghboring country has the saem occupant. Check if the neighbor has already been added to the set of reachable countries (it might be the nieghbor of a previously added country too)
-			reachableList = neighbor->getReachableForOccupant(reachableList); //If country has not previously been added to list, add that country's neighbors to list using recursion. The base case is reached when all of a country's neighbors are already in the list.
+			reachableList = neighbor->getReachableWithinContinent(reachableList); //If country has not previously been added to list, add that country's neighbors to list using recursion. The base case is reached when all of a country's neighbors are already in the list.
 	return reachableList;
 }
 /**Check if country is neighbor of another country. Good for checking if attacks are valid.*/
@@ -81,6 +81,24 @@ bool Country::isNeighbor(Country * country) const {
 		return true;
 	else
 		return false;
+}
+/**Return true if country has attackable neighbors and more than 1 troop.**/
+bool Country::canAttack() const {
+	if (troopCount > 1)
+		for (Country* neighbor : neighborList)
+			if (neighbor->occupant != occupant)
+				return true;
+	return false;
+}
+/**Display attackable neighbors (neighbors owned by another player).**/
+void Country::displayAttackableNeighbors(std::string lspace) const {
+	if (canAttack()) {
+		std::cout << lspace << "From " << name << ", " << occupant->getName() << " may attack:  " << std::endl;
+		for (Country* neighbor : neighborList)
+			if (neighbor->occupant != occupant)
+				neighbor->display(lspace + "  ");
+	} else 
+		std::cout << lspace << occupant->getName() << " can not attack a country from " << name << "." << std::endl;
 }
 /**Given a set of countries, get a country specified by name from the set (if it is a set member). Throw an exception otherwise.**/
 Country* Country::getCountryFromSet(std::string countryName, std::unordered_set<Country*> countryList) {

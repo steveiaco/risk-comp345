@@ -4,7 +4,6 @@
 class MapLoader;
 
 #include "Map.h"
-#include "MapLoader.h"
 #include <iostream>
 #include <fstream>
 #include <string>

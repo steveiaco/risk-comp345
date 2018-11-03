@@ -1,64 +1,39 @@
 #include "Player.h"
-
 using std::string;
 
-Player::~Player(){
-	delete dice;
-	delete hand;
-	std::cout<<"Object Player has been deleted"<<std::endl;
-}
-
+//Constructor
+/**Standard player constructor. Constructs a player with a given name and a new hand/set of dice.*/
 Player::Player(std::string name) {
 	this->name = name;
 	this->dice = new Dice();
 	this->hand = new Hand();
 }
 
-std::string Player::getName() const {
-	return name;
+//Destructor
+/**Player Destructor. Deletes players hand and dice.*/
+Player::~Player() {
+	delete dice;
+	delete hand;
+	std::cout << "Object Player has been deleted" << std::endl;
 }
 
-void Player::addCountry(Country* country) {
-	countriesOwned.insert(country);
-}
+//Mutator
+/**Add a given card to the player's hand*/
+void Player::addCard(Card* card) { hand->addCard(card); }
 
-void Player::addContinent(Continent* continent) {
-	continentsOwned.insert(continent);
-}
-
-bool Player::removeCountry(Country* country) {
-	return countriesOwned.erase(country);
-}
-
-bool Player::removeContinent(Continent* continent) {
-	return continentsOwned.erase(continent);
-}
-
-int Player::exchange() {
-	return hand->exchange();
-}
-
-void Player::printCountriesOwned() const //iterate through all countries and print their name along with troop number
-{
-	for (Country* country : countriesOwned) {
-		std::cout << country->getName() << " - " << country->getTroops() << " troops." << std::endl;
-	}
-}
-
+//Utility
+/**Allows player to add troops to country if country is owned by player. Thorws an exception if country is not owned*/
 void Player::reinforce(Country* toReinforce, int numTroops) {
 	//check whether the passed country is owned by current player
 	if (!ownsCountry(toReinforce))
 		throw std::invalid_argument("The player does not own this country!"); //throw an exception if trying to modify a country not owned by that player
-	else {
+	else
 		toReinforce->addTroops(numTroops); //add troops
-	}
 }
-
 /**Method that handles attacking and defending mechanics, implementing dice rolls and their comparisons. Takes in the country to attack from, country to attack to, how many dice the attacker rolls [1,2]
 and how many dice the defender rolls [1,3]. If the attacker wins the attack, 1 troop will be automatically moved into the defending country. Implementation of moving more troops than this
 will be done within the driver.**/
-bool Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice, int numDefenderDice)
-{
+bool Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice, int numDefenderDice) {
 	//Player object for the defending country.
 	Player* defender = attackTo->getOccupant();
 	//Player object for the attacking country.
@@ -110,13 +85,12 @@ bool Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice,
 	//check how many dice we must compare (the smallest number between numAttackerDice and numDefenderDice)
 	int numDiceToCompare = (numAttackerDice >= numDefenderDice) ? numDefenderDice : numAttackerDice;
 	
-	for (int i = 0; i < numDiceToCompare; i++) {
-		if (defenderRolled[i] >= attackerRolled[i]) {
+	for (int i = 0; i < numDiceToCompare; i++)
+		if (defenderRolled[i] >= attackerRolled[i])
 			//defender wins the roll, meaning attacker loses 1 troop
 			//the attacker cannot go under 1 troop therefore we will not check this condition as it was already checked above
 			attackFrom->addTroops(-1);
-		}
-		else {
+		else
 			//attacker wins the roll, meaning defender loses 1 troop
 			if (attackTo->addTroops(-1) == 0) {
 				//meaning the defender has lost their country
@@ -126,20 +100,13 @@ bool Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice,
 				return 1;
 			}
 			//else move on
-
-		}
-			
-	}
-
 	return false;
-
 }
-
-void Player::fortify(Country* moveFrom, Country* moveTo, int numberOfTroops) //move troops from one country to another
-{
+/**Fortify from one country to another (rules regarding how this should be done are contradictory, in this implementation, we allow player to move troops between neighboring countries)*/
+void Player::fortify(Country* moveFrom, Country* moveTo, int numberOfTroops) {
 	//first we check if this player owns both of these countries
 	if (!(this->ownsCountry(moveFrom) && this->ownsCountry(moveTo)))
-		throw std::invalid_argument("Both countries are not owned by this player");
+		throw std::invalid_argument("One of the countries are not owned by this player");
 
 	//next condition to check is whether the countries are neighbors
 	if (!(moveFrom->isNeighbor(moveTo)))
@@ -154,57 +121,18 @@ void Player::fortify(Country* moveFrom, Country* moveTo, int numberOfTroops) //m
 	moveTo->addTroops(numberOfTroops); //then we add this number to the destination country
 }
 /*Returns true or false depending on if the player owns the passed country*/
-bool Player::ownsCountry(Country * country) const
-{
+bool Player::ownsCountry(Country * country) const {
 	if (countriesOwned.count(country))
 		return true;
 	else
 		return false;
 }
-
-/*Rolls the dice object, [1-3] dice*/
-std::vector<int> Player::getRoll(int numRolls) {
-	return dice->roll(numRolls);
-}
-
-void Player::printDiceStatistics() {
-	dice->display();
-}
-
-void Player::addCard(Card * card) {
-	hand->addCard(card);
-}
-/*Prints the dice statistics to the console*/
-void Player::printDiceStatistics() const
-{
-	dice->display();
-}
-
-/*Adds a card into the player's deck*/
-void Player::addCard(Card * card)
-{
-	playerHand->addCard(card);
-}
-
-/*Prints out the player's hand of cards*/
-void Player::displayHand() {
-	hand->display();
-}
-
-/*Returns the number of cards the player owns*/
-int Player::getNumCards()
-{
-	return this->playerHand->getSize();
-}
-
 /*Calculate the number of troops to be awarded at the beginning of the round from the number of countries and continents owned*/
 int Player::calculateTroopsAwarded() const {
-
 	int toReturn = 0;
 
-	//first we start off with troops awarded for country ownership
+	//first we start off with troops awarded for country ownership (minimum is 3)
 	int countryTroops = this->countriesOwned.size() / 3;
-
 	toReturn += (countryTroops >= 3) ? countryTroops : 3;
 
 	//secondly, we calculate the number of troops awarded for contients owned
@@ -212,68 +140,25 @@ int Player::calculateTroopsAwarded() const {
 		toReturn += cont->getValue();
 
 	//third would be troops awarded from card exchanges but we will handle that within our controller as it requires user interaction.
-
 	return toReturn;
 }
-
-/*Returns a boolean, whether the player can exchange 3 cards for troops, does not modify the object*/
-bool Player::canExchange() const
-{
-	return (!this->playerHand->canExchange().empty());
+/**Display countries owned by player*/
+void Player::printCountriesOwned() const {
+	//iterate through all countries and print their name along with troop number
+	for (Country* country : countriesOwned)
+		std::cout << country->getName() << " - " << country->getTroops() << " troops." << std::endl;
 }
-
-/*Returns a boolean, whether or not a player must exchange 3 cards this round (as they have more than 5 cards)*/
-bool Player::mustExchange() const
-{
-	return (this->playerHand->getSize() > 5);
-}
-
-/*Prints out all countries that are capable of attacking an adjacent enemy country, returns true if there exists at least one country, false if there are not any countries that can be used to attack*/
-bool Player::printCountriesThatCanAttack() const
-{
-	std::set<Country*> countriesAttackableFrom;
-
-	for (Country* check : countriesOwned) {
-		std::unordered_set<Country*> neighbors = check->getNeighborCountries();
-
-		if (check->getTroops() < 2)
-			continue;
-
-		for (Country* neigh : neighbors)
-		{
-			if (!this->ownsCountry(neigh)) { //if the neighbors of the country are not all owned by this player then that country can attack
-				countriesAttackableFrom.insert(check); 
-			}
-		}
-	}
-
-	if (countriesAttackableFrom.empty())
-		return false;
-
-	std::cout << this->getName() << " can attack from the following countries:\n";
-
-	for (Country* canAttack : countriesAttackableFrom) {
-		std::cout << canAttack->getName() << ": " << canAttack->getTroops() << " troops\n";
-	}
-	return true;
-}
-
-/*Returns attackable neighbors of the passed country object, false if list is empty*/
-bool Player::printAttackableNeighbors(Country * country) const
-{
-	std::set<Country*> attackable;
-	for (Country* neighbor : country->getNeighborCountries()) {
-		if (!this->ownsCountry(neighbor))
-			attackable.insert(neighbor);
-	}
-
-	if (attackable.empty())
-		return false;
-
-	std::cout << "You may attack the following neighboring countries:\n";
-
-	for (Country* print : attackable)
-		std::cout << print->getName() << ": " << print->getTroops() << " troops.\n";
-
-	return true;
-}
+/**Display player's hand*/
+void Player::displayHand() const { hand->display(); }
+/**Exchange cards in hand for troops (exchanges first set of three valid cards)*/
+int	Player::exchange() { return hand->exchange(); }
+/**Check if player can exchange thier cards*/
+bool Player::canExchange() const { return (!hand->canExchange().empty()); }
+/**Check if player must exchange thier cards (player must exchange cards if they have more than 5)*/
+bool Player::mustExchange() const { return (hand->getSize() > 5); }
+/*Rolls the dice object, [1-3] dice*/
+std::vector<int> Player::getRoll(int numRolls) { return dice->roll(numRolls); }
+/**Display player's dice and their statistsics*/
+void Player::displayDice() const { dice->display(); }
+/**Get number of cards in player's hand*/
+int Player::getNumCards() const { return hand->getSize(); }

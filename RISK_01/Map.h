@@ -3,7 +3,6 @@
 
 class Map;
 
-#include "Map.h"
 #include "Country.h"
 #include "Continent.h"
 #include "Deck.h"
@@ -11,6 +10,8 @@ class Map;
 #include <iostream>
 #include <string>
 #include <unordered_set>
+#include <iterator>
+#include <vector>
 
 /**Defines a map. Maps will be stored as two undirected graphs. One graph will be made up of countries connected according to whether or not they are neighbors. The other graph will be comprised of continents. Continents will be connected if their countries are connected.**/
 class Map {
@@ -55,6 +56,8 @@ public:
 	void populateDeck(Deck* deck) const;
 	/**Creates a valid map for testing*/
 	void getValidMap();
+	/**Assign equal number of countries to players randomly*/
+	void assignCountries(std::vector<Player*>& players);
 };
 
 #endif

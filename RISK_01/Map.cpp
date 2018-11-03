@@ -1,6 +1,5 @@
 #include "Map.h"
-#include <iterator>
-#include <string>
+
 //Constructors
 /**Constructs a map with the name name. Continent and Country graph start empty. We will fill them up later as the continents/countries are created and linked together. Good for loading a map from a file.*/
 Map::Map(std::string name) {
@@ -98,9 +97,17 @@ void Map::populateDeck(Deck* deck) const {
 	for (Country* country : countryList)
 		deck->addCard(new Card(country, static_cast<TroopType>(keepCount%3)));
 }
-
+/**Assign equal number of countries to players randomly*/
+void Map::assignCountries(std::vector<Player*>& players) {
+	std::vector<Player*>::iterator crrtPlayer = players.begin();
+	for (Country* country : countryList) {
+		country->changeOccupant(*crrtPlayer++);
+		if (crrtPlayer == players.end())
+			crrtPlayer = players.begin();
+	}
+}
 /**Constructs a default diamond-shaped map. Good for testing purposes.**/
-void Map::getValidMap(){
+void Map::getValidMap() {
   //Create Continents
 	Continent* contA = new Continent("Left", 1);
 	Continent* contB = new Continent("Right", 4);
@@ -129,4 +136,4 @@ void Map::getValidMap(){
 	addCountry(f);
 	addContinent(contA);
 	addContinent(contB);
-  }
+ }

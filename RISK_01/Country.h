@@ -37,7 +37,7 @@ public:
 	/**Add troopsToAdd troops to country**/
 	int addTroops(int troopsToAdd);
 	/**Add a neighboring country to neighborList. Ensure that neighbor also has this country as its own neighbor (edges must all be bidirectional). If neighbor belongs to a different continent, link the continents by defining them as neighbors.**/
-	inline void addNeighbor(Country* neighbor);
+	void addNeighbor(Country* neighbor);
 	/**Changes the occupant**/
 	void changeOccupant(Player* newOccupant);
 
@@ -55,6 +55,10 @@ public:
 	//Utility
 	/**Display details regarding country (occupant, neighbors, troops holding country, continent). Accepts a parameter for specifying left-space indentation (this is mainly used for displaying country within a list of countries).**/
 	void display(std::string lspace = "") const;
+	/**Returns true if country has attackable neighbors and more than one troop on it.**/
+	bool canAttack() const;
+	/**Display attackable neighbors.**/
+	void displayAttackableNeighbors(std::string lspace = "") const;
 	/**Get the countries reachable from this country. Does not check if neighboring countries are owned by the same player. Just checks for neighbors. Good for checking if maps are complete during validation.**/
 	std::unordered_set<Country*> getReachable(std::unordered_set<Country*> reachableList) const;
 	/**Get the countries reachable from this country without crossing foreign borders. Checks if neighboring countries are occupied by the same player. Good for checking if occupant can fortify from this country to another and vice versa.**/

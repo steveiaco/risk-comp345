@@ -1,5 +1,5 @@
-﻿#ifndef DICE_H
-#define DICE_H
+﻿#ifndef DICE
+#define DICE
 
 class Dice;
 

@@ -7,17 +7,13 @@ Hand::Hand() {
 
 }
 
+//Destructor
+/**Hand destructor. Deletes hand and cards in hand.*/
 Hand::~Hand(){
 	//Delete cards in hand
 	for (Card* card : hand)
 		delete card;
 	std::cout<<"Object Hand has been deleted"<<std::endl;
-}
-
-//Accessors
-/**Get hand size.**/
-int Hand::getSize() const {
-	return hand.size();
 }
 
 //Mutators
