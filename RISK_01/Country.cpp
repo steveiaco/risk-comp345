@@ -18,7 +18,7 @@ Country::~Country() {
 /**Add or remove (negative number) troopsToAdd troops to country. Return number of troops holding country.**/
 int Country::addTroops(int troopsToAdd) {
 	if (troopCount + troopsToAdd < 0) //Make sure that troop count does not go negative
-		throw std::invalid_argument("Failed to remove troops, cannot have negative troops.");
+		throw std::invalid_argument("Failed to remove troops. Cannot have negative troops.");
 	troopCount += troopsToAdd; //Change count
 	return troopCount; //Return result
 }

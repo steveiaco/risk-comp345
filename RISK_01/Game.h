@@ -21,14 +21,18 @@ class Game {
 		Deck* deck;
 
 		//UTILITIES
-		/**Set up game (assign countries, randomize play order)*/
-		void setup();
 		/**Randomizes order of play (shuffles list of players)*/
 		void randomizeOrderOfPlay();
-		/**Assign all countries to players*/
-		void assignCountries();
 		/**Prompt players to assign starting armies to countries owned*/
 		void assignArmies();
+		/**Runs main game loop until game is over*/
+		void runGameLoop();
+		/**Allows player passed as argument to reinforce*/
+		void reinforce(Player* player);
+		/**Allows player passed as argument to attack*/
+		void attack(Player* player);
+		/**Allows player passed as argument to fortify*/
+		void fortify(Player* player);
 
     public:
 		//CONSTRUCTORS

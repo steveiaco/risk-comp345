@@ -26,7 +26,7 @@ void Player::addCard(Card* card) { hand->addCard(card); }
 void Player::reinforce(Country* toReinforce, int numTroops) {
 	//check whether the passed country is owned by current player
 	if (!ownsCountry(toReinforce))
-		throw std::invalid_argument("The player does not own this country!"); //throw an exception if trying to modify a country not owned by that player
+		throw std::invalid_argument(name + " does not own this country."); //throw an exception if trying to modify a country not owned by that player
 	else
 		toReinforce->addTroops(numTroops); //add troops
 }
@@ -147,6 +147,20 @@ void Player::printCountriesOwned() const {
 	//iterate through all countries and print their name along with troop number
 	for (Country* country : countriesOwned)
 		std::cout << country->getName() << " - " << country->getTroops() << " troops." << std::endl;
+}
+/**Display attack options (countries that can attack other countries). Return true if an option was found.*/
+bool Player::displayAttackable() const {
+	//Loop over countries, display attack options if any.
+	bool hasAttackable = false;
+	for (Country* country : countriesOwned)
+		if (country->canAttack()) {
+			hasAttackable = true;
+			country->displayAttackableNeighbors();
+		}
+	//Print a message if no attackable neighbors
+	if (!hasAttackable)
+		std::cout << name << " has no options for attack." << std::endl;
+	return hasAttackable;
 }
 /**Display player's hand*/
 void Player::displayHand() const { hand->display(); }

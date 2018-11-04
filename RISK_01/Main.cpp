@@ -52,9 +52,9 @@ int main() {
 	//Create deck
 	Deck* deck = new Deck(map);
 
-	deck->display();
-
 	//Create game
 	Game game = Game(players, map, deck);
+	//Start up game
+	game.start();
 
 }

@@ -46,6 +46,10 @@ public:
 	Country* getCountry(std::string name) const;
 	/**Get a continnt from the list of continents in the map by name. Return an exception if the continent does not exist within the map.**/
 	Continent* getContinent(std::string name) const;
+	/**Get number of countries in map.**/
+	inline int getNumberOfCountries() const { return countryList.size(); }
+	/**Get number of continents in map.**/
+	inline int getNumberOfContinents() const { return continentList.size(); }
 
 	//Utility
 	/**Display the name of the map and a list of its continents (with their included countries) to the user.**/
@@ -58,6 +62,8 @@ public:
 	void getValidMap();
 	/**Assign equal number of countries to players randomly*/
 	void assignCountries(std::vector<Player*>& players);
+	/**Return winner if one person owns all countries. Return null otherwise.*/
+	Player* getWinner() const;
 };
 
 #endif

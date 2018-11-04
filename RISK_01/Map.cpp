@@ -102,9 +102,20 @@ void Map::assignCountries(std::vector<Player*>& players) {
 	std::vector<Player*>::iterator crrtPlayer = players.begin();
 	for (Country* country : countryList) {
 		country->changeOccupant(*crrtPlayer++);
+		country->addTroops(1);
 		if (crrtPlayer == players.end())
 			crrtPlayer = players.begin();
 	}
+}
+/**Return winner if one person owns all countries. Return null otherwise.*/
+Player* Map::getWinner() const {
+	Player* potentialWinner = (*countryList.begin())->getOccupant();
+	for (Country* country : countryList)
+		//If a country in the list is not owned by the same player as another, there is no winner yet, return null
+		if (country->getOccupant() != potentialWinner)
+			return NULL;
+	//If all countreis are owned by the same person, return the person who owns the first one
+	return potentialWinner;
 }
 /**Constructs a default diamond-shaped map. Good for testing purposes.**/
 void Map::getValidMap() {

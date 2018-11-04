@@ -42,6 +42,10 @@ public:
 	inline std::string getName() const { return name; }
 	/**Get number of cards in player's hand*/
 	int getNumCards() const;
+	/**Get number of countries owned by player*/
+	inline int getNumberOfCountries() const { return countriesOwned.size(); }
+	/**Get number of continents owned by player*/
+	inline int getNumberOfContinents() const { return continentsOwned.size(); }
 
 	//MUTATORS
 	/**Add a given card to the player's hand*/
@@ -82,6 +86,10 @@ public:
 	bool canExchange() const;
 	/**Check if player must exchange thier cards (player must exchange cards if they have more than 5)*/
 	bool mustExchange() const;
+	/**Check if player has lost (player has no more countries)*/
+	inline bool hasLost() const { return getNumberOfCountries() == 0; }
+	/**Display attack options (countries that can attack other countries). Return true if an option was found.*/
+	bool displayAttackable() const;
 
 };
 
