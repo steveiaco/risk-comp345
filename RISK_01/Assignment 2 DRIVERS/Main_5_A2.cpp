@@ -37,88 +37,71 @@ int main() {
 	//main loop used for attack phase
 	while (attacking) {
 
-		cout << thisPlayer->getName() << ": would you like to attack? (y/n) ";
-		char input;
-		cin >> input;
-
-
+		cout << thisPlayer->getName() << ", would you like to attack? (y/n) ";
+		string input;
+		std::getline(std::cin, input); std::cout << std::endl;
 		//ask if player would like to continue attacking
-		if (input == 'Y' || input == 'y')
-			attacking = true; //do nothing
-		else if (input == 'N' || input == 'n') {
-			attacking = false;
-			continue;
-		}
+		if (input == "N" || input == "n")
+			break;
 
 		//if player is attacking, asks player for which country he would like to attack from
-		cout << "You own these countries\n";
+		cout << thisPlayer->getName() << " owns: \n";
 		thisPlayer->printCountriesOwned();
-
-		if (!thisPlayer->printCountriesThatCanAttack()) {
-			cout << "The current player has no countries they can use to attack.";
+		cout << std::endl;
+		if (!thisPlayer->displayAttackable())
 			break;
-		}
-			
-		Country* attackingCountry = NULL;
 
 		//get a valid attacking country and store it in attackingCountry
+		Country* attackingCountry = NULL;
+
 		do {
-			string inp = string();
-			cout << "\nPlease select a country to attack from (cancel to cancel): ";
-			cin >> inp;
+			string inp;
+			cout << thisPlayer->getName() << ": please select a country to attack from (cancel to cancel): ";
+			std::getline(std::cin, inp); std::cout << std::endl;
+			if (inp == "cancel")
+				break;
 
 			try {
-				if (inp == "cancel")
-					continue;
-				else {
-					attackingCountry = thisMap->getCountry(inp);
+				attackingCountry = thisMap->getCountry(inp);
+				//check if player owns the attacking country
+				if (!thisPlayer->ownsCountry(attackingCountry)) {
+					attackingCountry = NULL;
+					throw std::invalid_argument("You do not own this country.");
+				}
 
-					//check if player owns the attacking country
-					if (!thisPlayer->ownsCountry(attackingCountry)) {
-						attackingCountry = NULL;
-						throw std::invalid_argument("You do not own this country.");
-					}
+				//if country has less than two troops then it cannot attack,  ask again
+				if (attackingCountry->getTroops() < 2) {
+					attackingCountry = NULL;
+					throw std::invalid_argument("This country does not have enough troops to attack.");
+				}
 
-					//if country has less than two troops then it cannot attack,  ask again
-					if (attackingCountry->getTroops() < 2) {
-						attackingCountry = NULL;
-						throw std::invalid_argument("This country does not have enough troops to attack.");
-					}
+				bool listValid = attackingCountry->canAttack();
 
-					bool listValid = thisPlayer->printAttackableNeighbors(attackingCountry);
-
-					//if the country has no attackable neighbors, then continue and ask user to input another country to attack from
-					if (!listValid) {
-						attackingCountry = NULL;
-						throw std::invalid_argument("This country has no attackable neighbors.");
-					}
-
-					
-
+				//if the country has no attackable neighbors, then continue and ask user to input another country to attack from
+				if (!listValid) {
+					attackingCountry = NULL;
+					throw std::invalid_argument("This country has no attackable neighbors.");
 				}
 			}
 			catch (std::invalid_argument e) {
 				cout << e.what();
 			}
-
-
-
-
 		} while (attackingCountry == NULL);
 
-
+		if (attackingCountry == NULL)
+			continue;
 
 		Country* defendingCountry = NULL;
 
 		//get a valid attacking country and store it in defendingCountry
 		do {
 			string inp = string();
-			cout << "\nPlease select a country to attack (cancel to cancel): ";
-			cin >> inp;
+			cout << thisPlayer->getName() << ": please select a country to attack (cancel to cancel): ";
+			std::getline(std::cin, inp); std::cout << std::endl;
 
 			try {
 				if (inp == "cancel")
-					continue;
+					break;
 				else {
 					defendingCountry = thisMap->getCountry(inp);
 
@@ -141,19 +124,25 @@ int main() {
 			}
 		} while (defendingCountry == NULL);
 
+		if (defendingCountry == NULL)
+			continue;
 
 		//query attacker for number of dice
+		string attackerRollString;
 		int attackerRoll;
 		do {
 			cout << thisPlayer->getName() << ": how many dice would you like to use to attack? [1-" << ((attackingCountry->getTroops() - 1 > 3) ? 3 : (attackingCountry->getTroops() - 1)) << "] ";
-			cin >> attackerRoll;
+			std::getline(std::cin, attackerRollString); std::cout << std::endl;
+			attackerRoll = std::stoi(attackerRollString);
 		} while (attackerRoll <= 0 || attackerRoll >= attackingCountry->getTroops() || attackerRoll > 3);
 
 		//query defender for number of dice
+		string defenderRollString;
 		int defenderRoll;
 		do {
 			cout << defendingCountry->getOccupant()->getName() << ": how many dice would you like to use to defend? [1-" << ((defendingCountry->getTroops() > 2) ? 2 : (defendingCountry->getTroops())) << "] ";
-			cin >> defenderRoll;
+			std::getline(std::cin, defenderRollString); std::cout << std::endl;
+			defenderRoll = std::stoi(defenderRollString);
 		} while (defenderRoll <= 0 || defenderRoll > defendingCountry->getTroops() || defenderRoll > 2);
 
 		//if we get here, then we have successfully selected an attacker and attackee, move on to calling the attack function.
@@ -167,10 +156,12 @@ int main() {
 
 		if (attackSuccessful) {
 			int numTroopsToMove;
+			string numTroopsToMoveString;
 			cout << thisPlayer->getName() << " has successfully invaded " << defendingCountry->getName() << std::endl;
 			do {
-				cout << thisPlayer->getName() << ": 1 troop automatically moved into " << defendingCountry->getName() << ", how many additional troops would you like to move into " << defendingCountry->getName() << "? [0-" << attackingCountry->getTroops() - 1 << "] ";
-				cin >> numTroopsToMove;
+				cout << thisPlayer->getName() << ": " << attackingCountry << " troop(s) automatically moved into " << defendingCountry->getName() << ", how many additional troops would you like to move into " << defendingCountry->getName() << "? [0-" << attackingCountry->getTroops() - 1 << "] ";
+				std::getline(std::cin, numTroopsToMoveString); std::cout << std::endl;
+				numTroopsToMove = std::stoi(numTroopsToMoveString);
 			} while (numTroopsToMove >= attackingCountry->getTroops() || numTroopsToMove < 0);
 
 			defendingCountry->addTroops(numTroopsToMove);
