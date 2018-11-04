@@ -53,6 +53,7 @@ int main() {
 
 		//get a valid attacking country and store it in attackingCountry
 		Country* attackingCountry = NULL;
+
 		do {
 			string inp;
 			cout << "\nPlease select a country to attack from (cancel to cancel): ";
@@ -87,6 +88,9 @@ int main() {
 			}
 		} while (attackingCountry == NULL);
 
+		if (attackingCountry == NULL)
+			continue;
+
 		Country* defendingCountry = NULL;
 
 		//get a valid attacking country and store it in defendingCountry
@@ -120,6 +124,8 @@ int main() {
 			}
 		} while (defendingCountry == NULL);
 
+		if (defendingCountry == NULL)
+			continue;
 
 		//query attacker for number of dice
 		string attackerRollString;
@@ -153,7 +159,7 @@ int main() {
 			string numTroopsToMoveString;
 			cout << thisPlayer->getName() << " has successfully invaded " << defendingCountry->getName() << std::endl;
 			do {
-				cout << thisPlayer->getName() << ": 1 troop automatically moved into " << defendingCountry->getName() << ", how many additional troops would you like to move into " << defendingCountry->getName() << "? [0-" << attackingCountry->getTroops() - 1 << "] ";
+				cout << thisPlayer->getName() << ": " << attackingCountry << " troop(s) automatically moved into " << defendingCountry->getName() << ", how many additional troops would you like to move into " << defendingCountry->getName() << "? [0-" << attackingCountry->getTroops() - 1 << "] ";
 				std::getline(std::cin, numTroopsToMoveString); std::cout << std::endl;
 				numTroopsToMove = std::stoi(numTroopsToMoveString);
 			} while (numTroopsToMove >= attackingCountry->getTroops() || numTroopsToMove < 0);
