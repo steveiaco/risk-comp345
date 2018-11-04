@@ -95,8 +95,9 @@ bool Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice,
 			if (attackTo->addTroops(-1) == 0) {
 				//meaning the defender has lost their country
 				attackTo->changeOccupant(attacker);
-				attackFrom->addTroops(-1);
-				attackTo->addTroops(1);
+
+				attackFrom->addTroops(-numAttackerDice);
+				attackTo->addTroops(numAttackerDice);
 				return 1;
 			}
 			//else move on
