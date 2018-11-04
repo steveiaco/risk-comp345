@@ -11,7 +11,7 @@ Country::Country(std::string name, Continent* continent) {
 //Destructor
 /**Country destructor*/
 Country::~Country() {
-	std::cout<<"Object Country is being deleted"<<std::endl;
+	std::cout<<"Object Country has been deleted."<<std::endl;
 }
 
 //Mutators
@@ -51,7 +51,7 @@ void Country::display(std::string lspace) const {
 
 	//Display country's neighbors
 	std::cout << lspace + "    " << "Neighbors: ";
-	for (Country* neighbor : neighborList) std::cout << neighbor->getName() << ", ";
+	for (Country* neighbor : neighborList) std::cout << neighbor->getName() << " (" << ((neighbor->occupant == NULL) ? "NA" : neighbor->occupant->getName()) << "), ";
 	std::cout << std::endl;
 }
 /**Get the countries reachable from this country. Does not check if neighboring countries are owned by the same player. Just checks for neighbors. Good for checking if maps are complete during validation.*/
@@ -93,7 +93,7 @@ bool Country::canAttack() const {
 /**Display attackable neighbors (neighbors owned by another player).**/
 void Country::displayAttackableNeighbors(std::string lspace) const {
 	if (canAttack()) {
-		std::cout << lspace << "From " << name << ", " << occupant->getName() << " may attack:  " << std::endl;
+		std::cout << lspace << "From " << name << " (" << troopCount << "), " << occupant->getName() << " may attack:  " << std::endl;
 		for (Country* neighbor : neighborList)
 			if (neighbor->occupant != occupant)
 				neighbor->display(lspace + "  ");

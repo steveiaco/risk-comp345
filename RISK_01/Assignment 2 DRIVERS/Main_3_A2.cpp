@@ -6,6 +6,8 @@
 
 //Load the game map and players up. Start a game.
 int main() {
+	//A note to the evaluator
+	std::cout << "**Note that Main 2 and 3 both do the same thing (they create a game object, run the game setup, and demonstrate the game loop).\nDuring our evaluation, we intend on loading a simple map so that we can have tha game end within one turn (easy to test). We will also use a shortcut added to the setup phase whereby you can skip the rest of the army placing part by entering \"skip\".**\n**We suggest you do the same.**\n\n";
 
 	std::cout << "===================================\n";
 	std::cout << "             RISK GAME             \n";
@@ -58,7 +60,12 @@ int main() {
 	Deck* deck = new Deck(map);
 
 	//Create game
-	Game game = Game(players, map, deck);
+	Game* game = new Game(players, map, deck);
 	//Start up game
-	game.start();
+	game->start();
+	//Delete everything
+	delete game;
+	game = NULL;
+	map = NULL;
+	deck = NULL;
 }

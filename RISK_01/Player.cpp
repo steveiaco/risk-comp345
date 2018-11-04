@@ -67,7 +67,7 @@ bool Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice,
 
 	//roll the dice for the attacker
 	std::vector<int> attackerRolled = this->getRoll(numAttackerDice);
-	std::cout << std::endl << "Attacker rolled: ";
+	std::cout << "Attacker rolled: ";
 
 	for (int i : attackerRolled)
 		std::cout << "[" << i << "]";
@@ -94,7 +94,11 @@ bool Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice,
 			if (attackTo->addTroops(-1) == 0) {
 				//meaning the defender has lost their country
 				attackTo->changeOccupant(attacker);
-
+				//Check if defender has lost. Transfer cards in hand.
+				if (defender->hasLost()) {
+					std::cout << defender->getName() << " was eliminated by " << name << ". Their cards now belong to " << name << ".\n";
+					defender->hand->giveHandTo(hand);
+				}
 				attackFrom->addTroops(-numAttackerDice);
 				attackTo->addTroops(numAttackerDice);
 				return 1;

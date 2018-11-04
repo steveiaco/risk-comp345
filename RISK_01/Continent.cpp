@@ -82,6 +82,7 @@ bool Continent::validate() const {
 	//Map graph is bidirectional. If all countries within continent can be reached from one country within continent (without leaving continent), then all countries can reach eachother (without leaving continent).
 	Country* rootCountry = *countryList.begin();
 	std::unordered_set<Country*> connectedCountries = std::unordered_set<Country*>();
+	connectedCountries.insert(rootCountry);
 	if (countryList != rootCountry->getReachableWithinContinent(connectedCountries)) 
 		return false;
 

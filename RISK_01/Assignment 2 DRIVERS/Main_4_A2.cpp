@@ -1,4 +1,5 @@
 #include "Map.h"
+#include "Player.h"
 #include <iostream>
 #include <string>
 
@@ -16,7 +17,6 @@ int main() {
 
 	//map setup
 	Map* thisMap = new Map();
-	thisMap->getValidMap();
 
 	//give countries to A
 	thisMap->getCountry("a")->changeOccupant(thisPlayer);
@@ -34,69 +34,93 @@ int main() {
 	thisMap->getCountry("c")->addTroops(1);
 	thisMap->getCountry("e")->addTroops(4);
 	thisMap->getCountry("f")->addTroops(6);
+	thisMap->getCountry("d")->addTroops(6);
 
+	//Display map
+	thisMap->display();
+
+	//Give player 6 cards
+	Deck* deck = new Deck(thisMap);
+	for (int i = 0; i < 6; i++)
+		thisPlayer->addCard(deck->draw());
 
 	int troopsAvailable = 0;
 
 	//get the number of troops available from the countries the player owns and the contienent values
 	troopsAvailable += thisPlayer->calculateTroopsAwarded();
 
+	//Show player their cards
+	thisPlayer->displayHand();
+
 	//check whether the player must exchange cards (has more than 6 cards)
 	while (thisPlayer->mustExchange()) {
-		cout << "You have " << thisPlayer->getNumCards() << ", a number which is greater than 5, therefore here is an automatic exchange.\n";
+		std::cout << "You have " << thisPlayer->getNumCards() << ", cards. You can hold no more than 5 at a time. Here is an automatic exchange.\n";
 		troopsAvailable += thisPlayer->exchange();
 	}
 
 	//now we will check whether the player can exchange, if they can then we will ask if they want to exchange
 	while (thisPlayer->canExchange()) {
-		char input;
-		cout << "You currently have " << thisPlayer->getNumCards() << " cards and can exchange, would you like to do so? (Y/N) ";
-		cin >> input;
-		if (input == 'Y' || input == 'y')
+		std::string input;
+		std::cout << "You currently have " << thisPlayer->getNumCards() << " cards and can exchange, would you like to do so? (Y/N) ";
+		std::getline(std::cin, input); std::cout << std::endl;
+		if (input == "Y" || input == "y")
 			troopsAvailable += thisPlayer->exchange();
-		else if (input == 'N' || input == 'n')
+		else if (input == "N" || input == "n")
 			break;
 	}
 
-	cout << "You have a total of " << troopsAvailable << " troops available to place.\n";
+	std::cout << "You have a total of " << troopsAvailable << " troops available to place.\n";
 
 	//now we can ask the player to start placing their troops
 
-	cout << "You can now start placing troops on the countries you own.\nHere is a list of countries in your possession:\n";
+	std::cout << "You can now start placing troops on the countries you own.\nHere is a list of countries in your possession:\n";
 
 	thisPlayer->printCountriesOwned();
 
 	while (troopsAvailable != 0) {
-		string countrySelectedString;
-		cout << "You have " << troopsAvailable << " troops lefts to place, which country would you like to add troops to? ";
-		cin >> countrySelectedString;
+		std::string countrySelectedString;
+		std::cout << "You have " << troopsAvailable << " troops lefts to place, which country would you like to add troops to? ";
+		std::getline(std::cin, countrySelectedString); std::cout << std::endl;
 
 		Country* countrySelected;
 		try {
 			countrySelected = thisMap->getCountry(countrySelectedString);
 		}
 		catch (std::invalid_argument e) {
-			cout << "Country does not exist, try again.\n";
+			std::cout << "Country does not exist, try again.\n";
+			continue;
+		} if (!thisPlayer->ownsCountry(countrySelected)) {
+			std::cout << "You do not own this country, try again.\n";
 			continue;
 		}
 
-		if (!thisPlayer->ownsCountry(countrySelected)) {
-			cout << "You do not own this country, try again.\n";
-			continue;
-		}
-
-
+		std::string numTroopsToPlaceString;
 		int numTroopsToPlace;
-
 		do {
-			cout << "You have selected " << countrySelected->getName() << ". How many troops would you like to place on this country? (Max: " << troopsAvailable << ") : ";
-			cin >> numTroopsToPlace;
+			std::cout << "You have selected " << countrySelected->getName() << ". How many troops would you like to place on this country? (Max: " << troopsAvailable << ") : ";
+			std::getline(std::cin, numTroopsToPlaceString); std::cout << std::endl;
+			try { numTroopsToPlace = std::stoi(numTroopsToPlaceString); }
+			catch (std::invalid_argument& e) {
+				std::cout << "Invalid input. Input must be a valid integer value.\n";
+				continue;
+			}
 		} while (numTroopsToPlace > troopsAvailable || numTroopsToPlace < 0);
-
 		thisPlayer->reinforce(countrySelected, numTroopsToPlace);
-		cout << "You have placed " << numTroopsToPlace << " troops on " << countrySelected->getName() << " giving it " << countrySelected->getTroops() << " total members.\n";
-
+		std::cout << "You have placed " << numTroopsToPlace << " troops on " << countrySelected->getName() << " giving it " << countrySelected->getTroops() << " total members.\n";
 		troopsAvailable -= numTroopsToPlace;
-	
 	}
+
+	//Display map
+	std::cout << std::endl;
+	thisMap->display();
+
+	delete thisMap;
+	delete thisPlayer;
+	delete playerB;
+	delete deck;
+
+	thisMap = NULL;
+	thisPlayer = NULL;
+	playerB = NULL;
+	deck = NULL;
 }

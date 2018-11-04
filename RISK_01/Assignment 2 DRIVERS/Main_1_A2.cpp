@@ -57,8 +57,23 @@ int main() {
 	//Create deck
 	Deck* deck = new Deck(map);
 
-	//Create game
-	Game game = Game(players, map, deck);
-	//Start up game
-	game.start();
+	//Display results
+	map->display();
+	std::cout << std::endl;
+	deck->display();
+	std::cout << std::endl;
+	for (Player* player : players) {
+		std::cout << player->getName() << ": " << std::endl;
+		player->displayDice();
+		player->displayHand();
+		std::cout << std::endl;
+	}
+	//Delete everything
+	for (Player* player : players) {
+		delete player;
+	}
+	delete map;
+	delete deck;
+	map = NULL;
+	deck = NULL;
 }

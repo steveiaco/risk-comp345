@@ -49,7 +49,7 @@ public:
 
 	//MUTATORS
 	/**Add a given card to the player's hand*/
-	inline void addCard(Card* card);
+	void addCard(Card* card);
 	/**Add a country to the list of countries owned by player*/
 	inline bool addCountry(Country* country) { return countriesOwned.insert(country).second; }
 	/**Add a continent to the list of continents owned by player*/

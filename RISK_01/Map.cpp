@@ -76,10 +76,12 @@ bool Map::validate() const{
 	//Check if all countries are reachable from one country. If so, all countries are connected. Do same for continents. Return false otherwise.
 	Country* rootCountry = *countryList.begin();
 	std::unordered_set<Country*> connectedCountries = std::unordered_set<Country*> ();
+	connectedCountries.insert(rootCountry);
 	if (countryList != rootCountry->getReachable(connectedCountries))
 		return false;
 	Continent* rootContinent = *continentList.begin();
 	std::unordered_set<Continent*> connectedContinents = std::unordered_set<Continent*>();
+	connectedContinents.insert(rootContinent);
 	if (continentList != rootContinent->getReachable(connectedContinents))
 		return false;
 
@@ -97,7 +99,7 @@ void Map::populateDeck(Deck* deck) const {
 	int keepCount = 0;
 	//Troop types must be evenly distributed abong cards
 	for (Country* country : countryList)
-		deck->addCard(new Card(country, static_cast<TroopType>(keepCount%3)));
+		deck->addCard(new Card(country, static_cast<TroopType>(keepCount++%3)));
 }
 /**Assign equal number of countries to players randomly*/
 void Map::assignCountries(std::vector<Player*>& players) {
