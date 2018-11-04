@@ -7,7 +7,9 @@ Map::Map(std::string name) {
 }
 
 /**Default constructor. Creates an empty map with name "Default".*/
-Map::Map() : Map("Default") { }
+Map::Map() : Map("Default") { 
+	getValidMap();
+}
 
 //Destructor
 /**Map destructor (deletes all countries and continents)*/

@@ -53,10 +53,10 @@ bool Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice,
 
 	//check whether dice input is valid
 	if (numAttackerDice < 1 || numAttackerDice > 3)
-		throw std::invalid_argument("Wrong number of attacker dice thrown.");
+		throw std::invalid_argument("Invalid number of attacker dice thrown.");
 
 	if (numDefenderDice < 1 || numDefenderDice > 2)
-		throw std::invalid_argument("Wrong number of defender dice thrown.");
+		throw std::invalid_argument("Invalid number of defender dice thrown.");
 
 	//check whether player has enough troops for the specific roll
 	if (!(attackFrom->getTroops() + 1 >= numAttackerDice))
@@ -64,7 +64,6 @@ bool Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice,
 
 	if (!(attackTo->getTroops() >= numDefenderDice))
 		throw std::invalid_argument("Defender does not have enough troops for that number of dice.");
-
 
 	//roll the dice for the attacker
 	std::vector<int> attackerRolled = this->getRoll(numAttackerDice);

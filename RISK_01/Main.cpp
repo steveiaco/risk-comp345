@@ -53,8 +53,7 @@ int main() {
 	Deck* deck = new Deck(map);
 
 	//Create game
-	Game game = Game(players, map, deck);
+	Game game = Game(players, new Map(), deck);
 	//Start up game
 	game.start();
-
 }
