@@ -64,6 +64,11 @@ void Game::runGameLoop() {
 				//Let player do their turn
 				reinforce(player);
 				attack(player);
+
+				//if there's been a winner, skip fortify phase
+				if (map->getWinner())
+					break;
+
 				fortify(player);
 			}
 		//Increment turn counter
@@ -188,6 +193,10 @@ void Game::attack(Player* player) {
 	bool attacking = true;
 	bool firstSuccess = true; //We want to give player a card for first victory
 	while (attacking) {
+
+		//if there is a winner, then we skip the attack phase completely
+		if (map->getWinner())
+			break;
 
 		std::cout << player->getName() << ", would you like to attack? (y/n) ";
 		std::string input;
