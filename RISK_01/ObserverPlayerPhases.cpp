@@ -1,6 +1,13 @@
 #include "ObserverPlayerPhases.h"
 #include <iostream>
 
+ObserverPlayerPhases::ObserverPlayerPhases(){
+
+}
+
+ObserverPlayerPhases::~ObserverPlayerPhases(){
+    
+}
 
 //call this method by indicating which phase the player's turn is at (1 - Reinforcement,
 //2 - Attack Phase, 3 - Fortification Phase) and the number attributed to the player
