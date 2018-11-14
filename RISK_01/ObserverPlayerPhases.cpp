@@ -1,12 +1,10 @@
 #include "ObserverPlayerPhases.h"
+#include <iostream>
 
-std::string ObserverPlayerPhases::getWholeMessage(){
-    return header+"\n"+description;
-}
 
 //call this method by indicating which phase the player's turn is at (1 - Reinforcement,
 //2 - Attack Phase, 3 - Fortification Phase) and the number attributed to the player
-void ObserverPlayerPhases::setHeaderDescription(int phaseNumber2, int playerNumber2){
+void ObserverPlayerPhases::update(int phaseNumber2, int playerNumber2){
     phaseNumber = phaseNumber2;
     playerNumber = playerNumber2;
     setPhaseMessage();
@@ -23,4 +21,10 @@ void ObserverPlayerPhases::setPhaseMessage(){
         default: header = "Unknown";
                 description = "Unknown";
     }
+
+    std::cout<<getWholeMessage()<<std::endl;
+}
+
+std::string ObserverPlayerPhases::getWholeMessage(){
+    return header+"\n"+description;
 }

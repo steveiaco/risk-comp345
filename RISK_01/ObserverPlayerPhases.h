@@ -10,7 +10,7 @@ class ObserverPlayerPhases{
     public:
         std::string getWholeMessage();//includes header, description
         
-        void setHeaderDescription(int phaseNumber2, int playerNumber);//includes the phase number and the player number
+        void update(int phaseNumber2, int playerNumber);//includes the phase number and the player number
         
 
 };
