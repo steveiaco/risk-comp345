@@ -8,7 +8,7 @@ class Game;
 #include <vector>
 #include <random>
 #include <algorithm>
-#include "ObserverPlayerPhases.h";
+#include "ObserverPlayerPhases.h"
 
 class Game {
     private:
@@ -21,7 +21,7 @@ class Game {
 		/**Deck of cards used in game*/
 		Deck* deck;
 		/**The list of observers of the class**/
-		std::vector<ObserverPlayerPhases*> observers; 
+		std::vector<ObserverPlayerPhases*> observers {}; 
 
 		//UTILITIES
 		/**Randomizes order of play (shuffles list of players)*/
@@ -48,7 +48,7 @@ class Game {
 		/**Controller destructor*/
         ~Game();
 
-		/**Runs main game loop until game is over*/
+		//For testing purposes only for part 2 of the assignment3
 		void runGameLoop();
 
 		//UTILITIES

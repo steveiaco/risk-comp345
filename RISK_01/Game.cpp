@@ -128,6 +128,11 @@ void Game::assignArmies() {
 }
 /**Allows player passed as argument to reinforce*/
 void Game::reinforce(Player* player) {
+
+	//Notify observers
+	if(observers.size()>=1)
+		notify(1, player->getName());
+
 	int troopsAvailable = 0;
 
 	//get the number of troops available from the countries the player owns and the contienent values
@@ -189,6 +194,11 @@ void Game::reinforce(Player* player) {
 }
 /**Allows player passed as argument to attack*/
 void Game::attack(Player* player) {
+
+	//Notify observers of a change of phase
+	if(observers.size()>=1)
+		notify(2, player->getName());
+
 	//main loop used for attack phase
 	bool attacking = true;
 	bool firstSuccess = true; //We want to give player a card for first victory
@@ -368,6 +378,11 @@ void Game::attack(Player* player) {
 }
 /**Allows player passed as argument to fortify*/
 void Game::fortify(Player* player) {
+
+	//Notify observers of a change of phase
+	if(observers.size()>=1)
+		notify(3, player->getName());
+
 	while (true) {
 
 		//Ask if player would like to fortify
