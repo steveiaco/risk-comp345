@@ -471,3 +471,17 @@ void Game::fortify(Player* player) {
 		break;
 	}
 }
+
+void Game::notify(int phase, std::string name){
+	for(int i=0;i<observers.size();i++){
+		observers[i]->update(phase, name);
+	}
+}
+
+void Game::attach(ObserverPlayerPhases* a){
+	observers.push_back(a);
+}
+
+void Game::detach(ObserverPlayerPhases* a){
+	observers.erase(std::remove(observers.begin(), observers.end(), a), observers.end());
+}
