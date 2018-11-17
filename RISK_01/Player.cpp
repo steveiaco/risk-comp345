@@ -14,7 +14,6 @@ Player::Player(std::string name) {
 Player::~Player() {
 	delete dice;
 	delete hand;
-	std::cout << "Object Player has been deleted" << std::endl;
 }
 
 //Mutator

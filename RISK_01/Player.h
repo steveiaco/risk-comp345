@@ -64,8 +64,8 @@ public:
 	void displayHand() const;
 	/**Display player's dice and their statistsics*/
 	void displayDice() const;
-	/*Return an iterator of countries owned*/
-	std::unordered_set<Country*>* Player::getCountriesOwned();
+	/*Return a set of countries owned*/
+	std::unordered_set<Country*>* getCountriesOwned();
 
 	/**Allows player to add troops to country if country is owned by player. Thorws an exception if country is not owned*/
 	void reinforce(Country* toReinforce, int numTroops);

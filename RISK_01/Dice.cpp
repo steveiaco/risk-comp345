@@ -1,16 +1,17 @@
 ﻿#include "Dice.h"
 #include <algorithm>
-//Constructors
+//CONSTRUCTORS
 /**Create a standard set of dice**/
 Dice::Dice() {
 	srand(time(NULL));
 }
 
+//DESTRUCTORS
+/**Dice destructor*/
 Dice::~Dice(){
-	std::cout<<"Object Dice has been deleted"<<std::endl;
 }
 
-//Utility
+//UTILTIY
 /**Return a sorted vector of nbRolls random numbers between 1 and 6. Update the stats for this set of dice. Check that numRolls is not less than 1 or greater than 3.**/
 std::vector<int> Dice::roll(const int nbRolls) {
 	//Check for invalid number of rolls

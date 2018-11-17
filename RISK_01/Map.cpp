@@ -7,9 +7,7 @@ Map::Map(std::string name) {
 }
 
 /**Default constructor. Creates an empty map with name "Default".*/
-Map::Map() : Map("Default") { 
-	getValidMap();
-}
+Map::Map() : Map("Default") { }
 
 //Destructor
 /**Map destructor (deletes all countries and continents)*/
@@ -20,7 +18,6 @@ Map::~Map() {
 	//Delete all continents
 	for (Continent* continent : continentList)
 		delete continent;
-	std::cout<<"Object Map has been deleted"<<std::endl;
 }
 
 //Mutators

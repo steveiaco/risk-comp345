@@ -1,7 +1,6 @@
 #include "MapLoader.h"
 
 MapLoader::~MapLoader(){
-	std::cout<<"Object MapLoader has been deleted"<<std::endl;
 }
 
 /**

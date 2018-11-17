@@ -58,8 +58,6 @@ public:
 	bool validate() const;
 	/**Populate a deck of cards using countries from map.**/
 	void populateDeck(Deck* deck) const;
-	/**Creates a valid map for testing*/
-	void getValidMap();
 	/**Assign equal number of countries to players randomly*/
 	void assignCountries(std::vector<Player*>& players);
 	/**Return winner if one person owns all countries. Return null otherwise.*/

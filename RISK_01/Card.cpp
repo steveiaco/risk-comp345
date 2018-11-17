@@ -10,7 +10,6 @@ Card::Card(Country* country, TroopType troopType) {
 //Destructor
 /**Card destructor*/
 Card::~Card() {
-	std::cout << "Object Card has been deleted" << std::endl;
 }
 
 //Utility

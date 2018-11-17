@@ -4,7 +4,7 @@ int Hand::timesExchanged = 0;
 
 /**Default constructor. Creates an empty hand.**/
 Hand::Hand() {
-
+	hand = std::unordered_set<Card*>();
 }
 
 //Destructor
@@ -13,7 +13,6 @@ Hand::~Hand(){
 	//Delete cards in hand
 	for (Card* card : hand)
 		delete card;
-	std::cout<<"Object Hand has been deleted"<<std::endl;
 }
 
 //Mutators

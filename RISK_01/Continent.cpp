@@ -11,7 +11,6 @@ Continent::Continent(std::string name, int value) {
 //Destructor
 /**Continent destructor*/
 Continent::~Continent() {
-	std::cout<<"Object continent has been deleted"<<std::endl;
 }
 
 //Mutators

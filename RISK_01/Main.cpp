@@ -8,7 +8,7 @@
 int main() {
 
 	std::cout << "===================================\n";
-	std::cout << "             RISK GAME             \n";
+	std::cout << "RISK GAME             \n";
 	std::cout << "===================================\n";
 
 	std::cout << std::endl;
@@ -59,6 +59,8 @@ int main() {
 
 	//Create game
 	Game game = Game(players, map, deck);
+	//Attach observer
+	ObserverPlayerPhase gameObserver = ObserverPlayerPhase(&game);
 	//Start up game
 	game.start();
 

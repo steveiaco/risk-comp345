@@ -40,13 +40,13 @@ int main(){
 	Deck* deck = new Deck(thisMap);
 
     //create observer
-    ObserverPlayerPhases* a = new ObserverPlayerPhases();
+    ObserverPlayerPhase* a = new ObserverPlayerPhase();
 
 
     Game* someGame = new Game(allPlayers, thisMap, deck);
 
     someGame->attach(a);
-    someGame->runGameLoop();
+    someGame->start();
 
     return 0;
 }

@@ -18,7 +18,6 @@ Deck::~Deck(){
 	//Delete cards in deck
 	for (Card* card : cards)
 		delete card;
-	std::cout<<"Object Deck has been deleted"<<std::endl;
 }
 
 //Mutator

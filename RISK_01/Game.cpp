@@ -10,7 +10,7 @@ Game::Game(std::vector<Player*> listOfPlayers, Map* theControllerMap, Deck* theD
     players = listOfPlayers;
     map = theControllerMap;
 	deck = theDeck;
-	turn = 1;
+	turn = 0;
 }
 
 //DESTRUCTOR
@@ -20,15 +20,15 @@ Game::~Game(){
 	delete deck;
 	for (Player* player : players)
 		delete player;
-	std::cout << "Controller deleted.";
 }
 
 //UTILITIES
 /**Set up game (assign countries, randomize play order)*/
 void Game::start() {
+	currentState = SETUP;
 	//Display a message
 	std::cout << "==================================\n";
-	std::cout << "               SETUP              \n";
+	std::cout << "SETUP              \n";
 	std::cout << "==================================\n";
 	std::cout << "Welcome, " << (*players.begin())->getName(); 
 	//We will print the player names nicely
@@ -39,6 +39,10 @@ void Game::start() {
 	//Assign each country to a player
 	map->assignCountries(players);
 	map->display();
+	//Prompt player to press to continue
+	std::cout << "Hit enter to continue...";
+	std::string temp;
+	std::getline(std::cin, temp);
 	//Prompt players to assign starting armies to countries
 	assignArmies();
 	//Launch game loop
@@ -47,36 +51,33 @@ void Game::start() {
 /**Runs main game loop until game is over*/
 void Game::runGameLoop() {
 	//Run loop until a winner is determined
-	Player* winner = NULL;
-	while (!winner) {
-		//Display turn
-		std::cout << "==================================\n";
-		std::cout << "              TURN " << turn << "              \n";
-		std::cout << "==================================\n\n";
-		//Loop over players
-		for (Player* player : players) 
-			//Player can only play if they are still in the game (they have countries left to play with)
-			if (!player->hasLost()) {
-				//Display player
-				std::cout << "==================================\n";
-				std::cout << "              " << player->getName() << ":              \n";
-				std::cout << "==================================\n\n";
-				//Let player do their turn
-				reinforce(player);
-				attack(player);
-
-				//if there's been a winner, skip fortify phase
-				if (map->getWinner())
-					break;
-
-				fortify(player);
-			}
+	while (!map->getWinner()) {
 		//Increment turn counter
 		turn++;
-		//Check for winner
-		winner = map->getWinner();
+		//Loop over players
+		for (Player* player : players) {
+			//Player can only play if they are still in the game (they have countries left to play with)
+			if (!player->hasLost()) {
+				//Let player do their turn
+				currentPlayer = player;
+				//REINFORCE
+				currentState = REINFORCE;
+				notify();
+				reinforce(player);
+				//ATTACK
+				currentState = ATTACK;
+				notify();
+				attack(player);
+				//FORTIFY
+				currentState = FORTIFY;
+				notify();
+				fortify(player);
+			}
+		}
 	}
-	std::cout << "HOORAH! " << winner->getName() << " has won!\n\n";
+	//GAME OVER
+	currentState = END;
+	notify();
 }
 /**Randomizes order of play (shuffles list of players)*/
 void Game::randomizeOrderOfPlay() {
@@ -100,6 +101,8 @@ void Game::assignArmies() {
 	for (int i = 0; i < startArmies; i++)
 		//Players must take turns. Otherwise, the player placing their armies first is at a disadvantage (the other players already know his/her strategy when their chance to place troops comes)
 		for (Player* player : players) {
+			currentPlayer = player;
+			notify();
 			//Make sure that player has troops left (some of players troops will already have been placed on the countries assigned to them by default, that complicates things)
 			int armiesLeft = startArmies - i - player->getNumberOfCountries();
 			if (0 < armiesLeft) {
@@ -128,11 +131,6 @@ void Game::assignArmies() {
 }
 /**Allows player passed as argument to reinforce*/
 void Game::reinforce(Player* player) {
-
-	//Notify observers
-	if(observers.size()>=1)
-		notify(1, player->getName());
-
 	int troopsAvailable = 0;
 
 	//get the number of troops available from the countries the player owns and the contienent values
@@ -165,7 +163,7 @@ void Game::reinforce(Player* player) {
 
 	while (troopsAvailable != 0) {
 		std::string countrySelectedString;
-		std::cout << "You have " << troopsAvailable << " troops lefts to place, which country would you like to add troops to? ";
+		std::cout << "You have " << troopsAvailable << " troops left to place, which country would you like to add troops to? ";
 		std::getline(std::cin, countrySelectedString); std::cout << std::endl;
 
 		Country* countrySelected;
@@ -194,10 +192,6 @@ void Game::reinforce(Player* player) {
 }
 /**Allows player passed as argument to attack*/
 void Game::attack(Player* player) {
-
-	//Notify observers of a change of phase
-	if(observers.size()>=1)
-		notify(2, player->getName());
 
 	//main loop used for attack phase
 	bool attacking = true;
@@ -379,10 +373,6 @@ void Game::attack(Player* player) {
 /**Allows player passed as argument to fortify*/
 void Game::fortify(Player* player) {
 
-	//Notify observers of a change of phase
-	if(observers.size()>=1)
-		notify(3, player->getName());
-
 	while (true) {
 
 		//Ask if player would like to fortify
@@ -485,18 +475,4 @@ void Game::fortify(Player* player) {
 		std::cout << player->getName() << ": successfully moved " << moveNumTroops << " troop(s) from " << moveFrom->getName() << " to " << moveTo->getName() << ".\n";
 		break;
 	}
-}
-
-void Game::notify(int phase, std::string name){
-	for(int i=0;i<observers.size();i++){
-		observers[i]->update(phase, name);
-	}
-}
-
-void Game::attach(ObserverPlayerPhases* a){
-	observers.push_back(a);
-}
-
-void Game::detach(ObserverPlayerPhases* a){
-	observers.erase(std::remove(observers.begin(), observers.end(), a), observers.end());
 }
