@@ -500,3 +500,13 @@ void Game::attach(ObserverPlayerPhases* a){
 void Game::detach(ObserverPlayerPhases* a){
 	observers.erase(std::remove(observers.begin(), observers.end(), a), observers.end());
 }
+
+Map* Game::getMap()
+{
+	return map;
+}
+
+Deck* Game::getDeck()
+{
+	return deck;
+}

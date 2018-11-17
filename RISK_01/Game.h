@@ -19,7 +19,10 @@ class Game {
 
 		/**The list of observers of the class**/
 		std::vector<ObserverPlayerPhases*> observers {}; 
-
+		/**Map played on*/
+		Map* map;
+		/**Deck of cards used in game*/
+		Deck* deck;
 		//UTILITIES
 		/**Randomizes order of play (shuffles list of players)*/
 		void randomizeOrderOfPlay();
@@ -38,11 +41,7 @@ class Game {
 
     public:
 
-		/*Made Map and Player public in order for PlayerStrategy to have access to them*/
-		/**Map played on*/
-		Map* map;
-		/**Deck of cards used in game*/
-		Deck* deck;
+
 
 		//CONSTRUCTORS
 		/**Constructs a controller from a list of players on a given map*/
@@ -65,6 +64,10 @@ class Game {
 		/**Detaching observers from the class*/
 		void detach(ObserverPlayerPhases* a);
 
+		/*Return current map*/
+		Map* getMap();
+		/*Return current deck*/
+		Deck* getDeck();
 };
 
 #endif

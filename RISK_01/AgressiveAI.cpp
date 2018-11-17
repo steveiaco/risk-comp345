@@ -1,6 +1,6 @@
 #include "ArtificialPlayer.h"
 
-bool AgressiveAI::attack() {
+bool AgressiveAI::promptAttack() {
 
 	//main loop used for attack phase
 	bool attacking = true;
