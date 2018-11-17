@@ -16,10 +16,7 @@ class Game {
         int turn;
 		/**List of players*/
         std::vector<Player*> players;
-		/**Map played on*/
-        Map* map;
-		/**Deck of cards used in game*/
-		Deck* deck;
+
 		/**The list of observers of the class**/
 		std::vector<ObserverPlayerPhases*> observers {}; 
 
@@ -40,6 +37,13 @@ class Game {
 		void notify(int phase, std::string name);
 
     public:
+
+		/*Made Map and Player public in order for PlayerStrategy to have access to them*/
+		/**Map played on*/
+		Map* map;
+		/**Deck of cards used in game*/
+		Deck* deck;
+
 		//CONSTRUCTORS
 		/**Constructs a controller from a list of players on a given map*/
 		Game(std::vector<Player*> players, Map* theControllerMap, Deck* theDeck);
