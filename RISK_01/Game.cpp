@@ -475,4 +475,32 @@ void Game::fortify(Player* player) {
 		std::cout << player->getName() << ": successfully moved " << moveNumTroops << " troop(s) from " << moveFrom->getName() << " to " << moveTo->getName() << ".\n";
 		break;
 	}
+<<<<<<< HEAD
 }
+=======
+}
+
+void Game::notify(int phase, std::string name){
+	for(int i=0;i<observers.size();i++){
+		observers[i]->update(phase, name);
+	}
+}
+
+void Game::attach(ObserverPlayerPhases* a){
+	observers.push_back(a);
+}
+
+void Game::detach(ObserverPlayerPhases* a){
+	observers.erase(std::remove(observers.begin(), observers.end(), a), observers.end());
+}
+
+Map* Game::getMap()
+{
+	return map;
+}
+
+Deck* Game::getDeck()
+{
+	return deck;
+}
+>>>>>>> 1711f791a64474f51a5262d7170f64797f95b62a

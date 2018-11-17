@@ -3,6 +3,7 @@
 
 class Player;
 
+#include "PlayerStrategy.h"
 #include "Country.h"
 #include "Continent.h"
 #include "Hand.h"
@@ -26,6 +27,8 @@ private:
 	Hand* hand;
 	/**Player dice*/
 	Dice* dice;
+	/**Player strategy*/
+	PlayerStrategy* strategy;
 
 public:
 
@@ -46,6 +49,8 @@ public:
 	inline int getNumberOfCountries() const { return countriesOwned.size(); }
 	/**Get number of continents owned by player*/
 	inline int getNumberOfContinents() const { return continentsOwned.size(); }
+	/*Get the player strategy*/
+	PlayerStrategy* getStrategy();
 
 	//MUTATORS
 	/**Add a given card to the player's hand*/
@@ -58,7 +63,8 @@ public:
 	inline void removeCountry(Country* country) { countriesOwned.erase(country); }
 	/**Remove a continent from the list of continents owned by player*/
 	inline void removeContinent(Continent* continent) { continentsOwned.erase(continent); }
-
+	/*Replace the player's strategy*/
+	void Player::replaceStrategy(PlayerStrategy* newStrategy);
 	//UTILITY
 	/**Display player's hand*/
 	void displayHand() const;

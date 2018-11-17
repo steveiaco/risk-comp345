@@ -14,11 +14,17 @@ Player::Player(std::string name) {
 Player::~Player() {
 	delete dice;
 	delete hand;
+<<<<<<< HEAD
+=======
+	delete strategy;
+	std::cout << "Object Player has been deleted" << std::endl;
+>>>>>>> 1711f791a64474f51a5262d7170f64797f95b62a
 }
 
 //Mutator
 /**Add a given card to the player's hand*/
 void Player::addCard(Card* card) { hand->addCard(card); }
+void Player::replaceStrategy(PlayerStrategy* newStrategy) { this->strategy = newStrategy;  }
 
 //Utility
 /**Allows player to add troops to country if country is owned by player. Thorws an exception if country is not owned*/
@@ -182,3 +188,5 @@ std::vector<int> Player::getRoll(int numRolls) { return dice->roll(numRolls); }
 void Player::displayDice() const { dice->display(); }
 /**Get number of cards in player's hand*/
 int Player::getNumCards() const { return hand->getSize(); }
+/**Returns the player's strategy*/
+PlayerStrategy * Player::getStrategy() { return strategy; }
