@@ -166,6 +166,9 @@ bool Player::displayAttackable() const {
 		std::cout << name << " has no options for attack." << std::endl;
 	return hasAttackable;
 }
+std::unordered_set<Country*>* Player::getCountriesOwned() {
+	return &countriesOwned;
+}
 /**Display player's hand*/
 void Player::displayHand() const { hand->display(); }
 /**Exchange cards in hand for troops (exchanges first set of three valid cards)*/
