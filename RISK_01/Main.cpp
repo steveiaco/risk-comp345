@@ -61,4 +61,9 @@ int main() {
 	Game game = Game(players, map, deck);
 	//Start up game
 	game.start();
+
+	for (Player* player : players)
+		delete player;
+	delete deck;
+	delete map;
 }

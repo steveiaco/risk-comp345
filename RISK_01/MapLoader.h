@@ -27,9 +27,9 @@ public:
 			5 - A country in the continent has an invalid x or y coordinate (not an integer value).
 			6 - A country in the continent has an invalid neighbor (no country defined with the same name in the .map file).
 			7 - Two countries defined in the map have the same name.
-			8 - The file describes a map that is not fully connected (ie one in which some countries/continents are unreachable from others).
+			8 - The file describes a map that is not fully connected (ie one in which some countries/continents are unreachable from others and/or one in which the continents do not form fully connected subgraphs).
 		
-		Note: We need not worry about empty maps because those are technically valid. Additionally, we need not worry about countries belonging to multiple continents because a countries continent can only ever e defined once. Moreover, we need not check if a country's defined neighbors also define said country as their neighbor. The neighbor relationship will alwasy be made symmetrical (this is ensured by the addNeighbor method) regardless of the country definitions.
+		Notes: We need not worry about empty maps because those are technically valid. Additionally, we need not worry about countries belonging to multiple continents because a countries continent can only ever e defined once. Moreover, we need not check if a country's defined neighbors also define said country as their neighbor. The neighbor relationship will alwasy be made symmetrical (this is ensured by the addNeighbor method) regardless of the country definitions.
 	**/
 	static Map* readMapFile(std::string);
 	~MapLoader();

@@ -1,6 +1,11 @@
+#ifndef OBSERVER_PLAYER_PHASES
+#define OBSERVER_PLAYER_PHASES
+
 #include <string>
+
 class ObserverPlayerPhases{
     private:
+		/***/
         std::string description; //description of phase
         int phaseNumber; //number of the phase
         std::string playerName;
@@ -16,3 +21,5 @@ class ObserverPlayerPhases{
         
 
 };
+
+#endif

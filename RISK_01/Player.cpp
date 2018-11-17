@@ -101,7 +101,7 @@ bool Player::attack(Country* attackFrom, Country* attackTo, int numAttackerDice,
 				}
 				attackFrom->addTroops(-numAttackerDice);
 				attackTo->addTroops(numAttackerDice);
-				return 1;
+				return true;
 			}
 			//else move on
 	return false;

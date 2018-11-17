@@ -121,34 +121,3 @@ Player* Map::getWinner() const {
 	//If all countreis are owned by the same person, return the person who owns the first one
 	return potentialWinner;
 }
-/**Constructs a default diamond-shaped map. Good for testing purposes.**/
-void Map::getValidMap() {
-  //Create Continents
-	Continent* contA = new Continent("Left", 1);
-	Continent* contB = new Continent("Right", 4);
-	//Create Countries
-	Country* a = new Country("a", contA);
-	Country* b = new Country("b", contB);
-	Country* c = new Country("c", contB);
-	Country* d = new Country("d", contB);
-	Country* e = new Country("e", contB);
-	Country* f = new Country("f", contA);
-	//Link Countries/Continents
-	a->addNeighbor(f);
-	a->addNeighbor(c);
-	a->addNeighbor(e);
-	f->addNeighbor(b);
-	c->addNeighbor(b);
-	d->addNeighbor(f);
-	d->addNeighbor(b);
-	e->addNeighbor(b);
-	//Add Continents/Countries to Map
-	addCountry(a);
-	addCountry(b);
-	addCountry(c);
-	addCountry(d);
-	addCountry(e);
-	addCountry(f);
-	addContinent(contA);
-	addContinent(contB);
- }
