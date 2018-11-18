@@ -46,7 +46,7 @@ void ObserverStats::displayStats() {
 		int countriesOwned = player->getNumberOfCountries();
 		std::string barTitle = player->getName() + "(" + std::to_string(countriesOwned) + ")";
 		//Calculate percentage of countries owned
-		float percentCountriesOwned = countriesOwned * 1. / numberOfCountries;
+		double percentCountriesOwned = countriesOwned * 1. / numberOfCountries;
 		std::cout << barTitle + std::string(namingSpace- barTitle.size(), ' ');
 		std::cout << "|" << std::string((int)(percentCountriesOwned * barWidth), '*') << std::string(barWidth - (int)(percentCountriesOwned * barWidth), ' ') << "| " << countriesOwned * 100. / numberOfCountries << "%\n";
 	}
@@ -57,7 +57,7 @@ void ObserverStats::displayStats() {
 		int continentsOwned = player->getNumberOfContinents();
 		std::string barTitle = player->getName() + "(" + std::to_string(continentsOwned) + ")";
 		//Calculate percentage of continents owned
-		float percentContinentsOwned = continentsOwned * 1. / numberOfContinents;
+		double percentContinentsOwned = continentsOwned * 1. / numberOfContinents;
 		std::cout << barTitle + std::string(namingSpace - barTitle.size(), ' ');
 		std::cout << "|" << std::string((int)(percentContinentsOwned * barWidth), '*') << std::string(barWidth - (int)(percentContinentsOwned * barWidth), ' ') << "| " << continentsOwned * 100. / numberOfContinents << "%\n";
 	}

@@ -17,12 +17,15 @@ Country* AggressiveAI::getStrongest(Player* player) {
 	for (Country* country : countriesOwned)
 		if (country->getTroops() > strongest->getTroops())
 			strongest = country;
-	//If the strongest country has 1 troop, all countries are the strongest (a country can have no less than one troop). In this case, we can make the ai a little smarter by having it choose a country that can attack
+	//If the strongest country has 1 troop, all countries are the strongest (a country can have no less than one troop). In this case, we can make the ai a little smarter by having it choose a country that has attackable neighbors
 	if (strongest->getTroops() != 1)
 		return strongest;
 	for (Country* country : countriesOwned)
-		if (country->canAttack())
-			return country;
+		for (Country* neighbor : country->getNeighbors())
+			if (neighbor->getOccupant() != country->getOccupant())
+				return country;
+	//This should never happen
+	return NULL;
 }
 /**Prompt for where to place setup troop.*/
 Country* AggressiveAI::askSetup(Player* player) {

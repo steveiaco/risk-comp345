@@ -4,7 +4,6 @@
 class PlayerStrategy;
 
 #include "Player.h"
-#include "Game.h"
 
 class PlayerStrategy {
 public:

@@ -1,6 +1,8 @@
 #ifndef OBSERVER_STATS
 #define OBSERVER_STATS
 
+class ObserverStats;
+
 #include "Observer.h"
 #include "Game.h"
 #include <string>

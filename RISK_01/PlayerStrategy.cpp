@@ -6,8 +6,7 @@ PlayerStrategy::PlayerStrategy() { }
 PlayerStrategy::~PlayerStrategy() { }
 
 /**Prompt for attacks. Determines attacks for passed player.*/
-bool PlayerStrategy::attack(Player* player)
-{
+bool PlayerStrategy::attack(Player* player) {
 	//We will put this inside of a loop so that we can easily restart the prompts if the user so chooses
 	while(true) {
 		//main loop used for attack phase
@@ -40,9 +39,11 @@ bool PlayerStrategy::attack(Player* player)
 			//Make the move
 			defendingCountry->addTroops(numTroopsToMove);
 			attackingCountry->addTroops(-numTroopsToMove);
-			return true;//Return true (attack was successful)
+			//Return true (attack was successful)
+			return true;
 		}
-		return false;//return false (attack was not successful)
+		//Return false (attack was not successful)
+		return false;
 	}
 }
 
@@ -61,10 +62,11 @@ void PlayerStrategy::reinforce(Player* player) {
 		troopsAvailable += player->exchange();
 	}
 	//Now we will check whether the player can exchange. If they can, we will ask if they want to exchange
-	while (player->canExchange())
+	while (player->canExchange()) {
 		std::cout << "You can exchange 3 of your cards. Would you like to do so? (y/n) ";
 		if (askExchange())
 			troopsAvailable += player->exchange();
+	}
 
 	//Now we can ask the player to start placing their troops
 	std::cout << "You have a total of " << troopsAvailable << " troops available to place.\n";
