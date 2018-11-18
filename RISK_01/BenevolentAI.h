@@ -1,6 +1,8 @@
 #ifndef BENEVOLENT_AI_H
 #define BENEVOLENT_AI_H
 
+class BenevolentAI;
+
 #include "PlayerStrategy.h"
 
 class BenevolentAI : public PlayerStrategy {

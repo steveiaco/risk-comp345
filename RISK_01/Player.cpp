@@ -167,7 +167,7 @@ bool Player::displayAttackable() const {
 	return hasAttackable;
 }
 /**Return whether or not player can attack.*/
-bool Player::displayAttackable() const {
+bool Player::canAttack() const {
 	bool hasAttackable = false;
 	for (Country* country : countriesOwned)
 		if (country->canAttack())
@@ -194,3 +194,18 @@ void Player::displayDice() const { dice->display(); }
 
 /**Get number of cards in player's hand*/
 int Player::getNumCards() const { return hand->getSize(); }
+
+/**Prompt the player to reinforce*/
+void Player::promptReinforce() { strategy->reinforce(this); };
+
+/**Prompt the player to make an attack. Returns true if attack was successful*/
+bool Player::promptAttack() { return strategy->attack(this); };
+
+/**Prompt the player to fortify.*/
+void Player::promptFortify() { strategy->fortify(this); };
+
+/**Ask the player if they want to attack.*/
+bool Player::askAttack() { return strategy->askAttack(this); };
+
+/**Ask the player where they would like to place a troop for setup.*/
+Country* Player::askSetup() { return strategy->askSetup(this); };

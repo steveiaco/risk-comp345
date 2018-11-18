@@ -1,6 +1,8 @@
 #ifndef AGGRESSIVE_AI_H
 #define AGGRESSIVE_AI_H
 
+class AggressiveAI;
+
 #include "PlayerStrategy.h"
 
 class AggressiveAI : public PlayerStrategy {

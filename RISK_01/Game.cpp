@@ -98,18 +98,20 @@ void Game::assignArmies() {
 	for (int i = 0; i < startArmies; i++)
 		//Players must take turns. Otherwise, the player placing their armies first is at a disadvantage (the other players already know his/her strategy when their chance to place troops comes)
 		for (Player* player : players) {
-			currentPlayer = player;
-			notify();
 			//Make sure that player has troops left (some of players troops will already have been placed on the countries assigned to them by default, that complicates things)
 			int armiesLeft = startArmies - i - player->getNumberOfCountries();
 			if (0 < armiesLeft) {
+				currentPlayer = player;
+				notify();
 				//Prompt player to select a country
 				Country* countryChosen;
 				std::cout << "You have " << armiesLeft << " troops remaining. Enter the name of a country where you would place one: ";
-				countryChosen = player->askSetup();
+				countryChosen = player->askSetup(); 
+				player->reinforce(countryChosen, 1);
 				//Returns null if player chose to skip
 				if (countryChosen == NULL)
 					return;
+				pause();
 			}
 		}
 }

@@ -1,6 +1,8 @@
 #ifndef OBSERVER_PLAYER_PHASES
 #define OBSERVER_PLAYER_PHASES
 
+class ObserverPlayerPhase;
+
 #include "Observer.h"
 #include "Game.h"
 #include <string>
