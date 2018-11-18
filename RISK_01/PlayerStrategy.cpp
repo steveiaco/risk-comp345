@@ -6,7 +6,8 @@ PlayerStrategy::PlayerStrategy() { }
 PlayerStrategy::~PlayerStrategy() { }
 
 /**Prompt for attacks. Determines attacks for passed player.*/
-bool PlayerStrategy::attack(Player* player) {
+bool PlayerStrategy::attack(Player* player)
+{
 	//We will put this inside of a loop so that we can easily restart the prompts if the user so chooses
 	while(true) {
 		//main loop used for attack phase
@@ -35,15 +36,13 @@ bool PlayerStrategy::attack(Player* player) {
 			std::cout << player->getName() << " has successfully invaded " << defendingCountry->getName() << std::endl;
 			//Prompt for number of troops to move
 			std::cout << player->getName() << ": " << attackerRoll << " troop(s) automatically moved into " << defendingCountry->getName() << ", how many additional troops would you like to move into " << defendingCountry->getName() << "? [0-" << attackingCountry->getTroops() - 1 << "] ";
-			int numTroopsToMove = moveTroops(attackingCountry, defendingCountry);
+			int numTroopsToMove = chooseMoveTroops(attackingCountry, defendingCountry);
 			//Make the move
 			defendingCountry->addTroops(numTroopsToMove);
 			attackingCountry->addTroops(-numTroopsToMove);
-			//Return true (attack was successful)
-			return true;
+			return true;//Return true (attack was successful)
 		}
-		//Return false (attack was not successful)
-		return false;
+		return false;//return false (attack was not successful)
 	}
 }
 
@@ -62,11 +61,10 @@ void PlayerStrategy::reinforce(Player* player) {
 		troopsAvailable += player->exchange();
 	}
 	//Now we will check whether the player can exchange. If they can, we will ask if they want to exchange
-	while (player->canExchange()) {
+	while (player->canExchange())
 		std::cout << "You can exchange 3 of your cards. Would you like to do so? (y/n) ";
 		if (askExchange())
 			troopsAvailable += player->exchange();
-	}
 
 	//Now we can ask the player to start placing their troops
 	std::cout << "You have a total of " << troopsAvailable << " troops available to place.\n";
@@ -113,7 +111,7 @@ void PlayerStrategy::fortify(Player* player) {
 
 		/*GET NUMBER OF TROOPS TO MOVE*/
 		std::cout << player->getName() << ": how many troops would you like to move from " << moveFrom->getName() << " to " << moveTo->getName() << " ? [1 - " << (moveFrom->getTroops() - 1) << "] (cancel to cancel): ";
-		int numTroops = moveTroops(moveFrom, moveTo);
+		int numTroops = chooseMoveTroops(moveFrom, moveTo);
 		//We will return -1 if player cancels
 		if (numTroops == -1)
 			continue;

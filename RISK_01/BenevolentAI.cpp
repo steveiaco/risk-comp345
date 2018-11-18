@@ -1,1 +1,1 @@
-#include "ArtificialPlayer.h"
+#include "BenevolentAI.h"
