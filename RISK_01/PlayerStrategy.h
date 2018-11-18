@@ -1,6 +1,8 @@
 #ifndef PLAYERSTRATEGY_H
 #define PLAYERSTRATEGY_H
 
+class PlayerStrategy;
+
 #include "Player.h"
 #include "Game.h"
 

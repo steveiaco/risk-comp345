@@ -1,12 +1,11 @@
 #include "HumanPlayer.h"
 
-HumanPlayer::HumanPlayer(Game* passedGame, Player* passedPlayer)
+HumanPlayer::HumanPlayer()
 {
-	thisGame = passedGame;
-	thisPlayer = passedPlayer;
+
 }
 
-bool HumanPlayer::askAttack() {
+bool HumanPlayer::askAttack(Player* thisPlayer) {
 	std::cout << thisPlayer->getName() << ", would you like to attack? (y/n) ";
 	std::string input;
 	std::getline(std::cin, input); std::cout << std::endl;
@@ -44,6 +43,7 @@ int HumanPlayer::chooseDefenderRoll(Country * defendingCountry) {
 
 int HumanPlayer::chooseAttackerRoll(Country * attackingCountry)
 {
+	Player* thisPlayer = attackingCountry->getOccupant();
 	int attackerRoll = NULL;
 	std::string attackerRollString;
 
@@ -68,7 +68,7 @@ int HumanPlayer::chooseAttackerRoll(Country * attackingCountry)
 	return attackerRoll;
 }
 
-Country * HumanPlayer::chooseAttackFrom()
+Country * HumanPlayer::chooseAttackFrom(Player* thisPlayer)
 {
 	Country* attackingCountry = NULL;
 	while (attackingCountry == NULL) {
@@ -79,7 +79,9 @@ Country * HumanPlayer::chooseAttackFrom()
 			return NULL;
 		//Make sure country is valid
 		try {
-			attackingCountry = thisGame->getMap()->getCountry(inp);;
+			
+			attackingCountry = Country::getCountryFromSet(inp, thisPlayer->getCountriesOwned());
+
 			//check if player owns the attacking country
 			if (!thisPlayer->ownsCountry(attackingCountry)) {
 				attackingCountry = NULL;
@@ -104,6 +106,8 @@ Country * HumanPlayer::chooseAttackFrom()
 
 Country * HumanPlayer::chooseAttackTo(Country* attackingCountry) {
 
+	Player* thisPlayer = attackingCountry->getOccupant();
+
 	Country* defendingCountry = NULL;
 	while (defendingCountry == NULL) {
 		std::string inp = std::string();
@@ -114,7 +118,7 @@ Country * HumanPlayer::chooseAttackTo(Country* attackingCountry) {
 			if (inp == "cancel")
 				break;
 			else {
-				defendingCountry = thisGame->getMap()->getCountry(inp);
+				defendingCountry = Country::getCountryFromSet(inp,thisPlayer->getCountriesOwned);
 
 				//if the attacking player owns the selected defending country, then it is an invalid selection
 				if (thisPlayer->ownsCountry(defendingCountry)) {
@@ -136,7 +140,7 @@ Country * HumanPlayer::chooseAttackTo(Country* attackingCountry) {
 	}
 }
 
-int HumanPlayer::moveTroopsAfterWin(Country* attackingCountry, Country* defendingCountry)
+int HumanPlayer::moveTroops(Country* attackingCountry, Country* defendingCountry)
 {
 	std::string numTroopsToMoveString;
 	int numTroopsToMove = NULL;
@@ -161,174 +165,93 @@ int HumanPlayer::moveTroopsAfterWin(Country* attackingCountry, Country* defendin
 }
 
 
-//THE FOLLOWING FUNCTIONS WILL BE TRANSFERRED TO THE PLAYERSTRATEGY CLASS AFTER I AM DONE CREATING THE STRATEGY FUNCTIONS
-
-void HumanPlayer::promptReinforce()
+bool HumanPlayer::askFortify(Player * thisPlayer)
 {
+	//Ask if player would like to fortify
+	std::cout << thisPlayer->getName() << ": would you like to fortify? (y/n) ";
+	std::string input;
+	std::getline(std::cin, input); std::cout << std::endl;
+	if (input == "N" || input == "n")
+		return false;
+	return true;
+}
 
-	int troopsAvailable = 0;
-
-	//get the number of troops available from the countries the player owns and the contienent values
-	troopsAvailable += thisPlayer->calculateTroopsAwarded();
-
-	//Show player their cards
-	thisPlayer->displayHand();
-
-	//check whether the player must exchange cards (has more than 6 cards)
-	while (thisPlayer->mustExchange()) {
-		std::cout << "You have " << thisPlayer->getNumCards() << ", cards. You can hold no more than 5 at a time. Here is an automatic exchange.\n";
-		troopsAvailable += thisPlayer->exchange();
-	}
-
-	//now we will check whether the player can exchange, if they can then we will ask if they want to exchange
-	while (thisPlayer->canExchange()) {
-		std::string input;
-		std::cout << "You currently have " << thisPlayer->getNumCards() << " cards and can exchange, would you like to do so? (Y/N) ";
-		std::getline(std::cin, input); std::cout << std::endl;
-		if (input == "Y" || input == "y")
-			troopsAvailable += thisPlayer->exchange();
-		else if (input == "N" || input == "n")
+Country * HumanPlayer::chooseOriginCountryFortify(Player * thisPlayer)
+{
+	Country* moveFrom = NULL;
+	while (moveFrom == NULL) {
+		std::string inp;
+		std::cout << std::endl << thisPlayer->getName() << ": please select a country to move players from (cancel to cancel): ";
+		std::getline(std::cin, inp); std::cout << std::endl;
+		if (inp == "cancel")
 			break;
-	}
-
-	//now we can ask the player to start placing their troops
-	std::cout << "You have a total of " << troopsAvailable << " troops available to place.\n";
-	std::cout << "You can now start placing troops on the countries you own.\nHere is a list of countries in your possession:\n";
-	thisPlayer->printCountriesOwned();
-
-	while (troopsAvailable != 0) {
-		std::string countrySelectedString;
-		std::cout << "You have " << troopsAvailable << " troops lefts to place, which country would you like to add troops to? ";
-		std::getline(std::cin, countrySelectedString); std::cout << std::endl;
-
-		Country* countrySelected;
 		try {
-			countrySelected = thisGame->map->getCountry(countrySelectedString);
+			moveFrom = Country::getCountryFromSet(inp, thisPlayer->getCountriesOwned());
+			//check if player owns the country
+			if (!thisPlayer->ownsCountry(moveFrom)) {
+				moveFrom = NULL;
+				throw std::invalid_argument("You do not own this country.");
+			}
+			//moveFrom must have enough armies
+			if (moveFrom->getTroops() < 2) {
+				moveFrom = NULL;
+				throw std::invalid_argument("Country must have more than one army on it.");
+			}
 		}
 		catch (std::invalid_argument e) {
-			std::cout << "Country does not exist, try again.\n";
-			continue;
-		} if (!thisPlayer->ownsCountry(countrySelected)) {
-			std::cout << "You do not own this country, try again.\n";
-			continue;
+			std::cout << e.what();
 		}
-
-		std::string numTroopsToPlaceString;
-		int numTroopsToPlace;
-		do {
-			std::cout << "You have selected " << countrySelected->getName() << ". How many troops would you like to place on this country? (Max: " << troopsAvailable << ") : ";
-			std::getline(std::cin, numTroopsToPlaceString); std::cout << std::endl;
-			numTroopsToPlace = std::stoi(numTroopsToPlaceString);
-		} while (numTroopsToPlace > troopsAvailable || numTroopsToPlace < 0);
-		thisPlayer->reinforce(countrySelected, numTroopsToPlace);
-		std::cout << "You have placed " << numTroopsToPlace << " troops on " << countrySelected->getName() << " giving it " << countrySelected->getTroops() << " total members.\n";
-		troopsAvailable -= numTroopsToPlace;
 	}
+
+	return moveFrom;
 }
 
-void HumanPlayer::promptFortify()
+Country * HumanPlayer::chooseDestinationCountryFortify(Country * originCountry)
 {
 
-	while (true) {
+	Player* thisPlayer = originCountry->getOccupant();
 
-		//Ask if player would like to fortify
-		std::cout << thisPlayer->getName() << ": would you like to fortify? (y/n) ";
-		std::string input;
-		std::getline(std::cin, input); std::cout << std::endl;
-		if (input == "N" || input == "n")
-			break;
-
-		//Display owned countries
-		std::cout << thisPlayer->getName() << ": you may fortify from/to the following countries.\n";
-		thisPlayer->printCountriesOwned();
-
-		/*GET VALID MOVE FROM COUNTRY*/
-		Country* moveFrom = NULL;
-		while (moveFrom == NULL) {
-			std::string inp;
-			std::cout << std::endl << thisPlayer->getName() << ": please select a country to move players from (cancel to cancel): ";
-			std::getline(std::cin, inp); std::cout << std::endl;
+	Country* moveTo = NULL;
+	/*GET VALID MOVE TO COUNTRY*/
+	while (moveTo == NULL) {
+		std::string inp = std::string();
+		std::cout << std::endl << thisPlayer->getName() << ": please select a country to move armies to (cancel to cancel): ";
+		std::getline(std::cin, inp); std::cout << std::endl;
+		try {
 			if (inp == "cancel")
 				break;
-			try {
-				moveFrom = thisGame->map->getCountry(inp);
-				//check if player owns the country
-				if (!thisPlayer->ownsCountry(moveFrom)) {
-					moveFrom = NULL;
-					throw std::invalid_argument("You do not own this country.");
-				}
-				//moveFrom must have enough armies
-				if (moveFrom->getTroops() < 2) {
-					moveFrom = NULL;
-					throw std::invalid_argument("Country must have more than one army on it.");
-				}
+			moveTo = Country::getCountryFromSet(inp, thisPlayer->getCountriesOwned());
+			//moveFrom must be a neighbor to moveTo
+			if (!moveTo->isNeighbor(originCountry)) {
+				moveTo = NULL;
+				throw std::invalid_argument("Country must be a neighbor.");
 			}
-			catch (std::invalid_argument e) {
-				std::cout << e.what();
+			//Player must own destination
+			if (!thisPlayer->ownsCountry(moveTo)) {
+				moveTo = NULL;
+				throw std::invalid_argument("You do not own this country.");
 			}
 		}
-		//If player canceled before moveFrom could be set, restart
-		if (moveFrom == NULL)
-			continue;
-
-		std::cout << "You may fortify " << moveFrom->getName() << "'s neighboring countries.\n";
-		moveFrom->display();
-		Country* moveTo = NULL;
-		/*GET VALID MOVE TO COUNTRY*/
-		while (moveTo == NULL) {
-			std::string inp = std::string();
-			std::cout << std::endl << thisPlayer->getName() << ": please select a country to move armies to (cancel to cancel): ";
-			std::getline(std::cin, inp); std::cout << std::endl;
-			try {
-				if (inp == "cancel")
-					break;
-				moveTo = thisGame->map->getCountry(inp);
-				//moveFrom must be a neighbor to moveTo
-				if (!moveTo->isNeighbor(moveFrom)) {
-					moveTo = NULL;
-					throw std::invalid_argument("Country must be a neighbor.");
-				}
-				//Player must own destination
-				if (!thisPlayer->ownsCountry(moveTo)) {
-					moveTo = NULL;
-					throw std::invalid_argument("You do not own this country.");
-				}
-			}
-			catch (std::invalid_argument e) {
-				std::cout << e.what();
-			}
+		catch (std::invalid_argument e) {
+			std::cout << e.what();
 		}
-		if (moveTo == NULL)
-			continue;
-
-		/*QUERY FOR NUMBER OF TROOPS TO MOVE*/
-		std::string moveNumTroopsString;
-		int moveNumTroops = NULL;
-		while (moveNumTroops == NULL) {
-			std::cout << thisPlayer->getName() << ": how many troops would you like to move from " << moveFrom->getName() << " to " << moveTo->getName() << " ? [1 - " << (moveFrom->getTroops() - 1) << "] (cancel to cancel): ";
-			std::getline(std::cin, moveNumTroopsString); std::cout << std::endl;
-			if (moveNumTroopsString == "cancel")
-				break;
-			//Make sure input is valid int
-			try { moveNumTroops = std::stoi(moveNumTroopsString); }
-			catch (std::invalid_argument& e) {
-				std::cout << "Invalid input. Input must be a valid integer value.\n";
-				moveNumTroops = NULL;
-				continue;
-			}
-			//Make sure input is within valid range
-			if (moveNumTroops < 1 || moveNumTroops >(moveFrom->getTroops() - 1)) {
-				std::cout << "Invalid input. Can only move a number of troops between 1 and " << (moveFrom->getTroops() - 1) << ".\n";
-				moveNumTroops = NULL;
-				continue;
-			}
-		}
-		if (moveNumTroops == NULL)
-			continue;
-
-		//Make the move
-		thisPlayer->fortify(moveFrom, moveTo, moveNumTroops);
-		std::cout << thisPlayer->getName() << ": successfully moved " << moveNumTroops << " troop(s) from " << moveFrom->getName() << " to " << moveTo->getName() << ".\n";
-		break;
 	}
 }
+
+Country * HumanPlayer::chooseReinforceCountry(Player * thisPlayer)
+{
+	std::string countrySelectedString;
+	std::getline(std::cin, countrySelectedString); std::cout << std::endl;
+
+	Country* countrySelected = NULL;
+	while (countrySelected == NULL) {
+		try {
+			countrySelected = Country::getCountryFromSet(countrySelectedString, thisPlayer->getCountriesOwned());
+		}
+		catch (std::invalid_argument e) {
+			std::cout << thisPlayer->getName() << ": you do not own this country or it does not exist, try again.\n";
+			return NULL;
+		}
+	}
+}
+
