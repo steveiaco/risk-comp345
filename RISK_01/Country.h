@@ -43,18 +43,22 @@ public:
 
 	//Accessors
 	/**Get name of country**/
-	inline std::string getName() const {return name;}
+	inline std::string getName() const { return name; }
 	/**Get number of troops holding country**/
-	inline int getTroops() const {return troopCount;}
+	inline int getTroops() const { return troopCount; }
 	/**Get player occupying country**/
-	inline Player* getOccupant() const {return occupant;}
+	inline Player* getOccupant() const { return occupant; }
 	/**Get continent that country belongs to**/
-	inline Continent* getContinent() const {return continent;}
+	inline Continent* getContinent() const { return continent; }
+	/**Get neighbors of country**/
+	inline std::unordered_set<Country*> getNeighbors() const { return neighborList; }
 
 
 	//Utility
 	/**Display details regarding country (occupant, neighbors, troops holding country, continent). Accepts a parameter for specifying left-space indentation (this is mainly used for displaying country within a list of countries).**/
 	void display(std::string lspace = "") const;
+	/**Display neighbors of country.**/
+	void displayNeighbors(std::string lspace = "") const;
 	/**Returns true if country has attackable neighbors and more than one troop on it.**/
 	bool canAttack() const;
 	/**Display attackable neighbors.**/

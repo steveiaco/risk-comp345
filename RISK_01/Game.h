@@ -43,6 +43,8 @@ class Game: public Subject {
 		void attack(Player* player);
 		/**Allows player passed as argument to fortify*/
 		void fortify(Player* player);
+		/**Pause the output and wait for user to read*/
+		void pause();
 
     public:
 		//CONSTRUCTORS

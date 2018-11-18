@@ -106,3 +106,8 @@ Country* Country::getCountryFromSet(std::string countryName, std::unordered_set<
 			return country;
 	throw std::invalid_argument(countryName + " is not a valid option.");
 }
+/**Display the nieghbors of country.**/
+void Country::displayNeighbors(std::string lspace) const {
+	for (Country* neighbor : neighborList)
+		neighbor->display(lspace);
+}

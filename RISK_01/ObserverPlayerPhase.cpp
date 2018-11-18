@@ -84,4 +84,3 @@ void ObserverPlayerPhase::displayFortify() {
 /**Display information for end phase*/
 void ObserverPlayerPhase::displayEnd() {
 }
-

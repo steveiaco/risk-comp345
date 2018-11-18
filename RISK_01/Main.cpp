@@ -2,6 +2,7 @@
 #include "MapLoader.h"
 #include "ObserverPlayerPhase.h"
 #include "ObserverStats.h"
+#include "AggressiveAI.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -56,13 +57,14 @@ int main() {
 		}
 	}
 	std::cout << std::endl;
-	//Create player objects
+	//Create player objects and AI
+	AggressiveAI* aggressiveAI = new AggressiveAI();
 	std::vector<Player*> players = std::vector<Player*>();
 	for (int i = 1; i < numPlayers+1; i++) {
 		std::string playerName;
 		std::cout << "Enter name of player " << i << ": ";
 		std::getline(std::cin, playerName);
-		players.push_back(new Player(playerName));
+		players.push_back(new Player(playerName, aggressiveAI));
 	}
 	std::cout << std::endl;
 	//Create deck
@@ -80,4 +82,5 @@ int main() {
 		delete player;
 	delete deck;
 	delete map;
+	delete aggressiveAI;
 }

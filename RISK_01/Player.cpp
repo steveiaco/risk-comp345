@@ -3,10 +3,11 @@ using std::string;
 
 //Constructor
 /**Standard player constructor. Constructs a player with a given name and a new hand/set of dice.*/
-Player::Player(std::string name) {
+Player::Player(std::string name, PlayerStrategy* strategy) {
 	this->name = name;
 	this->dice = new Dice();
 	this->hand = new Hand();
+	this->strategy = strategy;
 }
 
 //Destructor
@@ -165,8 +166,13 @@ bool Player::displayAttackable() const {
 		std::cout << name << " has no options for attack." << std::endl;
 	return hasAttackable;
 }
-std::unordered_set<Country*>* Player::getCountriesOwned() {
-	return &countriesOwned;
+/**Return whether or not player can attack.*/
+bool Player::displayAttackable() const {
+	bool hasAttackable = false;
+	for (Country* country : countriesOwned)
+		if (country->canAttack())
+			hasAttackable = true;
+	return hasAttackable;
 }
 /**Display player's hand*/
 void Player::displayHand() const { hand->display(); }
