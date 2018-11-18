@@ -111,15 +111,9 @@ void PlayerStrategy::fortify(Player* player) {
 
 		/*GET NUMBER OF TROOPS TO MOVE*/
 		std::cout << player->getName() << ": how many troops would you like to move from " << moveFrom->getName() << " to " << moveTo->getName() << " ? [1 - " << (moveFrom->getTroops() - 1) << "] (cancel to cancel): ";
-<<<<<<< HEAD
-		int numTroops = moveTroops(moveFrom, moveTo);
+		int numTroops = chooseMoveTroops(moveFrom, moveTo);
 		//We will return -1 if player cancels
 		if (numTroops == -1)
-=======
-		int numTroops = chooseMoveTroops(moveFrom, moveTo);
-		//We will return null if player cancels
-		if (numTroops == NULL)
->>>>>>> ff5712e99fbdc3466c16bd0ba812824327f4cfe1
 			continue;
 
 		//Make the move
