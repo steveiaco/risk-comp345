@@ -56,7 +56,7 @@ Continent* Map::getContinent(std::string name) const {
 /**Display the name of the map and a list of its continents (with their included countries) to the user.**/
 void Map::display() const {
 	//Display map's name
-	std::cout << name + ": \n\n";
+	std::cout << name + ": \n";
 	//Display continents in country
 	for (Continent* continent : continentList)
 		continent->display("  ");

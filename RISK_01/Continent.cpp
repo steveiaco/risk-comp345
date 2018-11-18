@@ -42,7 +42,6 @@ void Continent::display(std::string lspace) const {
 	//Display continent countries
 	std::cout << lspace + "  " + "Countries: \n";
 	for (Country* country : countryList) country->display(lspace + "  ");
-	std::cout << std::endl;
 }
 /**Most continent attributes will never change once map is loaded. However, player posessing the continent could change whenever posession of a country in the continent changes. This method is called when a country in the continent changes posession to calculate wheter or not the occupant has changed and make appropriate changes for the previous/new occupant and the continent itself.*/
 void Continent::update() {

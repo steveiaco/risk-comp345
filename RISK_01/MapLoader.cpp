@@ -26,7 +26,7 @@ Map* MapLoader::readMapFile(std::string mapName) {
 	bool allSections = false; //Keep track of whether or not the map file contains all three sections ([Map], [Continents], and [Territories])
 
 	try { //Check for IO errors
-		inFile.open(mapName + "\\" + mapName + ".map");
+		inFile.open("Maps\\" + mapName + ".map");
 
 		if (!inFile.good()) //If named map DNE, throw invalid argument exception. Explain why.
 			throw std::invalid_argument(mapName + " does not exist.");

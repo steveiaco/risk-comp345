@@ -3,13 +3,13 @@
 
 class Player;
 
-#include "PlayerStrategy.h"
 #include "Country.h"
 #include "Continent.h"
 #include "Hand.h"
 #include "Dice.h"
 #include "Map.h"
 #include "Card.h"
+#include "PlayerStrategy.h"
 #include <string>
 #include <vector>
 #include <unordered_set>
@@ -27,7 +27,7 @@ private:
 	Hand* hand;
 	/**Player dice*/
 	Dice* dice;
-	/**Player strategy*/
+	/**Strategy employed*/
 	PlayerStrategy* strategy;
 
 public:
@@ -49,8 +49,8 @@ public:
 	inline int getNumberOfCountries() const { return countriesOwned.size(); }
 	/**Get number of continents owned by player*/
 	inline int getNumberOfContinents() const { return continentsOwned.size(); }
-	/*Get the player strategy*/
-	PlayerStrategy* getStrategy();
+	/**Get strategy employed by player*/
+	inline playerStrategy* getStrategy() const { return strategy; }
 
 	//MUTATORS
 	/**Add a given card to the player's hand*/
@@ -63,8 +63,9 @@ public:
 	inline void removeCountry(Country* country) { countriesOwned.erase(country); }
 	/**Remove a continent from the list of continents owned by player*/
 	inline void removeContinent(Continent* continent) { continentsOwned.erase(continent); }
-	/*Replace the player's strategy*/
-	void Player::replaceStrategy(PlayerStrategy* newStrategy);
+	/**Set the strategy currently employed to another*/
+	inline void setStrategy(PlayerStrategy* strategy) { this->strategy = strategy; }
+
 	//UTILITY
 	/**Display player's hand*/
 	void displayHand() const;
@@ -72,20 +73,18 @@ public:
 	void displayDice() const;
 	/*Return a set of countries owned*/
 	std::unordered_set<Country*>* getCountriesOwned();
-
 	/**Allows player to add troops to country if country is owned by player. Thorws an exception if country is not owned*/
 	void reinforce(Country* toReinforce, int numTroops);
 	/**Attack from a country owned by player to a neighboring country owned by another player (throws an exception otherwise). Attack with a certain number of attacker and defender dice (must be a valid number, otherwise, will throw excpetion). Removes the appropriate number of troops from both participating countries. If defending country runs out of troops, attacker wins. An change of posession takes place, attacking troops are moved to new country and true is returned (driver can then prompt user to select a number of troops to move). If attacker loses, returns false. Driver can then prompt attacker to chose what to do next.*/
 	bool attack(Country* attackFrom, Country* attackTo, int numAttackerDice, int numDefenderDice);
 	/**Fortify from one country to another (rules regarding how this should be done are contradictory, in this implementation, we allow player to move troops between neighboring countries)*/
 	void fortify(Country* moveFrom, Country* moveTo, int numberOfTroops);
-
 	/*Rolls the dice object, [1-3] dice*/
 	inline std::vector<int> getRoll(int numRolls);
 	/**Calculate troops awarded to player during reinforce phase*/
 	int calculateTroopsAwarded() const;
 	/**Display countries owned by player*/
-	void printCountriesOwned() const;
+	void printCountriesOwned(std::string lspace) const;
 	/**Check if player owns country*/
 	bool ownsCountry(Country* country) const;
 	/**Exchange cards in hand for troops (exchanges first set of three valid cards)*/

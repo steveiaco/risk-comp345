@@ -14,17 +14,11 @@ Player::Player(std::string name) {
 Player::~Player() {
 	delete dice;
 	delete hand;
-<<<<<<< HEAD
-=======
-	delete strategy;
-	std::cout << "Object Player has been deleted" << std::endl;
->>>>>>> 1711f791a64474f51a5262d7170f64797f95b62a
 }
 
 //Mutator
 /**Add a given card to the player's hand*/
 void Player::addCard(Card* card) { hand->addCard(card); }
-void Player::replaceStrategy(PlayerStrategy* newStrategy) { this->strategy = newStrategy;  }
 
 //Utility
 /**Allows player to add troops to country if country is owned by player. Thorws an exception if country is not owned*/
@@ -152,10 +146,10 @@ int Player::calculateTroopsAwarded() const {
 	return toReturn;
 }
 /**Display countries owned by player*/
-void Player::printCountriesOwned() const {
+void Player::printCountriesOwned(string lspace) const {
 	//iterate through all countries and print their name along with troop number
 	for (Country* country : countriesOwned)
-		std::cout << country->getName() << " - " << country->getTroops() << " troops." << std::endl;
+		std::cout << lspace << country->getName() << " - " << country->getTroops() << " troops." << std::endl;
 }
 /**Display attack options (countries that can attack other countries). Return true if an option was found.*/
 bool Player::displayAttackable() const {
@@ -176,17 +170,21 @@ std::unordered_set<Country*>* Player::getCountriesOwned() {
 }
 /**Display player's hand*/
 void Player::displayHand() const { hand->display(); }
+
 /**Exchange cards in hand for troops (exchanges first set of three valid cards)*/
 int	Player::exchange() { return hand->exchange(); }
+
 /**Check if player can exchange thier cards*/
 bool Player::canExchange() const { return (!hand->canExchange().empty()); }
+
 /**Check if player must exchange thier cards (player must exchange cards if they have more than 5)*/
 bool Player::mustExchange() const { return (hand->getSize() > 5); }
+
 /*Rolls the dice object, [1-3] dice*/
 std::vector<int> Player::getRoll(int numRolls) { return dice->roll(numRolls); }
+
 /**Display player's dice and their statistsics*/
 void Player::displayDice() const { dice->display(); }
+
 /**Get number of cards in player's hand*/
 int Player::getNumCards() const { return hand->getSize(); }
-/**Returns the player's strategy*/
-PlayerStrategy * Player::getStrategy() { return strategy; }

@@ -4,6 +4,7 @@
 #include "Observer.h"
 #include "Game.h"
 #include <string>
+#include <iostream>
 
 class ObserverPlayerPhase: public Observer {
     private:
@@ -13,6 +14,16 @@ class ObserverPlayerPhase: public Observer {
 		//UTILITY
 		/**Display header for current game state*/
 		void diplayHeader();
+		/**Display Information for setup phase*/
+		void displaySetup();
+		/**Display Information for attack phase*/
+		void displayAttack();
+		/**Display Information for fortify phase*/
+		void displayFortify();
+		/**Display Information for reinforce phase*/
+		void displayReinforce();
+		/**Display Information for end phase*/
+		void displayEnd();
 
     public:
 		//CONSTRUCTOR

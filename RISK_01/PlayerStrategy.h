@@ -6,29 +6,50 @@
 
 class PlayerStrategy {
 public:
-	/*Highest level functions*/
-	virtual bool promptAttack() = 0;//returns true if the attack was successful
-	virtual void promptReinforce() = 0;
-	virtual void promptFortify() = 0;
+	//HIGH LEVEL UTILITIES
+	/**Prompt for an attack. Returns true if attack was successful. Determines attack for passed player.*/
+	bool attack(Player* player);
+	/**Prompt for reinforcements. Determines reinforcement for passed player.*/
+	void reinforce(Player* player);
+	/**Prompt for fortifications. Determines fortification for passed player.*/
+	void fortify(Player* player);
 
-/*Apparently these methods need to be public in order for sibling objects to access them.. i thought protected attributes allowed this behavior..*/
-//protected:
+protected:
+	//CONSTRUCTORS
+	/**PlayerStrategy constructor (doesn't do anything special)*/
+	PlayerStrategy();
 
-	/*Strategy methods for attack phase*/
-	virtual bool askAttack() = 0;
-	virtual int chooseDefenderRoll(Country* defendingCountry) = 0; //choose defender roll, pass the defending country in order to verify the input
-	virtual int chooseAttackerRoll(Country* attackingCountry) = 0; //choose attacker roll, pass the attacking country in order to verify the input
-	virtual Country* chooseAttackFrom() = 0; //choose country to attack from
-	virtual Country* chooseAttackTo(Country* attackFrom) = 0; //choose country to attack using attackFrom (passed object used for verification of chosen country, chosen country must not be owned and must be a neighbor)
+	//DESTRUCTORS
+	/**Player Strategy destructor*/
+	virtual ~PlayerStrategy();
+
+	//LOW LEVEL UTILITIES
+
+	//REINFORCE
+	/**Choose a country to reinforce*/
+	virtual Country* chooseReinforceCountry() = 0;
+
+	//ATTACK
+	/**Returns true if player wants to attack, false otherwise*/
+	virtual bool askAttack(Player* player) = 0;
+	/**Get number of dice player would like to defend with (given defending country)*/
+	virtual int chooseDefenderRoll(Country* defendingCountry) = 0;
+	/**Get number of dice player would like to attack with (given attacking country)*/
+	virtual int chooseAttackerRoll(Country* attackingCountry) = 0;
+	/**Chose country to attack from*/
+	virtual Country* chooseAttackFrom(Player* player) = 0;
+	/**Chose country to attack (given origin)*/
+	virtual Country* chooseAttackTo(Country* attackFrom) = 0;
+	/**Chose number of troops to move from one country to another after a victory*/
 	virtual int moveTroopsAfterWin(Country* attackingCountry, Country* defendingCountry) = 0;
-	/*Helper methods for reinforce, fortify phase*/
-	virtual bool askFortify() = 0;
-	virtual Country* chooseOriginCountry() = 0; //choose country to move troops from
-	virtual Country* chooseDestinationCountry(Country* originCountry) = 0; //choose a neighbor to the origin country
 
-
-	Game* thisGame;
-	Player* thisPlayer;
+	//FORTIFY
+	/**Returns true if player wants to fortify, false otherwise*/
+	virtual bool askFortify(Player* player) = 0;
+	/**Chose country to fortify from*/
+	virtual Country* chooseOriginCountry(Player* player) = 0;
+	/**Chose country to fortify to (guven origin)*/
+	virtual Country* chooseDestinationCountry(Country* originCountry) = 0;
 };
 
 #endif

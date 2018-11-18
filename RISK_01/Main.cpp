@@ -1,16 +1,27 @@
 #include "Game.h"
 #include "MapLoader.h"
+#include "ObserverPlayerPhase.h"
+#include "ObserverStats.h"
 #include <iostream>
 #include <string>
 #include <vector>
+#include <filesystem>
 
 //Load the game map and players up. Start a game.
 int main() {
-
-	std::cout << "===================================\n";
-	std::cout << "RISK GAME             \n";
-	std::cout << "===================================\n";
-
+	//Display welcome
+	std::cout << "=======================================================================\n";
+	std::cout << "\tRISK GAME             \n";
+	std::cout << "=======================================================================\n";
+	std::cout << std::endl;
+	//Display list of available maps
+	std::cout << "Enter one of the following maps to play (without extension):\n";
+	int i = 1;
+	for (auto & p : std::experimental::filesystem::directory_iterator("Maps\\"))
+		if (p.path().extension() == ".map") {
+			std::cout << "\t" << i << "- " << p.path().filename() << std::endl;
+			i++;
+		}
 	std::cout << std::endl;
 	//Keep trying to get map until a valid map is returned
 	Map* map = NULL;
@@ -59,7 +70,8 @@ int main() {
 
 	//Create game
 	Game game = Game(players, map, deck);
-	//Attach observer
+	//Attach observers (order is important)
+	ObserverStats statsObserver = ObserverStats(&game);
 	ObserverPlayerPhase gameObserver = ObserverPlayerPhase(&game);
 	//Start up game
 	game.start();

@@ -6,4 +6,4 @@
 class AgressiveAI : public PlayerStrategy {};
 class BenevolentAI : public PlayerStrategy {};
 
-#endif // !ARTIFICIALPLAYER_H
+#endif
