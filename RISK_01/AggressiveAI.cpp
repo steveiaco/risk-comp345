@@ -113,9 +113,14 @@ Country* AggressiveAI::chooseAttackFrom(Player* player) {
 Country* AggressiveAI::chooseAttackTo(Country* attackFrom) {
 	//Find the weakest attackable neighbor
 	std::unordered_set<Country*> neighbors = attackFrom->getNeighbors();
-	Country* weakest = *neighbors.begin();
+	Country* weakest = NULL;
+	//Begin by setting weakest to some country that is not owned
 	for (Country* country : neighbors)
-		if (country->getTroops() < weakest->getTroops())
+		if (country->getOccupant() != attackFrom->getOccupant())
+			weakest = country;
+	//Now change weakest country to weakest country
+	for (Country* country : neighbors)
+		if ((country->getOccupant() != attackFrom->getOccupant()) && (country->getTroops() < weakest->getTroops()))
 			weakest = country;
 	//Display a message indicating what happened
 	std::cout << weakest->getName() << "\n";
@@ -163,9 +168,9 @@ Country* AggressiveAI::chooseDestinationCountryFortify(Country* originCountry) {
 	//Though we could move the troops to a country from which the player can attack more efficiently via pathfinding, we will opt for instructing the player to make random moves instead (over time, this will put the player into an attackable position)
 	std::unordered_set<Country*> neighbors = originCountry->getNeighbors();
 	srand(time(NULL)); //initialize the random seed
-	int RandIndex = std::rand() % neighbors.size(); //Country will always have at least one neighbor (graph is fully connected)
+	int randIndex = std::rand() % neighbors.size(); //Country will always have at least one neighbor (graph is fully connected)
 	std::unordered_set<Country*>::const_iterator it(neighbors.begin());
-	advance(it, 5);
+	advance(it, randIndex);
 	Country* destination = *it;
 	//Display a message indicating what happened
 	std::cout << destination->getName() << "\n";

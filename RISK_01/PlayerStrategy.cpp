@@ -100,11 +100,11 @@ void PlayerStrategy::fortify(Player* player) {
 		Country* moveFrom = chooseOriginCountryFortify(player);
 		//We will return null if player cancels
 		if (moveFrom == NULL)
-			break;
+			continue;
 
 		/*GET VALID MOVE TO COUNTRY*/
 		std::cout << "You may fortify " << moveFrom->getName() << "'s neighboring countries: \n";
-		moveFrom->displayNeighbors("/t");
+		moveFrom->displayNeighbors("  ");
 		std::cout << std::endl << player->getName() << ": please select a country to move armies to (cancel to cancel): ";
 		Country* moveTo = chooseDestinationCountryFortify(moveFrom);
 		//We will return null if player cancels
@@ -114,13 +114,13 @@ void PlayerStrategy::fortify(Player* player) {
 		/*GET NUMBER OF TROOPS TO MOVE*/
 		std::cout << player->getName() << ": how many troops would you like to move from " << moveFrom->getName() << " to " << moveTo->getName() << " ? [1 - " << (moveFrom->getTroops() - 1) << "] (cancel to cancel): ";
 		int numTroops = moveTroops(moveFrom, moveTo);
-		//We will return null if player cancels
-		if (numTroops == NULL)
+		//We will return -1 if player cancels
+		if (numTroops == -1)
 			continue;
 
 		//Make the move
 		player->fortify(moveFrom, moveTo, numTroops);
 		std::cout << player->getName() << ": successfully moved " << numTroops << " troop(s) from " << moveFrom->getName() << " to " << moveTo->getName() << ".\n";
-		break;
+		return;
 	}
 }
