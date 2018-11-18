@@ -20,6 +20,7 @@ int HumanPlayer::chooseDefenderRoll(Country * defendingCountry) {
 	int defenderRoll = NULL;
 	std::string defenderRollString;
 
+
 	while (defenderRoll == NULL) {
 		std::cout << defendingCountry->getOccupant()->getName() << ": how many dice would you like to use to defend? [1-" << ((defendingCountry->getTroops() > 2) ? 2 : (defendingCountry->getTroops())) << "] ";
 		std::getline(std::cin, defenderRollString); std::cout << std::endl;
@@ -118,7 +119,7 @@ Country * HumanPlayer::chooseAttackTo(Country* attackingCountry) {
 			if (inp == "cancel")
 				break;
 			else {
-				defendingCountry = Country::getCountryFromSet(inp,thisPlayer->getCountriesOwned);
+				defendingCountry = Country::getCountryFromSet(inp,thisPlayer->getCountriesOwned());
 
 				//if the attacking player owns the selected defending country, then it is an invalid selection
 				if (thisPlayer->ownsCountry(defendingCountry)) {
@@ -255,3 +256,22 @@ Country * HumanPlayer::chooseReinforceCountry(Player * thisPlayer)
 	}
 }
 
+int HumanPlayer::chooseNumberOfTroopsToReinforce(Country * reinforcedCountry, int troopsAvailable)
+{
+	std::string numTroopsToPlaceString;
+	int numTroopsToPlace;
+	do {
+		std::cout << "You have selected " << reinforcedCountry->getName() << ". How many troops would you like to place on this country? (Max: " << troopsAvailable << ") : ";
+		std::getline(std::cin, numTroopsToPlaceString); std::cout << std::endl;
+		numTroopsToPlace = std::stoi(numTroopsToPlaceString);
+	} while (numTroopsToPlace > troopsAvailable || numTroopsToPlace < 0);
+	reinforcedCountry->getOccupant()->reinforce(reinforcedCountry, numTroopsToPlace);
+	std::cout << "You have placed " << numTroopsToPlace << " troops on " << reinforcedCountry->getName() << " giving it " << reinforcedCountry->getTroops() << " total members.\n";
+	return (troopsAvailable -= numTroopsToPlace);
+
+}
+
+bool HumanPlayer::askExchange()
+{
+	return false;
+}

@@ -1,7 +1,7 @@
 #ifndef HUMANPLAYER_H
 #define HUMANPLAYER_H
 
-#include "PlayerStrategy.h";
+#include "PlayerStrategy.h"
 #include <string>
 
 
