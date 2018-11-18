@@ -49,7 +49,7 @@ protected:
 	/**Chose country to attack (given origin)*/
 	virtual Country* chooseAttackTo(Country* attackFrom) = 0;
 	/**Chose number of troops to move from one country to another after a victory*/
-	virtual int moveTroops(Country* attackingCountry, Country* defendingCountry) = 0;
+	virtual int chooseMoveTroops(Country* attackingCountry, Country* defendingCountry) = 0;
 
 	//FORTIFY
 	/**Returns true if player wants to fortify, false otherwise*/

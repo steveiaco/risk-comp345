@@ -8,12 +8,11 @@
 
 class HumanPlayer : public PlayerStrategy {
 public:
-	//constructor
-	HumanPlayer();
 
-	bool promptAttack(); 
-	void promptReinforce();
-	void promptFortify();
+	/**Returns true if player wants to attack, false otherwise*/
+	bool askAttack(Player*);
+	/**Prompt for where to place setup troop.*/
+	Country* askSetup(Player*);
 
 protected:
 
@@ -39,7 +38,7 @@ protected:
 	/**Chose country to attack (given origin)*/
 	Country* chooseAttackTo(Country* attackFrom);
 	/**Chose number of troops to move from one country to another after a victory*/
-	int moveTroops(Country* attackingCountry, Country* defendingCountry);
+	int chooseMoveTroops(Country* attackingCountry, Country* defendingCountry);
 
 	//FORTIFY
 	/**Returns true if player wants to fortify, false otherwise*/

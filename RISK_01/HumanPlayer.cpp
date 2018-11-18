@@ -103,6 +103,8 @@ Country * HumanPlayer::chooseAttackFrom(Player* thisPlayer)
 			std::cout << e.what() << std::endl;
 		}
 	}
+
+	return attackingCountry;
 }
 
 Country * HumanPlayer::chooseAttackTo(Country* attackingCountry) {
@@ -139,9 +141,11 @@ Country * HumanPlayer::chooseAttackTo(Country* attackingCountry) {
 			std::cout << e.what() << std::endl;
 		}
 	}
+
+	return defendingCountry;
 }
 
-int HumanPlayer::moveTroops(Country* attackingCountry, Country* defendingCountry)
+int HumanPlayer::chooseMoveTroops(Country* attackingCountry, Country* defendingCountry)
 {
 	std::string numTroopsToMoveString;
 	int numTroopsToMove = NULL;
@@ -163,6 +167,8 @@ int HumanPlayer::moveTroops(Country* attackingCountry, Country* defendingCountry
 			continue;
 		}
 	}
+
+	return numTroopsToMove;
 }
 
 
@@ -237,6 +243,8 @@ Country * HumanPlayer::chooseDestinationCountryFortify(Country * originCountry)
 			std::cout << e.what();
 		}
 	}
+
+	return moveTo;
 }
 
 Country * HumanPlayer::chooseReinforceCountry(Player * thisPlayer)
@@ -267,8 +275,8 @@ int HumanPlayer::chooseNumberOfTroopsToReinforce(Country * reinforcedCountry, in
 	} while (numTroopsToPlace > troopsAvailable || numTroopsToPlace < 0);
 	reinforcedCountry->getOccupant()->reinforce(reinforcedCountry, numTroopsToPlace);
 	std::cout << "You have placed " << numTroopsToPlace << " troops on " << reinforcedCountry->getName() << " giving it " << reinforcedCountry->getTroops() << " total members.\n";
+	
 	return (troopsAvailable -= numTroopsToPlace);
-
 }
 
 bool HumanPlayer::askExchange()
