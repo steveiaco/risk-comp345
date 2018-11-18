@@ -53,6 +53,6 @@ private:
 	Country* chooseOriginCountryFortify(Player* player);
 	/**Chose country to fortify to (guven origin)*/
 	Country* chooseDestinationCountryFortify(Country* originCountry);
-}
+};
 
 #endif

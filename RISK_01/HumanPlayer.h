@@ -1,16 +1,16 @@
 #ifndef HUMANPLAYER_H
 #define HUMANPLAYER_H
 
+class HumanPlayer;
+
 #include "PlayerStrategy.h"
 #include <string>
-
 
 
 class HumanPlayer : public PlayerStrategy {
 public:
 
-	/**Returns true if player wants to attack, false otherwise*/
-	bool askAttack(Player*);
+	HumanPlayer();
 	/**Prompt for where to place setup troop.*/
 	Country* askSetup(Player*);
 
@@ -25,6 +25,7 @@ protected:
 	int chooseNumberOfTroopsToReinforce(Country* reinforcedCountry, int troopsAvailable);
 	/**Ask if player wants to exchange cards for troops*/
 	bool askExchange();
+
 
 	//ATTACK
 	/*Asks player whether they would like to attack*/

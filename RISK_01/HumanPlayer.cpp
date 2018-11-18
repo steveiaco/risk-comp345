@@ -1,9 +1,6 @@
 #include "HumanPlayer.h"
 
-HumanPlayer::HumanPlayer()
-{
-
-}
+HumanPlayer::HumanPlayer() { }
 
 bool HumanPlayer::askAttack(Player* thisPlayer) {
 	std::cout << thisPlayer->getName() << ", would you like to attack? (y/n) ";
@@ -15,6 +12,8 @@ bool HumanPlayer::askAttack(Player* thisPlayer) {
 	else
 		return true;
 }
+
+
 
 int HumanPlayer::chooseDefenderRoll(Country * defendingCountry) {
 	int defenderRoll = NULL;
@@ -282,4 +281,9 @@ int HumanPlayer::chooseNumberOfTroopsToReinforce(Country * reinforcedCountry, in
 bool HumanPlayer::askExchange()
 {
 	return false;
+}
+
+Country * HumanPlayer::askSetup(Player *)
+{
+	return nullptr;
 }
