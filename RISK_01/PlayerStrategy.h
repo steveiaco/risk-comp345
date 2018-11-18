@@ -4,21 +4,20 @@
 class PlayerStrategy;
 
 #include "Player.h"
-#include "Game.h"
 
 class PlayerStrategy {
 public:
 	//HIGH LEVEL UTILITIES
 	/**Prompt for an attack. Returns true if attack was successful. Determines attack for passed player.*/
-	bool attack(Player*);
+	bool attack(Player* player);
 	/**Prompt for reinforcements. Determines reinforcement for passed player.*/
-	void reinforce(Player*);
+	void reinforce(Player* player);
 	/**Prompt for fortifications. Determines fortification for passed player.*/
-	void fortify(Player*);
+	void fortify(Player* player);
 	/**Returns true if player wants to attack, false otherwise*/
-	virtual bool askAttack(Player*) = 0;
+	virtual bool askAttack(Player* player) = 0;
 	/**Prompt for where to place setup troop.*/
-	virtual Country* askSetup(Player*) = 0;
+	virtual Country* askSetup(Player* player) = 0;
 
 protected:
 	//CONSTRUCTORS
@@ -33,7 +32,7 @@ protected:
 
 	//REINFORCE
 	/**Choose a country to reinforce*/
-	virtual Country* chooseReinforceCountry(Player*) = 0;
+	virtual Country* chooseReinforceCountry(Player* player) = 0;
 	/**Choose number of troops to reinforce with*/
 	virtual int chooseNumberOfTroopsToReinforce(Country* reinforcedCountry, int troopsAvailable) = 0;
 	/**Ask if player wants to exchange cards for troops*/
@@ -45,17 +44,17 @@ protected:
 	/**Get number of dice player would like to attack with (given attacking country)*/
 	virtual int chooseAttackerRoll(Country* attackingCountry) = 0;
 	/**Chose country to attack from*/
-	virtual Country* chooseAttackFrom(Player*) = 0;
+	virtual Country* chooseAttackFrom(Player* player) = 0;
 	/**Chose country to attack (given origin)*/
 	virtual Country* chooseAttackTo(Country* attackFrom) = 0;
 	/**Chose number of troops to move from one country to another after a victory*/
-	virtual int chooseMoveTroops(Country* attackingCountry, Country* defendingCountry) = 0;
+	virtual int moveTroops(Country* attackingCountry, Country* defendingCountry) = 0;
 
 	//FORTIFY
 	/**Returns true if player wants to fortify, false otherwise*/
-	virtual bool askFortify(Player*) = 0;
+	virtual bool askFortify(Player* player) = 0;
 	/**Chose country to fortify from*/
-	virtual Country* chooseOriginCountryFortify(Player*) = 0;
+	virtual Country* chooseOriginCountryFortify(Player* player) = 0;
 	/**Chose country to fortify to (guven origin)*/
 	virtual Country* chooseDestinationCountryFortify(Country* originCountry) = 0;
 };
