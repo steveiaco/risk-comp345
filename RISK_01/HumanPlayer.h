@@ -1,34 +1,53 @@
 #ifndef HUMANPLAYER_H
 #define HUMANPLAYER_H
 
-#include "PlayerStrategy.h";
-#include <string>
+class HumanPlayer;
 
+#include "PlayerStrategy.h"
+#include <string>
 
 
 class HumanPlayer : public PlayerStrategy {
 public:
-	//constructor
-	HumanPlayer(Game* passedGame, Player* passedPlayer);
 
-	bool promptAttack() = 0; 
-	void promptReinforce() = 0;
-	void promptFortify() = 0;
+	HumanPlayer();
+	/**Prompt for where to place setup troop.*/
+	Country* askSetup(Player*);
 
 protected:
 
-	/*Helper methods for attack phase*/
-	bool askAttack();
-	int chooseDefenderRoll(Country* defendingCountry); //choose defender roll
-	int chooseAttackerRoll(Country* attackingCountry); //choose attacker roll
-	Country* chooseAttackFrom(); //choose country to attack from
-	Country* chooseAttackTo(Country* attackFrom); //choose country to attack using attackFrom (passed object used for verification of chosen country, chosen country must not be owned and must be a neighbor)
-	int moveTroopsAfterWin(Country* attackingCountry, Country* defendingCountry);
+	//LOW LEVEL UTILITIES
 
-	/*Helper methods for reinforce, fortify phase*/
-	bool askFortify();
-	Country* chooseOriginCountry() = 0; //choose country to move troops from
-	Country* chooseDestinationCountry(Country* originCountry) = 0; //choose a neighbor to the origin country
+	//REINFORCE
+	/**Choose a country to reinforce*/
+	 Country* chooseReinforceCountry(Player* thisPlayer);
+	/**Choose number of troops to reinforce with*/
+	int chooseNumberOfTroopsToReinforce(Country* reinforcedCountry, int troopsAvailable);
+	/**Ask if player wants to exchange cards for troops*/
+	bool askExchange();
+
+
+	//ATTACK
+	/*Asks player whether they would like to attack*/
+	bool askAttack(Player* thisPlayer);
+	/**Get number of dice player would like to defend with (given defending country)*/
+	int chooseDefenderRoll(Country* defendingCountry);
+	/**Get number of dice player would like to attack with (given attacking country)*/
+	int chooseAttackerRoll(Country* attackingCountry);
+	/**Chose country to attack from*/
+	Country* chooseAttackFrom(Player* thisPlayer);
+	/**Chose country to attack (given origin)*/
+	Country* chooseAttackTo(Country* attackFrom);
+	/**Chose number of troops to move from one country to another after a victory*/
+	int chooseMoveTroops(Country* attackingCountry, Country* defendingCountry);
+
+	//FORTIFY
+	/**Returns true if player wants to fortify, false otherwise*/
+	bool askFortify(Player* thisPlayer);
+	/**Chose country to fortify from*/
+	Country* chooseOriginCountryFortify(Player* thisPlayer);
+	/**Chose country to fortify to (guven origin)*/
+	Country* chooseDestinationCountryFortify(Country* originCountry);
 };	
 
 

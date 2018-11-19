@@ -128,7 +128,7 @@ Country* AggressiveAI::chooseAttackTo(Country* attackFrom) {
 	return weakest;
 }
 /**Chose number of troops to move from one country to another after a victory*/
-int AggressiveAI::moveTroops(Country* attackingCountry, Country* defendingCountry) {
+int AggressiveAI::chooseMoveTroops(Country* attackingCountry, Country* defendingCountry) {
 	//Move the maximum number of troops
 	int toRet = attackingCountry->getTroops()-1;
 	//Display a message indicating what happened

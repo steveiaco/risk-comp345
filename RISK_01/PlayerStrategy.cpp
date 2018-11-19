@@ -35,7 +35,7 @@ bool PlayerStrategy::attack(Player* player) {
 			std::cout << player->getName() << " has successfully invaded " << defendingCountry->getName() << std::endl;
 			//Prompt for number of troops to move
 			std::cout << player->getName() << ": " << attackerRoll << " troop(s) automatically moved into " << defendingCountry->getName() << ", how many additional troops would you like to move into " << defendingCountry->getName() << "? [0-" << attackingCountry->getTroops() - 1 << "] ";
-			int numTroopsToMove = moveTroops(attackingCountry, defendingCountry);
+			int numTroopsToMove = chooseMoveTroops(attackingCountry, defendingCountry);
 			//Make the move
 			defendingCountry->addTroops(numTroopsToMove);
 			attackingCountry->addTroops(-numTroopsToMove);
@@ -113,7 +113,7 @@ void PlayerStrategy::fortify(Player* player) {
 
 		/*GET NUMBER OF TROOPS TO MOVE*/
 		std::cout << player->getName() << ": how many troops would you like to move from " << moveFrom->getName() << " to " << moveTo->getName() << " ? [1 - " << (moveFrom->getTroops() - 1) << "] (cancel to cancel): ";
-		int numTroops = moveTroops(moveFrom, moveTo);
+		int numTroops = chooseMoveTroops(moveFrom, moveTo);
 		//We will return -1 if player cancels
 		if (numTroops == -1)
 			continue;
