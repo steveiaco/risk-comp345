@@ -8,6 +8,9 @@ class Game;
 #include "Deck.h"
 #include "Map.h"
 #include "Deck.h"
+#include "AggressiveAI.h"
+#include "BenevolentAI.h"
+#include "HumanPlayer.h"
 #include <vector>
 #include <random>
 #include <algorithm>
@@ -31,6 +34,9 @@ class Game: public Subject {
 		Map* map;
 		/**Deck of cards used in game*/
 		Deck* deck;
+
+		/**Set to true if you want to be able to swap player strategies for testing*/
+		bool swapType;
 
 		//UTILITIES
 		/**Randomizes order of play (shuffles list of players)*/
@@ -56,6 +62,10 @@ class Game: public Subject {
 		//DESTRUCTOR
 		/**Controller destructor*/
         ~Game();
+
+		//MUTATORS
+		/**Set swapType (for testing)*/
+		inline void setSwapType(bool in) { swapType = in;  }
 
 		//ACCESSORS
 		/**Get map (good for attached observers)*/

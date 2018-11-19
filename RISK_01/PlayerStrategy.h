@@ -4,7 +4,6 @@
 class PlayerStrategy;
 
 #include "Player.h"
-#include "Game.h"
 
 class PlayerStrategy {
 public:
@@ -20,14 +19,14 @@ public:
 	/**Prompt for where to place setup troop.*/
 	virtual Country* askSetup(Player*) = 0;
 
+	//DESTRUCTORS
+	/**Player Strategy destructor*/
+	virtual ~PlayerStrategy();
+
 protected:
 	//CONSTRUCTORS
 	/**PlayerStrategy constructor (doesn't do anything special)*/
 	PlayerStrategy();
-
-	//DESTRUCTORS
-	/**Player Strategy destructor*/
-	virtual ~PlayerStrategy();
 
 	//LOW LEVEL UTILITIES
 
