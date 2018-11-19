@@ -68,7 +68,7 @@ int main() {
 		std::string playerName;
 		std::cout << "Enter name of player " << i << ": ";
 		std::getline(std::cin, playerName);
-		players.push_back(new Player(playerName, benevolent));
+		players.push_back(new Player(playerName, human));
 	}
 	std::cout << std::endl;
 	//Create deck

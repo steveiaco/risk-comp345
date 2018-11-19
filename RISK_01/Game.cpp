@@ -106,11 +106,11 @@ void Game::assignArmies() {
 				//Prompt player to select a country
 				Country* countryChosen;
 				std::cout << "You have " << armiesLeft << " troops remaining. Enter the name of a country where you would place one: ";
-				countryChosen = player->askSetup(); 
-				player->reinforce(countryChosen, 1);
+				countryChosen = player->askSetup();
 				//Returns null if player chose to skip
 				if (countryChosen == NULL)
 					return;
+				player->reinforce(countryChosen, 1);
 				pause();
 			}
 		}
@@ -124,13 +124,22 @@ void Game::reinforce(Player* player) {
 void Game::attack(Player* player) {
 	//Give the player a card for their first success
 	bool firstSuccess = true;
-	while (player->askAttack()) {
-		//If first success is currently false and attack is successful, player should receive a card
-		if (firstSuccess = player->promptAttack() && firstSuccess == true) {
-			firstSuccess = false;
-			player->addCard(deck->draw());
-			std::cout << player->getName() << " has received a card for their first victory this round." << std::endl;
+	//skip if player can not attack
+	if (player->canAttack()) {
+		std::cout << player->getName() << ": Would you like to attack? (y/n): ";
+		while (player->askAttack()) {
+			//If first success is currently false and attack is successful, player should receive a card
+			if (firstSuccess = player->promptAttack() && firstSuccess == true) {
+				firstSuccess = false;
+				player->addCard(deck->draw());
+				std::cout << player->getName() << " has received a card for their first victory this round." << std::endl;
+			}
+			pause();
+			notify();
+			std::cout << player->getName() << ": Would you like to attack? (y/n): ";
 		}
+	}
+	else {
 		pause();
 		notify();
 	}

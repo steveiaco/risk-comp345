@@ -74,13 +74,39 @@ void ObserverPlayerPhase::displaySetup() {
 }
 /**Display information for reinforce phase*/
 void ObserverPlayerPhase::displayReinforce() {
+	//Get current player
+	Player* crrtPlayer = game->getCurrentPlayer();
+	//Display a message
+	std::cout << "Every turn begins with a reinforcement. You may fortify any country in your posession.\n\n";
+	std::cout << game->getCurrentPlayer()->getName() << ", it is your turn to reinforcement. The following countries are yours: \n";
+	game->getCurrentPlayer()->printCountriesOwned("\t");
+	//Show player their cards
+	std::cout << "If you have cards, you may also exchange them.\n";
+	crrtPlayer->displayHand();
+	std::cout << std::endl;
+	std::cout << std::endl;
 }
 /**Display information for attack phase*/
 void ObserverPlayerPhase::displayAttack() {
+	//Get current player
+	Player* crrtPlayer = game->getCurrentPlayer();
+	//Display a message
+	std::cout << "The second step is to attack neighboring countries owned by enemies (if any).\n\n";
+	std::cout << game->getCurrentPlayer()->getName() << ", it is your turn to attack.\n";
+	game->getCurrentPlayer()->displayAttackable();
+	std::cout << std::endl;
 }
 /**Display information for fortify phase*/
 void ObserverPlayerPhase::displayFortify() {
+	//Get current player
+	Player* crrtPlayer = game->getCurrentPlayer();
+	//Display a message
+	std::cout << "The last step is to fortify countries. You can fortify from any country with more than one troop to any neighboring owned country.\n\n";
+	std::cout << game->getCurrentPlayer()->getName() << ", it is your turn to fortify. The following countries are yours: \n";
+	game->getCurrentPlayer()->printCountriesOwned("\t");
+	std::cout << std::endl;
 }
 /**Display information for end phase*/
 void ObserverPlayerPhase::displayEnd() {
+
 }

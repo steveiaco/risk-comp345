@@ -3,9 +3,8 @@
 HumanPlayer::HumanPlayer() { }
 
 bool HumanPlayer::askAttack(Player* thisPlayer) {
-	std::cout << thisPlayer->getName() << ", would you like to attack? (y/n) ";
 	std::string input;
-	std::getline(std::cin, input); std::cout << std::endl;
+	std::getline(std::cin, input);
 	//ask if player would like to continue attacking
 	if (input == "N" || input == "n")
 		return false;
@@ -16,11 +15,8 @@ bool HumanPlayer::askAttack(Player* thisPlayer) {
 int HumanPlayer::chooseDefenderRoll(Country * defendingCountry) {
 	int defenderRoll = NULL;
 	std::string defenderRollString;
-
-
 	while (defenderRoll == NULL) {
-		std::cout << defendingCountry->getOccupant()->getName() << ": how many dice would you like to use to defend? [1-" << ((defendingCountry->getTroops() > 2) ? 2 : (defendingCountry->getTroops())) << "] ";
-		std::getline(std::cin, defenderRollString); std::cout << std::endl;
+		std::getline(std::cin, defenderRollString);
 		try {
 			defenderRoll = std::stoi(defenderRollString);
 		}
@@ -34,8 +30,8 @@ int HumanPlayer::chooseDefenderRoll(Country * defendingCountry) {
 			defenderRoll = NULL;
 			continue;
 		}
+		std::cout << defendingCountry->getOccupant()->getName() << ": how many dice would you like to use to defend? [1-" << ((defendingCountry->getTroops() > 2) ? 2 : (defendingCountry->getTroops())) << "] ";
 	}
-
 	return defenderRoll;
 }
 
@@ -46,7 +42,6 @@ int HumanPlayer::chooseAttackerRoll(Country * attackingCountry)
 	std::string attackerRollString;
 
 	while (attackerRoll == NULL) {
-		std::cout << thisPlayer->getName() << ": how many dice would you like to use to attack? [1-" << ((attackingCountry->getTroops() - 1 > 3) ? 3 : (attackingCountry->getTroops() - 1)) << "] ";
 		std::getline(std::cin, attackerRollString); std::cout << std::endl;
 		try {
 			attackerRoll = std::stoi(attackerRollString);
@@ -61,8 +56,8 @@ int HumanPlayer::chooseAttackerRoll(Country * attackingCountry)
 			attackerRoll = NULL;
 			continue;
 		}
+		std::cout << thisPlayer->getName() << ": how many dice would you like to use to attack? [1-" << ((attackingCountry->getTroops() - 1 > 3) ? 3 : (attackingCountry->getTroops() - 1)) << "] ";
 	}
-
 	return attackerRoll;
 }
 
@@ -71,15 +66,12 @@ Country * HumanPlayer::chooseAttackFrom(Player* thisPlayer)
 	Country* attackingCountry = NULL;
 	while (attackingCountry == NULL) {
 		std::string inp;
-		std::cout << thisPlayer->getName() << ": please select a country to attack from (cancel to cancel): ";
-		std::getline(std::cin, inp); std::cout << std::endl;
+		std::getline(std::cin, inp);
 		if (inp == "cancel")
 			return NULL;
 		//Make sure country is valid
 		try {
-			
 			attackingCountry = Country::getCountryFromSet(inp, thisPlayer->getCountriesOwned());
-
 			//check if player owns the attacking country
 			if (!thisPlayer->ownsCountry(attackingCountry)) {
 				attackingCountry = NULL;
@@ -100,43 +92,36 @@ Country * HumanPlayer::chooseAttackFrom(Player* thisPlayer)
 			std::cout << e.what() << std::endl;
 		}
 	}
-
 	return attackingCountry;
 }
 
 Country * HumanPlayer::chooseAttackTo(Country* attackingCountry) {
-
 	Player* thisPlayer = attackingCountry->getOccupant();
-
 	Country* defendingCountry = NULL;
 	while (defendingCountry == NULL) {
 		std::string inp = std::string();
-		std::cout << thisPlayer->getName() << ": please select a country to attack (cancel to cancel): ";
-		std::getline(std::cin, inp); std::cout << std::endl;
-
+		std::getline(std::cin, inp);
 		try {
 			if (inp == "cancel")
 				break;
 			else {
 				defendingCountry = Country::getCountryFromSet(inp,thisPlayer->getCountriesOwned());
-
 				//if the attacking player owns the selected defending country, then it is an invalid selection
 				if (thisPlayer->ownsCountry(defendingCountry)) {
 					defendingCountry = NULL;
 					throw std::invalid_argument("You cannot attack your own country.");
 				}
-
 				//defending country must be a neighbor of the attacking country
 				if (!defendingCountry->isNeighbor(attackingCountry)) {
 					defendingCountry = NULL;
 					throw std::invalid_argument("Country must be a neighbor.");
 				}
-
 			}
 		}
 		catch (std::invalid_argument e) {
 			std::cout << e.what() << std::endl;
 		}
+		std::cout << thisPlayer->getName() << ": please select a country to attack (cancel to cancel): ";
 	}
 
 	return defendingCountry;
@@ -146,9 +131,8 @@ int HumanPlayer::chooseMoveTroops(Country* attackingCountry, Country* defendingC
 {
 	std::string numTroopsToMoveString;
 	int numTroopsToMove = NULL;
-	std::cout << std::endl;
 	while (numTroopsToMove == NULL) {
-		std::getline(std::cin, numTroopsToMoveString); std::cout << std::endl;
+		std::getline(std::cin, numTroopsToMoveString);
 		try {
 			numTroopsToMove = std::stoi(numTroopsToMoveString);
 			if (numTroopsToMove >= attackingCountry->getTroops() || numTroopsToMove < 0) {
@@ -161,10 +145,8 @@ int HumanPlayer::chooseMoveTroops(Country* attackingCountry, Country* defendingC
 		catch (std::invalid_argument& e) {
 			std::cout << "Invalid input! Input must be a valid integer value.\n";
 			numTroopsToMove = NULL;
-			continue;
 		}
 	}
-
 	return numTroopsToMove;
 }
 
@@ -172,9 +154,8 @@ int HumanPlayer::chooseMoveTroops(Country* attackingCountry, Country* defendingC
 bool HumanPlayer::askFortify(Player * thisPlayer)
 {
 	//Ask if player would like to fortify
-	std::cout << thisPlayer->getName() << ": would you like to fortify? (y/n) ";
 	std::string input;
-	std::getline(std::cin, input); std::cout << std::endl;
+	std::getline(std::cin, input);
 	if (input == "N" || input == "n")
 		return false;
 	return true;
@@ -185,8 +166,7 @@ Country * HumanPlayer::chooseOriginCountryFortify(Player * thisPlayer)
 	Country* moveFrom = NULL;
 	while (moveFrom == NULL) {
 		std::string inp;
-		std::cout << std::endl << thisPlayer->getName() << ": please select a country to move players from (cancel to cancel): ";
-		std::getline(std::cin, inp); std::cout << std::endl;
+		std::getline(std::cin, inp);
 		if (inp == "cancel")
 			break;
 		try {
@@ -206,20 +186,16 @@ Country * HumanPlayer::chooseOriginCountryFortify(Player * thisPlayer)
 			std::cout << e.what();
 		}
 	}
-
 	return moveFrom;
 }
 
 Country * HumanPlayer::chooseDestinationCountryFortify(Country * originCountry)
 {
-
 	Player* thisPlayer = originCountry->getOccupant();
-
 	Country* moveTo = NULL;
 	/*GET VALID MOVE TO COUNTRY*/
 	while (moveTo == NULL) {
 		std::string inp = std::string();
-		std::cout << std::endl << thisPlayer->getName() << ": please select a country to move armies to (cancel to cancel): ";
 		std::getline(std::cin, inp); std::cout << std::endl;
 		try {
 			if (inp == "cancel")
@@ -240,46 +216,69 @@ Country * HumanPlayer::chooseDestinationCountryFortify(Country * originCountry)
 			std::cout << e.what();
 		}
 	}
-
 	return moveTo;
 }
 
-Country * HumanPlayer::chooseReinforceCountry(Player * thisPlayer)
+Country * HumanPlayer::chooseReinforceCountry(Player* thisPlayer)
 {
 	std::string countrySelectedString;
-	std::getline(std::cin, countrySelectedString); std::cout << std::endl;
-
 	Country* countrySelected = NULL;
 	while (countrySelected == NULL) {
+		std::getline(std::cin, countrySelectedString);
 		try {
 			countrySelected = Country::getCountryFromSet(countrySelectedString, thisPlayer->getCountriesOwned());
 		}
 		catch (std::invalid_argument e) {
-			std::cout << thisPlayer->getName() << ": you do not own this country or it does not exist, try again.\n";
-			return NULL;
+			std::cout << thisPlayer->getName() << ": you do not own this country or it does not exist, try again : ";
 		}
 	}
+	return countrySelected;
 }
 
-int HumanPlayer::chooseNumberOfTroopsToReinforce(Country * reinforcedCountry, int troopsAvailable)
-{
-	std::string numTroopsToPlaceString;
-	int numTroopsToPlace;
-	do {
-		std::cout << "You have selected " << reinforcedCountry->getName() << ". How many troops would you like to place on this country? (Max: " << troopsAvailable << ") : ";
-		std::getline(std::cin, numTroopsToPlaceString); std::cout << std::endl;
-		numTroopsToPlace = std::stoi(numTroopsToPlaceString);
-	} while (numTroopsToPlace > troopsAvailable || numTroopsToPlace < 0);
-	
-	return numTroopsToPlace;
+int HumanPlayer::chooseNumberOfTroopsToReinforce(Country * reinforcedCountry, int troopsAvailable) {
+	std::string in;
+	int numTroopsToReinforce = NULL;
+	while (numTroopsToReinforce == NULL) {
+		std::getline(std::cin, in);
+		try {
+			numTroopsToReinforce = std::stoi(in);
+			if (numTroopsToReinforce > troopsAvailable || numTroopsToReinforce < 0) {
+				std::cout << "Invalid input! Input must be at least 0 and less than " << troopsAvailable << ". Try again: ";
+				numTroopsToReinforce = NULL;
+				continue;
+			}
+			break;
+		}
+		catch (std::invalid_argument& e) {
+			std::cout << "Invalid input! Input must be a valid integer value. Try again: ";
+			numTroopsToReinforce = NULL;
+		}
+	}
+	return numTroopsToReinforce;
 }
 
-bool HumanPlayer::askExchange()
-{
-	return false;
+bool HumanPlayer::askExchange() {
+	//Ask if player would like to exchange
+	std::string input;
+	std::getline(std::cin, input);
+	if (input == "N" || input == "n")
+		return false;
+	return true;
 }
 
-Country * HumanPlayer::askSetup(Player *)
-{
-	return nullptr;
+Country * HumanPlayer::askSetup(Player* player) {
+	std::string countrySelectedString;
+	Country* countrySelected = NULL;
+	while (countrySelected == NULL) {
+		std::getline(std::cin, countrySelectedString);
+		if (countrySelectedString == "cancel")
+			return NULL;
+		try {
+			countrySelected = Country::getCountryFromSet(countrySelectedString, player->getCountriesOwned());
+		}
+		catch (std::invalid_argument e) {
+			std::cout << player->getName() << ": you do not own this country or it does not exist, try again : ";
+		}
+	}
+	return countrySelected;
 }

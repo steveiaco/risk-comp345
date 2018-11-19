@@ -15,7 +15,7 @@ bool PlayerStrategy::attack(Player* player) {
 		std::cout << player->getName() << ": Choose a country to attack from (cancel to cancel): ";
 		Country* attackingCountry = chooseAttackFrom(player);
 		if (attackingCountry == NULL)
-			continue;
+			return false;
 		//get a valid defending country and store it in defendingCountry
 		std::cout << player->getName() << ": Choose a country to attack from (cancel to cancel): ";
 		Country* defendingCountry = chooseAttackTo(attackingCountry);
@@ -57,9 +57,6 @@ void PlayerStrategy::reinforce(Player* player) {
 	//Get the number of troops available from the countries the player owns and the continent values
 	troopsAvailable += player->calculateTroopsAwarded();
 
-	//Show player their cards
-	player->displayHand();
-	std::cout << std::endl;
 	//Check whether the player must exchange cards (has more than 6 cards)
 	while (player->mustExchange()) {
 		std::cout << "You have " << player->getNumCards() << ", cards. You can hold no more than 5 at a time. Here is an automatic exchange.\n";
@@ -74,8 +71,6 @@ void PlayerStrategy::reinforce(Player* player) {
 
 	//Now we can ask the player to start placing their troops
 	std::cout << "You have a total of " << troopsAvailable << " troops available to place.\n";
-	std::cout << "You can now start placing troops on the countries you own.\nHere is a list of countries in your possession:\n";
-	player->printCountriesOwned("\t");
 	//Loop until player runs out of reinforcements
 	while (troopsAvailable != 0) {
 		//Get country to reinforce
