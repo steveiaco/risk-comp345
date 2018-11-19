@@ -76,7 +76,7 @@ void PlayerStrategy::reinforce(Player* player) {
 	while (troopsAvailable != 0) {
 		//Get country to reinforce
 		std::cout << "You have " << troopsAvailable << " troops left to place, which country would you like to add troops to? ";
-		Country* countrySelected = chooseAttackFrom(player);
+		Country* countrySelected = chooseReinforceCountry(player);
 		//Get number of troops to reinforce with
 		std::cout << "You have selected " << countrySelected->getName() << ". How many troops would you like to place on this country? (Max: " << troopsAvailable << ") : ";
 		int numTroopsToPlace = chooseNumberOfTroopsToReinforce(countrySelected, troopsAvailable);
@@ -119,7 +119,13 @@ void PlayerStrategy::fortify(Player* player) {
 			continue;
 
 		//Make the move
-		player->fortify(moveFrom, moveTo, numTroops);
+		try {
+			player->fortify(moveFrom, moveTo, numTroops);
+		}
+		catch (std::invalid_argument e) {
+			std::cout << e.what();
+
+		}
 		std::cout << player->getName() << ": successfully moved " << numTroops << " troop(s) from " << moveFrom->getName() << " to " << moveTo->getName() << ".\n";
 		return;
 	}

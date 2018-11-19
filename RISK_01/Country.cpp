@@ -76,7 +76,7 @@ std::unordered_set<Country*> Country::getReachableWithinContinent(std::unordered
 }
 /**Check if country is neighbor of another country. Good for checking if attacks are valid.*/
 bool Country::isNeighbor(Country * country) const {
-	if (neighborList.count(country))
+	if (neighborList.count(country)>0)
 		return true;
 	else
 		return false;
