@@ -12,16 +12,20 @@ bool PlayerStrategy::attack(Player* player) {
 		//main loop used for attack phase
 		bool firstSuccess = false; //We want to give player a card for first victory
 		//get a valid attacking country and store it in attackingCountry
+		std::cout << player->getName() << ": Choose a country to attack from (cancel to cancel): ";
 		Country* attackingCountry = chooseAttackFrom(player);
 		if (attackingCountry == NULL)
 			continue;
 		//get a valid defending country and store it in defendingCountry
+		std::cout << player->getName() << ": Choose a country to attack from (cancel to cancel): ";
 		Country* defendingCountry = chooseAttackTo(attackingCountry);
 		if (defendingCountry == NULL)
 			continue;
 		//get a number of attacking die
+		std::cout << player->getName() << ": Choose a number of dice to attack with [1," << ((attackingCountry->getTroops()>3)? 3 : attackingCountry->getTroops()) << "] : ";
 		int attackerRoll = chooseAttackerRoll(attackingCountry);
 		//get a number of defending die
+		std::cout << player->getName() << ": Choose a number of dice to defend with [1," << ((defendingCountry->getTroops() > 1) ? 2 : 1) << "] : ";
 		int defenderRoll = defendingCountry->getOccupant()->getStrategy()->chooseDefenderRoll(defendingCountry);
 		//if we get here, then we have successfully selected an attacker and attackee, move on to calling the attack function.
 		bool attackSuccessful = false; //stores whether attacker has taken over defending country
@@ -124,7 +128,7 @@ void PlayerStrategy::fortify(Player* player) {
 		}
 		catch (std::invalid_argument e) {
 			std::cout << e.what();
-
+			exit(1);
 		}
 		std::cout << player->getName() << ": successfully moved " << numTroops << " troop(s) from " << moveFrom->getName() << " to " << moveTo->getName() << ".\n";
 		return;

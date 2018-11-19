@@ -4,6 +4,8 @@
 class Deck;
 
 #include "Card.h"
+#include "Deck.h"
+#include "Map.h"
 #include <iostream>
 #include <unordered_set>
 #include <stdlib.h>
