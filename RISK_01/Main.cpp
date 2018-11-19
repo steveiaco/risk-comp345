@@ -3,6 +3,7 @@
 #include "ObserverPlayerPhase.h"
 #include "ObserverStats.h"
 #include "AggressiveAI.h"
+#include "BenevolentAI.h"
 #include "HumanPlayer.h"
 #include <iostream>
 #include <string>
@@ -61,12 +62,13 @@ int main() {
 	//Create player objects and AI
 	HumanPlayer* human = new HumanPlayer();
 	AggressiveAI* aggressive = new AggressiveAI();
+	BenevolentAI* benevolent = new BenevolentAI();
 	std::vector<Player*> players = std::vector<Player*>();
 	for (int i = 1; i < numPlayers+1; i++) {
 		std::string playerName;
 		std::cout << "Enter name of player " << i << ": ";
 		std::getline(std::cin, playerName);
-		players.push_back(new Player(playerName, aggressive));
+		players.push_back(new Player(playerName, benevolent));
 	}
 	std::cout << std::endl;
 	//Create deck

@@ -17,6 +17,7 @@ Country* BenevolentAI::getWeakest(Player* player) {
 	for (Country* country : countriesOwned)
 		if (country->getTroops() < weakest->getTroops())
 			weakest = country;
+	return weakest;
 }
 /**Prompt for where to place setup troop.*/
 Country* BenevolentAI::askSetup(Player* player) {
@@ -83,30 +84,11 @@ int BenevolentAI::chooseAttackerRoll(Country* attackingCountry) {
 }
 /**Chose country to attack from*/
 Country* BenevolentAI::chooseAttackFrom(Player* player) {
-	//Chose strongest country (we already know that it is capable of attacking if we got here because player's troops will only be concentrated on strongest country)
-	Country* toRet = getWeakest(player);
-	//Display a message indicating what happened
-	std::cout << toRet->getName() << "\n";
-	//Return answer
-	return toRet;
+	return NULL; //these methods will never be used as BenevolentAI never attacks
 }
 /**Chose country to attack (given origin)*/
 Country* BenevolentAI::chooseAttackTo(Country* attackFrom) {
-	//Find the weakest attackable neighbor
-	std::unordered_set<Country*> neighbors = attackFrom->getNeighbors();
-	Country* weakest = NULL;
-	//Begin by setting weakest to some country that is not owned
-	for (Country* country : neighbors)
-		if (country->getOccupant() != attackFrom->getOccupant())
-			weakest = country;
-	//Now change weakest country to weakest country
-	for (Country* country : neighbors)
-		if ((country->getOccupant() != attackFrom->getOccupant()) && (country->getTroops() < weakest->getTroops()))
-			weakest = country;
-	//Display a message indicating what happened
-	std::cout << weakest->getName() << "\n";
-	//Return answer
-	return weakest;
+	return NULL; //these methods will never be used as BenevolentAI never attacks
 }
 /**Chose number of troops to move from one country to another after a victory*/
 int BenevolentAI::chooseMoveTroops(Country* attackingCountry, Country* defendingCountry) {
@@ -120,25 +102,39 @@ int BenevolentAI::chooseMoveTroops(Country* attackingCountry, Country* defending
 
 //FORTIFY
 /**Returns true if player wants to fortify, false otherwise*/
+
 bool BenevolentAI::askFortify(Player* player) {
-	//Players troops should always be concentrated in one country, player should only fortify if they can not attack
-	if (getStrongest(player)->canAttack()) {
-		//Display a message indicating what happened
-		std::cout << "no\n";
-		//Return answer
-		return false;
-	}
-	else {
-		//Display a message indicating what happened
-		std::cout << "yes\n";
-		//Return answer
-		return true;
+	bool fortify = false;
+	//if the player owns a country that has a weaker owned neighboring country, then we can fortify
+	for (Country* country : player->getCountriesOwned()) {
+		for (Country* neighbor : country->getNeighbors())
+			if (country->getTroops() < neighbor->getTroops())
+				fortify = true;
+
+		if (fortify) {
+			//Display a message indicating what happened
+			std::cout << "yes\n";
+			//Return answer
+			return true;
+		}
+		else {
+			//Display a message indicating what happened
+			std::cout << "no\n";
+			//Return answer
+			return false;
+		}
 	}
 }
-/**Chose country to fortify from*/
+
+	/**Chose country to fortify from*/
 Country* BenevolentAI::chooseOriginCountryFortify(Player* player) {
-	//Player can only fortify from strongest country
-	Country* toRet = getStrongest(player);
+
+	Country* toRet = NULL;
+	for (Country* country : player->getCountriesOwned()) {
+		for (Country* neighbor : country->getNeighbors())
+			if (country->getTroops() < neighbor->getTroops())
+				toRet = neighbor;
+	}
 	//Display a message indicating what happened
 	std::cout << toRet->getName() << "\n";
 	//Return answer
@@ -146,15 +142,11 @@ Country* BenevolentAI::chooseOriginCountryFortify(Player* player) {
 }
 /**Chose country to fortify to (guven origin)*/
 Country* BenevolentAI::chooseDestinationCountryFortify(Country* originCountry) {
-	//Though we could move the troops to a country from which the player can attack more efficiently via pathfinding, we will opt for instructing the player to make random moves instead (over time, this will put the player into an attackable position)
-	std::unordered_set<Country*> neighbors = originCountry->getNeighbors();
-	srand(time(NULL)); //initialize the random seed
-	int randIndex = std::rand() % neighbors.size(); //Country will always have at least one neighbor (graph is fully connected)
-	std::unordered_set<Country*>::const_iterator it(neighbors.begin());
-	advance(it, randIndex);
-	Country* destination = *it;
-	//Display a message indicating what happened
-	std::cout << destination->getName() << "\n";
-	//Return answer
+	//we will choose the weakest owned neighboring country
+	Country* destination = NULL;
+	for (Country* country : originCountry->getNeighbors()) {
+		if (originCountry->getOccupant()->ownsCountry(country) && country->getTroops() < originCountry->getTroops() )
+			destination = country;
+	}
 	return destination;
 }

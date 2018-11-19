@@ -44,7 +44,7 @@ private:
 	/**Chose country to attack (given origin)*/
 	Country* chooseAttackTo(Country* attackFrom);
 	/**Chose number of troops to move from one country to another after a victory*/
-	int moveTroops(Country* attackingCountry, Country* defendingCountry);
+	int chooseMoveTroops(Country* attackingCountry, Country* defendingCountry);
 
 	//FORTIFY
 	/**Returns true if player wants to fortify, false otherwise*/
