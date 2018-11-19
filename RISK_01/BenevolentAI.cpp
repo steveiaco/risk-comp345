@@ -55,26 +55,16 @@ bool BenevolentAI::askExchange() {
 //ATTACK
 /**Returns true if player wants to attack, false otherwise*/
 bool BenevolentAI::askAttack(Player* player) {
-	//Player will attack if strongest country is capable of attacking
-	if (getStrongest(player)->canAttack()) {
-		//Display a message indicating what happened
-		std::cout << "yes\n";
-		//Return answer
-		return true;
-	}
-	else {
-		//Display a message indicating what happened
-		std::cout << "no\n";
-		//Return answer
-		return false;
-	}
+	//Player will never attack
+	//Display a message indicating what happened
+	std::cout << "no\n";
+	//Return answer
+	return false;
 }
 /**Get number of dice player would like to defend with (given defending country)*/
 int BenevolentAI::chooseDefenderRoll(Country* defendingCountry) {
-	//AI will roll the maximum number of die possible
-	int roll = 2;
-	if (defendingCountry->getTroops() == 1)
-		roll = 1;
+	//AI will roll the minimum number of die
+	int roll = 1;
 	//Display a message indicating what happened
 	std::cout << roll << "\n";
 	//Return answer

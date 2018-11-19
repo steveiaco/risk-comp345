@@ -7,6 +7,7 @@ class Game;
 #include "Player.h"
 #include "Deck.h"
 #include "Map.h"
+#include "Deck.h"
 #include <vector>
 #include <random>
 #include <algorithm>
