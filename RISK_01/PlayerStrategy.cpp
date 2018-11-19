@@ -84,6 +84,14 @@ void PlayerStrategy::reinforce(Player* player) {
 		//Get number of troops to reinforce with
 		std::cout << "You have selected " << countrySelected->getName() << ". How many troops would you like to place on this country? (Max: " << troopsAvailable << ") : ";
 		int numTroopsToPlace = chooseNumberOfTroopsToReinforce(countrySelected, troopsAvailable);
+		//Do the reinforce
+		try {
+			player->reinforce(countrySelected, numTroopsToPlace);
+		}
+		catch (std::invalid_argument e) {
+			std::cout << e.what();
+			exit(1);
+		}
 		//Display results
 		std::cout << "You have placed " << numTroopsToPlace << " troops on " << countrySelected->getName() << " giving it " << countrySelected->getTroops() << " total members.\n";
 		troopsAvailable -= numTroopsToPlace;

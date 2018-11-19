@@ -141,7 +141,7 @@ int AggressiveAI::chooseMoveTroops(Country* attackingCountry, Country* defending
 /**Returns true if player wants to fortify, false otherwise*/
 bool AggressiveAI::askFortify(Player* player) {
 	//Players troops should always be concentrated in one country, player should only fortify if they can not attack
-	if (getStrongest(player)->canAttack() || getStrongest(player)->getTroops()!=1){
+	if (getStrongest(player)->canAttack() || getStrongest(player)->getTroops()==1){
 		//Display a message indicating what happened
 		std::cout << "no\n";
 		//Return answer

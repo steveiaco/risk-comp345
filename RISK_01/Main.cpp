@@ -60,7 +60,7 @@ int main() {
 	std::cout << std::endl;
 	//Create player objects and AI
 	HumanPlayer* human = new HumanPlayer();
-	HumanPlayer* aggressive = new HumanPlayer();
+	AggressiveAI* aggressive = new AggressiveAI();
 	std::vector<Player*> players = std::vector<Player*>();
 	for (int i = 1; i < numPlayers+1; i++) {
 		std::string playerName;
