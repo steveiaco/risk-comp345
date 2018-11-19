@@ -6,7 +6,8 @@ PlayerStrategy::PlayerStrategy() { }
 PlayerStrategy::~PlayerStrategy() { }
 
 /**Prompt for attacks. Determines attacks for passed player.*/
-bool PlayerStrategy::attack(Player* player) {
+bool PlayerStrategy::attack(Player* player)
+{
 	//We will put this inside of a loop so that we can easily restart the prompts if the user so chooses
 	while(true) {
 		//main loop used for attack phase
@@ -39,11 +40,9 @@ bool PlayerStrategy::attack(Player* player) {
 			//Make the move
 			defendingCountry->addTroops(numTroopsToMove);
 			attackingCountry->addTroops(-numTroopsToMove);
-			//Return true (attack was successful)
-			return true;
+			return true;//Return true (attack was successful)
 		}
-		//Return false (attack was not successful)
-		return false;
+		return false;//return false (attack was not successful)
 	}
 }
 
@@ -62,11 +61,10 @@ void PlayerStrategy::reinforce(Player* player) {
 		troopsAvailable += player->exchange();
 	}
 	//Now we will check whether the player can exchange. If they can, we will ask if they want to exchange
-	while (player->canExchange()) {
+	while (player->canExchange())
 		std::cout << "You can exchange 3 of your cards. Would you like to do so? (y/n) ";
 		if (askExchange())
 			troopsAvailable += player->exchange();
-	}
 
 	//Now we can ask the player to start placing their troops
 	std::cout << "You have a total of " << troopsAvailable << " troops available to place.\n";
@@ -76,7 +74,7 @@ void PlayerStrategy::reinforce(Player* player) {
 	while (troopsAvailable != 0) {
 		//Get country to reinforce
 		std::cout << "You have " << troopsAvailable << " troops left to place, which country would you like to add troops to? ";
-		Country* countrySelected = chooseReinforceCountry(player);
+		Country* countrySelected = chooseAttackFrom(player);
 		//Get number of troops to reinforce with
 		std::cout << "You have selected " << countrySelected->getName() << ". How many troops would you like to place on this country? (Max: " << troopsAvailable << ") : ";
 		int numTroopsToPlace = chooseNumberOfTroopsToReinforce(countrySelected, troopsAvailable);
@@ -119,13 +117,7 @@ void PlayerStrategy::fortify(Player* player) {
 			continue;
 
 		//Make the move
-		try {
-			player->fortify(moveFrom, moveTo, numTroops);
-		}
-		catch (std::invalid_argument e) {
-			std::cout << e.what();
-
-		}
+		player->fortify(moveFrom, moveTo, numTroops);
 		std::cout << player->getName() << ": successfully moved " << numTroops << " troop(s) from " << moveFrom->getName() << " to " << moveTo->getName() << ".\n";
 		return;
 	}
