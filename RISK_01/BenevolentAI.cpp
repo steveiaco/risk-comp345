@@ -108,7 +108,7 @@ bool BenevolentAI::askFortify(Player* player) {
 	//if the player owns a country that has a weaker owned neighboring country, then we can fortify
 	for (Country* country : player->getCountriesOwned()) {
 		for (Country* neighbor : country->getNeighbors())
-			if (country->getTroops() < neighbor->getTroops())
+			if (country->getTroops() > neighbor->getTroops())
 				fortify = true;
 
 		if (fortify) {
