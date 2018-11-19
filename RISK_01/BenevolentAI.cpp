@@ -84,7 +84,7 @@ int BenevolentAI::chooseAttackerRoll(Country* attackingCountry) {
 /**Chose country to attack from*/
 Country* BenevolentAI::chooseAttackFrom(Player* player) {
 	//Chose strongest country (we already know that it is capable of attacking if we got here because player's troops will only be concentrated on strongest country)
-	Country* toRet = getStrongest(player);
+	Country* toRet = getWeakest(player);
 	//Display a message indicating what happened
 	std::cout << toRet->getName() << "\n";
 	//Return answer

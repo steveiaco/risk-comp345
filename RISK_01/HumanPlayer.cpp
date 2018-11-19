@@ -270,10 +270,8 @@ int HumanPlayer::chooseNumberOfTroopsToReinforce(Country * reinforcedCountry, in
 		std::getline(std::cin, numTroopsToPlaceString); std::cout << std::endl;
 		numTroopsToPlace = std::stoi(numTroopsToPlaceString);
 	} while (numTroopsToPlace > troopsAvailable || numTroopsToPlace < 0);
-	reinforcedCountry->getOccupant()->reinforce(reinforcedCountry, numTroopsToPlace);
-	std::cout << "You have placed " << numTroopsToPlace << " troops on " << reinforcedCountry->getName() << " giving it " << reinforcedCountry->getTroops() << " total members.\n";
 	
-	return (troopsAvailable -= numTroopsToPlace);
+	return numTroopsToPlace;
 }
 
 bool HumanPlayer::askExchange()
