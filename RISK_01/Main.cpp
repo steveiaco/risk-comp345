@@ -59,14 +59,13 @@ int main() {
 	}
 	std::cout << std::endl;
 	//Create player objects and AI
-	AggressiveAI* aggressiveAI = new AggressiveAI();
-	HumanPlayer* realPlayer = new HumanPlayer();
+	HumanPlayer* human = new HumanPlayer();
 	std::vector<Player*> players = std::vector<Player*>();
 	for (int i = 1; i < numPlayers+1; i++) {
 		std::string playerName;
 		std::cout << "Enter name of player " << i << ": ";
 		std::getline(std::cin, playerName);
-		players.push_back(new Player(playerName, realPlayer));
+		players.push_back(new Player(playerName, human));
 	}
 	std::cout << std::endl;
 	//Create deck
@@ -84,5 +83,5 @@ int main() {
 		delete player;
 	delete deck;
 	delete map;
-	delete aggressiveAI;
+	delete human;
 }

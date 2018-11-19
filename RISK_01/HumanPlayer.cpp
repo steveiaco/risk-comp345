@@ -13,8 +13,6 @@ bool HumanPlayer::askAttack(Player* thisPlayer) {
 		return true;
 }
 
-
-
 int HumanPlayer::chooseDefenderRoll(Country * defendingCountry) {
 	int defenderRoll = NULL;
 	std::string defenderRollString;
