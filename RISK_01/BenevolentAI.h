@@ -43,7 +43,6 @@ private:
 	Country* chooseAttackFrom(Player* player);
 	/**Chose country to attack (given origin)*/
 	Country* chooseAttackTo(Country* attackFrom);
-	int chooseMoveTroops(Country * attackingCountry, Country * defendingCountry);
 	/**Chose number of troops to move from one country to another after a victory*/
 	int moveTroops(Country* attackingCountry, Country* defendingCountry);
 

@@ -107,13 +107,7 @@ void Game::assignArmies() {
 				Country* countryChosen;
 				std::cout << "You have " << armiesLeft << " troops remaining. Enter the name of a country where you would place one: ";
 				countryChosen = player->askSetup(); 
-				std::cout << countryChosen->getName();
-				try {
-					player->reinforce(countryChosen, 1);
-				}
-				catch (std::invalid_argument e) {
-					std::cout << "Error";
-				}
+				player->reinforce(countryChosen, 1);
 				//Returns null if player chose to skip
 				if (countryChosen == NULL)
 					return;

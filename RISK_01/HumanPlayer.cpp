@@ -13,8 +13,6 @@ bool HumanPlayer::askAttack(Player* thisPlayer) {
 		return true;
 }
 
-
-
 int HumanPlayer::chooseDefenderRoll(Country * defendingCountry) {
 	int defenderRoll = NULL;
 	std::string defenderRollString;
@@ -272,12 +270,7 @@ int HumanPlayer::chooseNumberOfTroopsToReinforce(Country * reinforcedCountry, in
 		std::getline(std::cin, numTroopsToPlaceString); std::cout << std::endl;
 		numTroopsToPlace = std::stoi(numTroopsToPlaceString);
 	} while (numTroopsToPlace > troopsAvailable || numTroopsToPlace < 0);
-	try {
-		reinforcedCountry->getOccupant()->reinforce(reinforcedCountry, numTroopsToPlace);
-	}
-	catch (std::invalid_argument e) {
-		std::cout << "You do not own this country.";
-	}
+	reinforcedCountry->getOccupant()->reinforce(reinforcedCountry, numTroopsToPlace);
 	std::cout << "You have placed " << numTroopsToPlace << " troops on " << reinforcedCountry->getName() << " giving it " << reinforcedCountry->getTroops() << " total members.\n";
 	
 	return (troopsAvailable -= numTroopsToPlace);
@@ -288,21 +281,7 @@ bool HumanPlayer::askExchange()
 	return false;
 }
 
-Country * HumanPlayer::askSetup(Player * thisPlayer)
+Country * HumanPlayer::askSetup(Player *)
 {
-	Country* countrySelected = NULL;
-
-	while (countrySelected == NULL) {
-		std::string countrySelectedString;
-		std::getline(std::cin, countrySelectedString); std::cout << std::endl;
-
-		try {
-			countrySelected = Country::getCountryFromSet(countrySelectedString, thisPlayer->getCountriesOwned());
-		}
-		catch (std::invalid_argument e) {
-			std::cout << thisPlayer->getName() << ": you do not own this country or it does not exist, try again.\nEnter the name of a country where you would place one:";
-		}
-	
-	}
-	return countrySelected;
+	return nullptr;
 }

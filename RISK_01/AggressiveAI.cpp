@@ -17,12 +17,15 @@ Country* AggressiveAI::getStrongest(Player* player) {
 	for (Country* country : countriesOwned)
 		if (country->getTroops() > strongest->getTroops())
 			strongest = country;
-	//If the strongest country has 1 troop, all countries are the strongest (a country can have no less than one troop). In this case, we can make the ai a little smarter by having it choose a country that can attack
+	//If the strongest country has 1 troop, all countries are the strongest (a country can have no less than one troop). In this case, we can make the ai a little smarter by having it choose a country that has attackable neighbors
 	if (strongest->getTroops() != 1)
 		return strongest;
 	for (Country* country : countriesOwned)
-		if (country->canAttack())
-			return country;
+		for (Country* neighbor : country->getNeighbors())
+			if (neighbor->getOccupant() != country->getOccupant())
+				return country;
+	//This should never happen
+	return NULL;
 }
 /**Prompt for where to place setup troop.*/
 Country* AggressiveAI::askSetup(Player* player) {
@@ -138,7 +141,7 @@ int AggressiveAI::chooseMoveTroops(Country* attackingCountry, Country* defending
 /**Returns true if player wants to fortify, false otherwise*/
 bool AggressiveAI::askFortify(Player* player) {
 	//Players troops should always be concentrated in one country, player should only fortify if they can not attack
-	if (getStrongest(player)->canAttack()){
+	if (getStrongest(player)->canAttack() || getStrongest(player)->getTroops()!=1){
 		//Display a message indicating what happened
 		std::cout << "no\n";
 		//Return answer
@@ -164,9 +167,13 @@ Country* AggressiveAI::chooseOriginCountryFortify(Player* player) {
 Country* AggressiveAI::chooseDestinationCountryFortify(Country* originCountry) {
 	//Though we could move the troops to a country from which the player can attack more efficiently via pathfinding, we will opt for instructing the player to make random moves instead (over time, this will put the player into an attackable position)
 	std::unordered_set<Country*> neighbors = originCountry->getNeighbors();
+	std::unordered_set<Country*> ownedNeighbors = std::unordered_set<Country*>();
+	for (Country* country : neighbors)
+		if (country->getOccupant() == originCountry->getOccupant())
+			ownedNeighbors.insert(country);
 	srand(time(NULL)); //initialize the random seed
-	int randIndex = std::rand() % neighbors.size(); //Country will always have at least one neighbor (graph is fully connected)
-	std::unordered_set<Country*>::const_iterator it(neighbors.begin());
+	int randIndex = std::rand() % ownedNeighbors.size(); //Country will always have at least one neighbor (graph is fully connected)
+	std::unordered_set<Country*>::const_iterator it(ownedNeighbors.begin());
 	advance(it, randIndex);
 	Country* destination = *it;
 	//Display a message indicating what happened
