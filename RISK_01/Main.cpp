@@ -66,7 +66,7 @@ int main() {
 		std::string playerName;
 		std::cout << "Enter name of player " << i << ": ";
 		std::getline(std::cin, playerName);
-		players.push_back(new Player(playerName, realPlayer));
+		players.push_back(new Player(playerName, aggressiveAI));
 	}
 	std::cout << std::endl;
 	//Create deck
