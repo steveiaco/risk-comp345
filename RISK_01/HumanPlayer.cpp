@@ -21,16 +21,15 @@ int HumanPlayer::chooseDefenderRoll(Country * defendingCountry) {
 			defenderRoll = std::stoi(defenderRollString);
 		}
 		catch (std::invalid_argument& e) {
-			std::cout << "Invalid input! Input must be a valid integer value.\n";
+			std::cout << "Input must be a valid integer value, how many dice would you like to use to defend ? [1 - " << ((defendingCountry->getTroops() > 2) ? 2 : (defendingCountry->getTroops())) << "] ";
 			defenderRoll = NULL;
 			continue;
 		}
 		if (defenderRoll < 1 || defenderRoll > defendingCountry->getTroops() || defenderRoll > 2) {
-			std::cout << "Invalid input! Input must be between 1 and " << ((defendingCountry->getTroops() > 2) ? 2 : (defendingCountry->getTroops())) << ".\n";
+			std::cout << "Input must be a valid integer value, how many dice would you like to use to defend ? [1 - " << ((defendingCountry->getTroops() > 2) ? 2 : (defendingCountry->getTroops())) << "] ";
 			defenderRoll = NULL;
 			continue;
 		}
-		std::cout << defendingCountry->getOccupant()->getName() << ": how many dice would you like to use to defend? [1-" << ((defendingCountry->getTroops() > 2) ? 2 : (defendingCountry->getTroops())) << "] ";
 	}
 	return defenderRoll;
 }
@@ -47,16 +46,15 @@ int HumanPlayer::chooseAttackerRoll(Country * attackingCountry)
 			attackerRoll = std::stoi(attackerRollString);
 		}
 		catch (std::invalid_argument& e) {
-			std::cout << "Invalid input! Input must be a valid integer value.\n";
+			std::cout << "Invalid input! Input must be a valid integer value, [1 - " << ((attackingCountry->getTroops() - 1 > 3) ? 3 : (attackingCountry->getTroops() - 1)) << "] ";
 			attackerRoll = NULL;
 			continue;
 		}
 		if (attackerRoll <= 0 || attackerRoll >= attackingCountry->getTroops() || attackerRoll > 3) {
-			std::cout << "Invalid input! Input must be between 1 and " << ((attackingCountry->getTroops() - 1 > 3) ? 3 : (attackingCountry->getTroops() - 1)) << ".\n";
+			std::cout << "Invalid input! Input must be [1," << ((attackingCountry->getTroops() - 1 > 3) ? 3 : (attackingCountry->getTroops() - 1)) << "] : ";
 			attackerRoll = NULL;
 			continue;
 		}
-		std::cout << thisPlayer->getName() << ": how many dice would you like to use to attack? [1-" << ((attackingCountry->getTroops() - 1 > 3) ? 3 : (attackingCountry->getTroops() - 1)) << "] ";
 	}
 	return attackerRoll;
 }
@@ -90,6 +88,7 @@ Country * HumanPlayer::chooseAttackFrom(Player* thisPlayer)
 		}
 		catch (std::invalid_argument e) {
 			std::cout << e.what() << std::endl;
+			std::cout << thisPlayer->getName() << ": Choose a country to attack from (cancel to cancel): ";
 		}
 	}
 	return attackingCountry;
@@ -103,9 +102,9 @@ Country * HumanPlayer::chooseAttackTo(Country* attackingCountry) {
 		std::getline(std::cin, inp);
 		try {
 			if (inp == "cancel")
-				break;
+				return NULL;
 			else {
-				defendingCountry = Country::getCountryFromSet(inp,thisPlayer->getCountriesOwned());
+				defendingCountry = Country::getCountryFromSet(inp,attackingCountry->getNeighbors());
 				//if the attacking player owns the selected defending country, then it is an invalid selection
 				if (thisPlayer->ownsCountry(defendingCountry)) {
 					defendingCountry = NULL;
@@ -120,8 +119,8 @@ Country * HumanPlayer::chooseAttackTo(Country* attackingCountry) {
 		}
 		catch (std::invalid_argument e) {
 			std::cout << e.what() << std::endl;
+			std::cout << thisPlayer->getName() << ": Choose a country to attack to (cancel to cancel): ";
 		}
-		std::cout << thisPlayer->getName() << ": please select a country to attack (cancel to cancel): ";
 	}
 
 	return defendingCountry;
@@ -269,9 +268,10 @@ bool HumanPlayer::askExchange() {
 Country * HumanPlayer::askSetup(Player* player) {
 	std::string countrySelectedString;
 	Country* countrySelected = NULL;
+
 	while (countrySelected == NULL) {
 		std::getline(std::cin, countrySelectedString);
-		if (countrySelectedString == "cancel")
+		if (countrySelectedString == "skip")
 			return NULL;
 		try {
 			countrySelected = Country::getCountryFromSet(countrySelectedString, player->getCountriesOwned());

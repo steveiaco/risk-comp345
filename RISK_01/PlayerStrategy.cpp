@@ -17,15 +17,15 @@ bool PlayerStrategy::attack(Player* player) {
 		if (attackingCountry == NULL)
 			return false;
 		//get a valid defending country and store it in defendingCountry
-		std::cout << player->getName() << ": Choose a country to attack from (cancel to cancel): ";
+		std::cout << player->getName() << ": Choose a country to attack to (cancel to cancel): ";
 		Country* defendingCountry = chooseAttackTo(attackingCountry);
 		if (defendingCountry == NULL)
-			continue;
+			return false;
 		//get a number of attacking die
-		std::cout << player->getName() << ": Choose a number of dice to attack with [1," << ((attackingCountry->getTroops()>3)? 3 : attackingCountry->getTroops()) << "] : ";
+		std::cout << player->getName() << ": Choose a number of dice to attack with [1," << ((attackingCountry->getTroops()>3) ? 3 : attackingCountry->getTroops() - 1) << "] : ";
 		int attackerRoll = chooseAttackerRoll(attackingCountry);
 		//get a number of defending die
-		std::cout << player->getName() << ": Choose a number of dice to defend with [1," << ((defendingCountry->getTroops() > 1) ? 2 : 1) << "] : ";
+		std::cout << defendingCountry->getOccupant()->getName() << ": Choose a number of dice to defend with [1," << ((defendingCountry->getTroops() > 1) ? 2 : 1) << "] : ";
 		int defenderRoll = defendingCountry->getOccupant()->getStrategy()->chooseDefenderRoll(defendingCountry);
 		//if we get here, then we have successfully selected an attacker and attackee, move on to calling the attack function.
 		bool attackSuccessful = false; //stores whether attacker has taken over defending country

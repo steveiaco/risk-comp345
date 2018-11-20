@@ -68,7 +68,10 @@ int main() {
 		std::string playerName;
 		std::cout << "Enter name of player " << i << ": ";
 		std::getline(std::cin, playerName);
-		players.push_back(new Player(playerName, benevolent));
+		if(i == 1)
+			players.push_back(new Player(playerName, human));
+		else
+			players.push_back(new Player(playerName, aggressive));
 	}
 	std::cout << std::endl;
 	//Create deck
@@ -76,7 +79,7 @@ int main() {
 
 	//Create game
 	Game game = Game(players, map, deck);
-	game.setSwapType(true);
+	game.setSwapType(false);
 	//Attach observers (order is important)
 	ObserverStats statsObserver = ObserverStats(&game);
 	ObserverPlayerPhase gameObserver = ObserverPlayerPhase(&game);

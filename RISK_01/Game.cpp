@@ -118,7 +118,7 @@ void Game::assignArmies() {
 					int choice = NULL;
 					std::cout << "You are currently in a mode for testing the strategy swap feature. The available strategies are Human (1), Aggressive (2), and Benevolent (3).\n";
 					while (choice == NULL) {
-						std::cout << "Chose a valid new player strategy for " << player->getName() << ": ";
+						std::cout << "Choose a valid new player strategy for " << player->getName() << ": ";
 						std::getline(std::cin, in);
 						try {
 							choice = std::stoi(in);
