@@ -4,6 +4,8 @@
 #include "ObserverStats.h"
 #include "AggressiveAI.h"
 #include "BenevolentAI.h"
+#include "CheaterAI.h"
+#include "RandomAI.h"
 #include "HumanPlayer.h"
 #include <iostream>
 #include <string>
@@ -63,15 +65,18 @@ int main() {
 	HumanPlayer* human = new HumanPlayer();
 	AggressiveAI* aggressive = new AggressiveAI();
 	BenevolentAI* benevolent = new BenevolentAI();
+	CheaterAI* cheater = new CheaterAI();
+	RandomAI* random = new RandomAI();
+
 	std::vector<Player*> players = std::vector<Player*>();
 	for (int i = 1; i < numPlayers+1; i++) {
 		std::string playerName;
 		std::cout << "Enter name of player " << i << ": ";
 		std::getline(std::cin, playerName);
 		if(i == 1)
-			players.push_back(new Player(playerName, human));
-		else
 			players.push_back(new Player(playerName, aggressive));
+		else
+			players.push_back(new Player(playerName, random));
 	}
 	std::cout << std::endl;
 	//Create deck
@@ -79,7 +84,7 @@ int main() {
 
 	//Create game
 	Game game = Game(players, map, deck);
-	game.setSwapType(false);
+	//game.setSwapType(true);
 	//Attach observers (order is important)
 	ObserverStats statsObserver = ObserverStats(&game);
 	ObserverPlayerPhase gameObserver = ObserverPlayerPhase(&game);
