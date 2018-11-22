@@ -2,6 +2,7 @@
 
 HumanPlayer::HumanPlayer() { }
 
+/*Asks player whether they would like to attack*/
 bool HumanPlayer::askAttack(Player* thisPlayer) {
 	std::string input;
 	std::getline(std::cin, input);
@@ -11,7 +12,7 @@ bool HumanPlayer::askAttack(Player* thisPlayer) {
 	else
 		return true;
 }
-
+/**Get number of dice player would like to defend with (given defending country)*/
 int HumanPlayer::chooseDefenderRoll(Country * defendingCountry) {
 	int defenderRoll = NULL;
 	std::string defenderRollString;
@@ -33,7 +34,7 @@ int HumanPlayer::chooseDefenderRoll(Country * defendingCountry) {
 	}
 	return defenderRoll;
 }
-
+/**Get number of dice player would like to attack with (given attacking country)*/
 int HumanPlayer::chooseAttackerRoll(Country * attackingCountry)
 {
 	Player* thisPlayer = attackingCountry->getOccupant();
@@ -58,7 +59,7 @@ int HumanPlayer::chooseAttackerRoll(Country * attackingCountry)
 	}
 	return attackerRoll;
 }
-
+/**Chose country to attack from*/
 Country * HumanPlayer::chooseAttackFrom(Player* thisPlayer)
 {
 	Country* attackingCountry = NULL;
@@ -93,7 +94,7 @@ Country * HumanPlayer::chooseAttackFrom(Player* thisPlayer)
 	}
 	return attackingCountry;
 }
-
+/**Chose country to attack (given origin)*/
 Country * HumanPlayer::chooseAttackTo(Country* attackingCountry) {
 	Player* thisPlayer = attackingCountry->getOccupant();
 	Country* defendingCountry = NULL;
@@ -125,7 +126,7 @@ Country * HumanPlayer::chooseAttackTo(Country* attackingCountry) {
 
 	return defendingCountry;
 }
-
+/**Chose number of troops to move from one country to another after a victory*/
 int HumanPlayer::chooseMoveTroops(Country* attackingCountry, Country* defendingCountry)
 {
 	std::string numTroopsToMoveString;
@@ -149,7 +150,7 @@ int HumanPlayer::chooseMoveTroops(Country* attackingCountry, Country* defendingC
 	return numTroopsToMove;
 }
 
-
+/**Returns true if player wants to fortify, false otherwise*/
 bool HumanPlayer::askFortify(Player * thisPlayer)
 {
 	//Ask if player would like to fortify
@@ -159,7 +160,7 @@ bool HumanPlayer::askFortify(Player * thisPlayer)
 		return false;
 	return true;
 }
-
+/**Chose country to fortify from*/
 Country * HumanPlayer::chooseOriginCountryFortify(Player * thisPlayer)
 {
 	Country* moveFrom = NULL;
@@ -187,7 +188,7 @@ Country * HumanPlayer::chooseOriginCountryFortify(Player * thisPlayer)
 	}
 	return moveFrom;
 }
-
+/**Chose country to fortify to (guven origin)*/
 Country * HumanPlayer::chooseDestinationCountryFortify(Country * originCountry)
 {
 	Player* thisPlayer = originCountry->getOccupant();
