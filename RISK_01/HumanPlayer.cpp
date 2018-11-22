@@ -1,5 +1,6 @@
 #include "HumanPlayer.h"
 
+/**Constructor*/
 HumanPlayer::HumanPlayer() { }
 
 /*Asks player whether they would like to attack*/
@@ -188,7 +189,7 @@ Country * HumanPlayer::chooseOriginCountryFortify(Player * thisPlayer)
 	}
 	return moveFrom;
 }
-/**Chose country to fortify to (guven origin)*/
+/**Chose country to fortify troops to*/
 Country * HumanPlayer::chooseDestinationCountryFortify(Country * originCountry)
 {
 	Player* thisPlayer = originCountry->getOccupant();
@@ -218,7 +219,7 @@ Country * HumanPlayer::chooseDestinationCountryFortify(Country * originCountry)
 	}
 	return moveTo;
 }
-
+/**Chose country to add troops to*/
 Country * HumanPlayer::chooseReinforceCountry(Player* thisPlayer)
 {
 	std::string countrySelectedString;
@@ -236,7 +237,7 @@ Country * HumanPlayer::chooseReinforceCountry(Player* thisPlayer)
 	}
 	return countrySelected;
 }
-
+/**Chose number of troops to add to a country*/
 int HumanPlayer::chooseNumberOfTroopsToReinforce(Country * reinforcedCountry, int troopsAvailable) {
 	std::string in;
 	int numTroopsToReinforce = NULL;
@@ -258,7 +259,7 @@ int HumanPlayer::chooseNumberOfTroopsToReinforce(Country * reinforcedCountry, in
 	}
 	return numTroopsToReinforce;
 }
-
+/**Chose country to fortify to (guven origin)*/
 bool HumanPlayer::askExchange() {
 	//Ask if player would like to exchange
 	std::string input;
@@ -267,7 +268,7 @@ bool HumanPlayer::askExchange() {
 		return false;
 	return true;
 }
-
+/**Chose country to setup troops in*/
 Country * HumanPlayer::askSetup(Player* player) {
 	std::string countrySelectedString;
 	Country* countrySelected = NULL;
