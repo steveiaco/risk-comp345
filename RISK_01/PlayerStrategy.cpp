@@ -10,7 +10,6 @@ bool PlayerStrategy::attack(Player* player) {
 	//We will put this inside of a loop so that we can easily restart the prompts if the user so chooses
 	while(true) {
 		//main loop used for attack phase
-		bool firstSuccess = false; //We want to give player a card for first victory
 		//get a valid attacking country and store it in attackingCountry
 		std::cout << player->getName() << ": Choose a country to attack from (cancel to cancel): ";
 		Country* attackingCountry = chooseAttackFrom(player);

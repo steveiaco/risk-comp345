@@ -16,10 +16,6 @@ Game::Game(std::vector<Player*> listOfPlayers, Map* theControllerMap, Deck* theD
 //DESTRUCTOR
 /**Controller destructor*/
 Game::~Game(){
-	delete map;
-	delete deck;
-	for (Player* player : players)
-		delete player;
 }
 
 //UTILITIES
@@ -41,6 +37,10 @@ void Game::start() {
 	//Assign each country to a player
 	map->assignCountries(players);
 	map->display();
+	//Chose strategies for different players
+	std::cout << std::endl;
+	for (Player* player : players)
+		swapStrategy(player);
 	//Prompt player to press to continue
 	std::cout << std::endl;
 	std::cout << "Hit enter to continue...";
@@ -104,6 +104,9 @@ void Game::assignArmies() {
 			if (0 < armiesLeft) {
 				currentPlayer = player;
 				notify();
+				//For testing, we allow the user to change type of player if swapType is enabled
+				if (swapType)
+					swapStrategy(player);
 				//Prompt player to select a country
 				Country* countryChosen;
 				std::cout << "You have " << armiesLeft << " troops remaining. Enter the name of a country where you would place one: ";
@@ -112,39 +115,6 @@ void Game::assignArmies() {
 				if (countryChosen == NULL)
 					return;
 				player->reinforce(countryChosen, 1);
-				//For testing, we allow the user to change type of player if swapType is enabled
-				if (swapType) {
-					std::string in;
-					int choice = NULL;
-					std::cout << "You are currently in a mode for testing the strategy swap feature. The available strategies are Human (1), Aggressive (2), and Benevolent (3).\n";
-					while (choice == NULL) {
-						std::cout << "Choose a valid new player strategy for " << player->getName() << ": ";
-						std::getline(std::cin, in);
-						try {
-							choice = std::stoi(in);
-							if (choice > 3 || choice < 1)
-								continue;
-						}
-						catch (std::invalid_argument e) {
-							continue;
-						}
-					}
-					//Delete previous strategy
-					PlayerStrategy* strat = player->getStrategy();
-					delete strat;
-					//Assign new strategy
-					switch (choice) {
-					case 1:
-						player->setStrategy(new HumanPlayer());
-						break;
-					case 2:
-						player->setStrategy(new AggressiveAI());
-						break;
-					case 3:
-						player->setStrategy(new BenevolentAI());
-						break;
-					}
-				}
 				pause();
 			}
 		}
@@ -163,7 +133,7 @@ void Game::attack(Player* player) {
 		std::cout << player->getName() << ": Would you like to attack? (y/n): ";
 		while (player->askAttack()) {
 			//If first success is currently false and attack is successful, player should receive a card
-			if (firstSuccess = player->promptAttack() && firstSuccess == true) {
+			if (player->promptAttack() && firstSuccess == true) {
 				firstSuccess = false;
 				player->addCard(deck->draw());
 				std::cout << player->getName() << " has received a card for their first victory this round." << std::endl;
@@ -184,6 +154,39 @@ void Game::attack(Player* player) {
 void Game::fortify(Player* player) {
 	player->promptFortify();
 	pause();
+}
+/**Prompts the user to swap strategy employed by a player for another*/
+void Game::swapStrategy(Player* player) {
+	std::string in;
+	int choice = NULL;
+	std::cout << "You are currently in a mode for testing the strategy swap feature. The available strategies are Human (1), Aggressive (2), and Benevolent (3).\n";
+	while (choice == NULL) {
+		std::cout << "Choose a valid new player strategy for " << player->getName() << ": ";
+		std::getline(std::cin, in);
+		try {
+			choice = std::stoi(in);
+			if (choice > 3 || choice < 1)
+				continue;
+		}
+		catch (std::invalid_argument e) {
+			continue;
+		}
+	}
+	//Delete previous strategy
+	PlayerStrategy* strat = player->getStrategy();
+	delete strat;
+	//Assign new strategy
+	switch (choice) {
+	case 1:
+		player->setStrategy(new HumanPlayer());
+		break;
+	case 2:
+		player->setStrategy(new AggressiveAI());
+		break;
+	case 3:
+		player->setStrategy(new BenevolentAI());
+		break;
+	}
 }
 /**Pause the output and wait for user to read*/
 void Game::pause() {

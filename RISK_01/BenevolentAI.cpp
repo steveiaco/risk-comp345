@@ -44,9 +44,9 @@ Country* BenevolentAI::chooseReinforceCountry(Player* player) {
 /**Choose number of troops to reinforce with*/
 int BenevolentAI::chooseNumberOfTroopsToReinforce(Country* reinforcedCountry, int troopsAvailable) {
 	//Display a message indicating what happened
-	std::cout << troopsAvailable << "\n";
+	std::cout << 1 << "\n";
 	//Return answer
-	return troopsAvailable;
+	return 1;
 }
 /**Ask if player wants to exchange cards for troops*/
 bool BenevolentAI::askExchange() {
@@ -94,15 +94,12 @@ Country* BenevolentAI::chooseAttackTo(Country* attackFrom) {
 	return NULL; //these methods will never be used as BenevolentAI never attacks
 }
 /**Chose number of troops to move from one country, in this case, benevolent only uses this for fortify*/
-int BenevolentAI::chooseMoveTroops(Country* attackingCountry, Country* defendingCountry) {
-	
-	int toRet = 0;
-
-	if (attackingCountry->getTroops() < 5)
-		toRet = (attackingCountry->getTroops() - 1);
-	else
-		toRet = (attackingCountry->getTroops() / 2);
-
+int BenevolentAI::chooseMoveTroops(Country* originCountry, Country* destinationCountry) {
+	//We will calculate the difference in troop count between both countries and return half of that difference if the origin country has more troops than the destination
+	int toRet = (originCountry->getTroops()- destinationCountry->getTroops())/2;
+	//Ensure that origin country has more
+	if (originCountry->getTroops() < destinationCountry->getTroops())
+		toRet = 0;
 	//Display a message indicating what happened
 	std::cout << toRet << "\n";
 	//Return answer
@@ -117,10 +114,9 @@ bool BenevolentAI::askFortify(Player* player) {
 	//if the player owns a country that has a weaker owned neighboring country, then we can fortify
 	for (Country* country : player->getCountriesOwned()) {
 		for (Country* neighbor : country->getNeighbors())
-			if ((country->getTroops() > neighbor->getTroops()) && player->ownsCountry(neighbor))
+			if (((country->getTroops()-1) > neighbor->getTroops()) && player->ownsCountry(neighbor))
 				fortify = true;
 	}
-
 		if (fortify) {
 			//Display a message indicating what happened
 			std::cout << "yes\n";
@@ -133,7 +129,6 @@ bool BenevolentAI::askFortify(Player* player) {
 			//Return answer
 			return false;
 		}
-
 }
 
 	/**Chose country to fortify from*/
@@ -143,7 +138,7 @@ Country* BenevolentAI::chooseOriginCountryFortify(Player* player) {
 
 	for (Country* country : player->getCountriesOwned()) {
 		for (Country* neighbor : country->getNeighbors())
-			if ((country->getTroops() > neighbor->getTroops()) && player->ownsCountry(neighbor))
+			if (((country->getTroops()-1) > neighbor->getTroops()) && player->ownsCountry(neighbor))
 				toRet = country;
 	}
 	//Display a message indicating what happened
@@ -163,5 +158,7 @@ Country* BenevolentAI::chooseDestinationCountryFortify(Country* originCountry) {
 			else if (destination->getTroops() > country->getTroops())
 				destination = country;
 	}
+	//Display a message indicating what happened
+	std::cout << destination->getName() << "\n";
 	return destination;
 }
