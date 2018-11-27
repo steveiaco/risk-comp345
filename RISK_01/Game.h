@@ -83,7 +83,7 @@ class Game: public Subject {
 
 		//UTILITIES
 		/**Start game (run main loop until game over)*/
-		void start();
+		Player* start();
 };
 
 #endif

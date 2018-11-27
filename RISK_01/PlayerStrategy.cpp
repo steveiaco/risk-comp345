@@ -16,7 +16,7 @@ bool PlayerStrategy::attack(Player* player) {
 		if (attackingCountry == NULL)
 			return false;
 		//get a valid defending country and store it in defendingCountry
-		std::cout << player->getName() << ": Choose a country to attack to (cancel to cancel): ";
+		std::cout << player->getName() << ": Choose a country to attack (cancel to cancel): ";
 		Country* defendingCountry = chooseAttackTo(attackingCountry);
 		if (defendingCountry == NULL)
 			return false;

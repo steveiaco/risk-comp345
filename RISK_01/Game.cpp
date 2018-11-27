@@ -20,7 +20,7 @@ Game::~Game(){
 
 //UTILITIES
 /**Set up game (assign countries, randomize play order)*/
-void Game::start() {
+Player* Game::start() {
 	currentState = SETUP;
 	system("CLS");
 	//Display a message
@@ -50,6 +50,7 @@ void Game::start() {
 	assignArmies();
 	//Launch game loop
 	runGameLoop();
+	return map->getWinner();
 }
 /**Runs main game loop until game is over*/
 void Game::runGameLoop() {
