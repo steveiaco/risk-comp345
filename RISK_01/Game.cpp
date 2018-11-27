@@ -130,18 +130,18 @@ void Game::assignArmies() {
 						}
 					}
 					//Delete previous strategy
-					PlayerStrategy* strat = player->getStrategy();
+					PlayerStrategy* strat = currentPlayer->getStrategy();
 					delete strat;
 					//Assign new strategy
 					switch (choice) {
 					case 1:
-						player->setStrategy(new HumanPlayer());
+						currentPlayer->setStrategy(new HumanPlayer());
 						break;
 					case 2:
-						player->setStrategy(new AggressiveAI());
+						currentPlayer->setStrategy(new AggressiveAI());
 						break;
 					case 3:
-						player->setStrategy(new BenevolentAI());
+						currentPlayer->setStrategy(new BenevolentAI());
 						break;
 					}
 				}

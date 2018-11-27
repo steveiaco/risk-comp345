@@ -17,7 +17,7 @@
 		std::cout << "\tRISK GAME             \n";
 		std::cout << "=======================================================================\n";
 		std::cout << std::endl;
-		std::cout << "This driver file was created to showcase the Phase Observer (Part 2) of the assignment. Here, an observer is attached to the game and is updated/notified regularly from within our game class.";
+		std::cout << "This driver file was created to showcase the Phase Observer (Part 2) of the assignment. Here, an observer is attached to the game and is updated/notified regularly from within our game class.\n";
 		//Display list of available maps
 		std::cout << "Enter one of the following maps to play (without extension):\n";
 		int i = 1;
