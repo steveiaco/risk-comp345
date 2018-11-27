@@ -9,11 +9,11 @@ class PlayerStrategy {
 public:
 	//HIGH LEVEL UTILITIES
 	/**Prompt for an attack. Returns true if attack was successful. Determines attack for passed player.*/
-	bool attack(Player*);
+	virtual bool attack(Player*);
 	/**Prompt for reinforcements. Determines reinforcement for passed player.*/
-	void reinforce(Player*);
+	virtual void reinforce(Player*);
 	/**Prompt for fortifications. Determines fortification for passed player.*/
-	void fortify(Player*);
+	virtual void fortify(Player*);
 	/**Returns true if player wants to attack, false otherwise*/
 	virtual bool askAttack(Player*) = 0;
 	/**Prompt for where to place setup troop.*/
@@ -22,6 +22,9 @@ public:
 	//DESTRUCTORS
 	/**Player Strategy destructor*/
 	virtual ~PlayerStrategy();
+
+	//friends
+	friend class CheaterAI;
 
 protected:
 	//CONSTRUCTORS
