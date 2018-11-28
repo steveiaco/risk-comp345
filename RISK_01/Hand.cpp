@@ -11,8 +11,7 @@ Hand::Hand() {
 /**Hand destructor. Deletes hand and cards in hand.*/
 Hand::~Hand(){
 	//Delete cards in hand
-	for (Card* card : hand)
-		delete card;
+	hand.clear();
 }
 
 //Mutators

@@ -53,6 +53,8 @@ class Game: public Subject {
 		void fortify(Player* player);
 		/**Pause the output and wait for user to read*/
 		void pause();
+		/**Prompts the user to swap strategy employed by a player for another*/
+		void swapStrategy(Player* player);
 
     public:
 		//CONSTRUCTORS

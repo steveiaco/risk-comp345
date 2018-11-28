@@ -77,7 +77,7 @@
 
 		//Create game
 		Game game = Game(players, map, deck);
-		game.setSwapType(true);
+		game.setSwapType(false);
 		//Attach observers (order is important)
 		ObserverStats statsObserver = ObserverStats(&game);
 		ObserverPlayerPhase gameObserver = ObserverPlayerPhase(&game);
