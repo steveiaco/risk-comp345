@@ -21,7 +21,7 @@ public:
 
 private:
 
-	//GENERAL
+	//UTILITY
 	/*Choose a random owned country*/
 	Country* randomOwnedCountry(Player * player);
 

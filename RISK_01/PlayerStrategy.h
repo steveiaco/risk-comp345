@@ -23,9 +23,6 @@ public:
 	/**Player Strategy destructor*/
 	virtual ~PlayerStrategy();
 
-	//friends
-	friend class CheaterAI;
-
 protected:
 	//CONSTRUCTORS
 	/**PlayerStrategy constructor (doesn't do anything special)*/

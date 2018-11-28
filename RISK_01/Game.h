@@ -10,6 +10,8 @@ class Game;
 #include "Deck.h"
 #include "AggressiveAI.h"
 #include "BenevolentAI.h"
+#include "CheaterAI.h"
+#include "RandomAI.h"
 #include "HumanPlayer.h"
 #include <vector>
 #include <random>
@@ -37,6 +39,8 @@ class Game: public Subject {
 
 		/**Set to true if you want to be able to swap player strategies for testing*/
 		bool swapType;
+		/**Set to true if you want the game to pause between rounds so that a human player can read what is going on*/
+		bool pauseToRead;
 
 		//UTILITIES
 		/**Randomizes order of play (shuffles list of players)*/
@@ -67,7 +71,9 @@ class Game: public Subject {
 
 		//MUTATORS
 		/**Set swapType (for testing)*/
-		inline void setSwapType(bool in) { swapType = in;  }
+		inline void setSwapType(bool in) { swapType = in; }
+		/**Set pauseToRead (this should be turned off to speed up tournament mode)*/
+		inline void setPauseToRead(bool in) { pauseToRead = in; }
 
 		//ACCESSORS
 		/**Get map (good for attached observers)*/

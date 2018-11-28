@@ -11,6 +11,7 @@ Game::Game(std::vector<Player*> listOfPlayers, Map* theControllerMap, Deck* theD
 	deck = theDeck;
 	turn = 0;
 	swapType = false;
+	pauseToRead = true;
 }
 
 //DESTRUCTOR
@@ -39,8 +40,9 @@ Player* Game::start() {
 	map->display();
 	//Chose strategies for different players
 	std::cout << std::endl;
-	for (Player* player : players)
-		swapStrategy(player);
+	if (swapType)
+		for (Player* player : players)
+			swapStrategy(player);
 	//Prompt player to press to continue
 	std::cout << std::endl;
 	std::cout << "Hit enter to continue...";
@@ -105,9 +107,6 @@ void Game::assignArmies() {
 			if (0 < armiesLeft) {
 				currentPlayer = player;
 				notify();
-				//For testing, we allow the user to change type of player if swapType is enabled
-				if (swapType)
-					swapStrategy(player);
 				//Prompt player to select a country
 				Country* countryChosen;
 				std::cout << "You have " << armiesLeft << " troops remaining. Enter the name of a country where you would place one: ";
@@ -160,14 +159,14 @@ void Game::fortify(Player* player) {
 void Game::swapStrategy(Player* player) {
 	std::string in;
 	int choice = NULL;
-	std::cout << "You are currently in a mode for testing the strategy swap feature. The available strategies are Human (1), Aggressive (2), and Benevolent (3).\n";
-	while (choice == NULL) {
+	std::cout << "You are currently in a mode for testing the strategy swap feature. The available strategies are Human (1), Aggressive (2), Benevolent (3), Cheater (4), and Random (5).\n";
+	while (true) {
 		std::cout << "Choose a valid new player strategy for " << player->getName() << ": ";
 		std::getline(std::cin, in);
 		try {
 			choice = std::stoi(in);
-			if (choice > 3 || choice < 1)
-				continue;
+			if (choice <= 5 && choice >= 1)
+				break;
 		}
 		catch (std::invalid_argument e) {
 			continue;
@@ -187,13 +186,21 @@ void Game::swapStrategy(Player* player) {
 	case 3:
 		player->setStrategy(new BenevolentAI());
 		break;
+	case 4:
+		player->setStrategy(new CheaterAI());
+		break;
+	case 5:
+		player->setStrategy(new RandomAI());
+		break;
 	}
 }
 /**Pause the output and wait for user to read*/
 void Game::pause() {
-	//Prompt player to press to continue
-	std::cout << std::endl;
-	std::cout << "Hit enter to continue...";
-	std::string temp;
-	std::getline(std::cin, temp);
+	//Prompt player to press to continue if pauseToRead is true
+	if (pauseToRead) {
+		std::cout << std::endl;
+		std::cout << "Hit enter to continue...";
+		std::string temp;
+		std::getline(std::cin, temp);
+	}
 }

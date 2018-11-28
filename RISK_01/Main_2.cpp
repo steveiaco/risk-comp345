@@ -17,7 +17,6 @@
 		std::cout << "\tRISK GAME             \n";
 		std::cout << "=======================================================================\n";
 		std::cout << std::endl;
-		std::cout << "This driver file was created to showcase the Phase Observer (Part 2) of the assignment. Here, an observer is attached to the game and is updated/notified regularly from within our game class.";
 		//Display list of available maps
 		std::cout << "Enter one of the following maps to play (without extension):\n";
 		int i = 1;
@@ -61,15 +60,12 @@
 		}
 		std::cout << std::endl;
 		//Create player objects and AI
-		HumanPlayer* human = new HumanPlayer();
-		AggressiveAI* aggressive = new AggressiveAI();
-		BenevolentAI* benevolent = new BenevolentAI();
 		std::vector<Player*> players = std::vector<Player*>();
 		for (int i = 1; i < numPlayers + 1; i++) {
 			std::string playerName;
 			std::cout << "Enter name of player " << i << ": ";
 			std::getline(std::cin, playerName);
-			players.push_back(new Player(playerName, human));
+			players.push_back(new Player(playerName, NULL));
 		}
 		std::cout << std::endl;
 		//Create deck
@@ -77,7 +73,8 @@
 
 		//Create game
 		Game game = Game(players, map, deck);
-		game.setSwapType(false);
+		game.setSwapType(true);
+		game.setPauseToRead(false);
 		//Attach observers (order is important)
 		ObserverStats statsObserver = ObserverStats(&game);
 		ObserverPlayerPhase gameObserver = ObserverPlayerPhase(&game);
@@ -88,6 +85,4 @@
 			delete player;
 		delete deck;
 		delete map;
-		delete human;
-		delete aggressive;
 	}
