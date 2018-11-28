@@ -15,13 +15,13 @@ Tournament::~Tournament()
 {
 }
 
-void TournamentStart()
+void Tournament::TournamentStart()
 {
 	//for each game, start it
-	for (Games* actualGame : games)
+	for (Game* actualGame : games)
 	{
 		//create a player object that will receive the winner returned by the start function;
-		Player* player;
+		Player* player = NULL;
 		player = actualGame.start();
 		
 		//Push the name of the player into the WinningPlayer vector, or draw if it was a draw
@@ -32,14 +32,14 @@ void TournamentStart()
 	}
 }
 
-void TournamentsResultsDisplay()
+void Tournament::TournamentResultsDisplay()
 {
 	//first display the first row of the table
 	std::cout << std::endl;
 	std::cout << "\t\t |";
 	for (int i = 0; i < nbGames; i++)
 	{
-		cout << "Game " << i << "\t |";
+		std::cout << "Game " << i << "\t |";
 	}
 	std::cout << std::endl;
 
