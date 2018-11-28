@@ -1,7 +1,9 @@
 #include "HumanPlayer.h"
 
+/**Constructor*/
 HumanPlayer::HumanPlayer() { }
 
+/*Asks player whether they would like to attack*/
 bool HumanPlayer::askAttack(Player* thisPlayer) {
 	std::string input;
 	std::getline(std::cin, input);
@@ -11,7 +13,7 @@ bool HumanPlayer::askAttack(Player* thisPlayer) {
 	else
 		return true;
 }
-
+/**Get number of dice player would like to defend with (given defending country)*/
 int HumanPlayer::chooseDefenderRoll(Country * defendingCountry) {
 	int defenderRoll = NULL;
 	std::string defenderRollString;
@@ -33,7 +35,7 @@ int HumanPlayer::chooseDefenderRoll(Country * defendingCountry) {
 	}
 	return defenderRoll;
 }
-
+/**Get number of dice player would like to attack with (given attacking country)*/
 int HumanPlayer::chooseAttackerRoll(Country * attackingCountry)
 {
 	Player* thisPlayer = attackingCountry->getOccupant();
@@ -41,24 +43,24 @@ int HumanPlayer::chooseAttackerRoll(Country * attackingCountry)
 	std::string attackerRollString;
 
 	while (attackerRoll == NULL) {
-		std::getline(std::cin, attackerRollString); std::cout << std::endl;
+		std::getline(std::cin, attackerRollString);
 		try {
 			attackerRoll = std::stoi(attackerRollString);
 		}
 		catch (std::invalid_argument& e) {
-			std::cout << "Invalid input! Input must be a valid integer value, [1 - " << ((attackingCountry->getTroops() - 1 > 3) ? 3 : (attackingCountry->getTroops() - 1)) << "] ";
+			std::cout << "Invalid input! Input must be a valid integer value, [1 - " << ((attackingCountry->getTroops() - 1 > 3) ? 3 : (attackingCountry->getTroops() - 1)) << "]: ";
 			attackerRoll = NULL;
 			continue;
 		}
 		if (attackerRoll <= 0 || attackerRoll >= attackingCountry->getTroops() || attackerRoll > 3) {
-			std::cout << "Invalid input! Input must be [1," << ((attackingCountry->getTroops() - 1 > 3) ? 3 : (attackingCountry->getTroops() - 1)) << "] : ";
+			std::cout << "Invalid input! Input must be [1," << ((attackingCountry->getTroops() - 1 > 3) ? 3 : (attackingCountry->getTroops() - 1)) << "]: ";
 			attackerRoll = NULL;
 			continue;
 		}
 	}
 	return attackerRoll;
 }
-
+/**Chose country to attack from*/
 Country * HumanPlayer::chooseAttackFrom(Player* thisPlayer)
 {
 	Country* attackingCountry = NULL;
@@ -93,7 +95,7 @@ Country * HumanPlayer::chooseAttackFrom(Player* thisPlayer)
 	}
 	return attackingCountry;
 }
-
+/**Chose country to attack (given origin)*/
 Country * HumanPlayer::chooseAttackTo(Country* attackingCountry) {
 	Player* thisPlayer = attackingCountry->getOccupant();
 	Country* defendingCountry = NULL;
@@ -125,7 +127,7 @@ Country * HumanPlayer::chooseAttackTo(Country* attackingCountry) {
 
 	return defendingCountry;
 }
-
+/**Chose number of troops to move from one country to another after a victory*/
 int HumanPlayer::chooseMoveTroops(Country* attackingCountry, Country* defendingCountry)
 {
 	std::string numTroopsToMoveString;
@@ -135,21 +137,21 @@ int HumanPlayer::chooseMoveTroops(Country* attackingCountry, Country* defendingC
 		try {
 			numTroopsToMove = std::stoi(numTroopsToMoveString);
 			if (numTroopsToMove >= attackingCountry->getTroops() || numTroopsToMove < 0) {
-				std::cout << "Invalid input! Input must be at least 0 and less than " << attackingCountry->getTroops() << ".\n";
+				std::cout << "Invalid input! Input must be at least 0 and less than " << attackingCountry->getTroops() << ". Try again: ";
 				numTroopsToMove = NULL;
 				continue;
 			}
 			break;
 		}
 		catch (std::invalid_argument& e) {
-			std::cout << "Invalid input! Input must be a valid integer value.\n";
+			std::cout << "Invalid input! Input must be a valid integer value. Try again: ";
 			numTroopsToMove = NULL;
 		}
 	}
 	return numTroopsToMove;
 }
 
-
+/**Returns true if player wants to fortify, false otherwise*/
 bool HumanPlayer::askFortify(Player * thisPlayer)
 {
 	//Ask if player would like to fortify
@@ -159,7 +161,7 @@ bool HumanPlayer::askFortify(Player * thisPlayer)
 		return false;
 	return true;
 }
-
+/**Chose country to fortify from*/
 Country * HumanPlayer::chooseOriginCountryFortify(Player * thisPlayer)
 {
 	Country* moveFrom = NULL;
@@ -173,21 +175,21 @@ Country * HumanPlayer::chooseOriginCountryFortify(Player * thisPlayer)
 			//check if player owns the country
 			if (!thisPlayer->ownsCountry(moveFrom)) {
 				moveFrom = NULL;
-				throw std::invalid_argument("You do not own this country.");
+				throw std::invalid_argument("You do not own this country. Try again: ");
 			}
 			//moveFrom must have enough armies
 			if (moveFrom->getTroops() < 2) {
 				moveFrom = NULL;
-				throw std::invalid_argument("Country must have more than one army on it.");
+				throw std::invalid_argument("Country must have more than one army on it. Try again: ");
 			}
 		}
 		catch (std::invalid_argument e) {
-			std::cout << e.what();
+			std::cout << e.what() << " Try again: ";
 		}
 	}
 	return moveFrom;
 }
-
+/**Chose country to fortify troops to*/
 Country * HumanPlayer::chooseDestinationCountryFortify(Country * originCountry)
 {
 	Player* thisPlayer = originCountry->getOccupant();
@@ -203,27 +205,29 @@ Country * HumanPlayer::chooseDestinationCountryFortify(Country * originCountry)
 			//moveFrom must be a neighbor to moveTo
 			if (!moveTo->isNeighbor(originCountry)) {
 				moveTo = NULL;
-				throw std::invalid_argument("Country must be a neighbor.");
+				throw std::invalid_argument("Country must be a neighbor. Try again: ");
 			}
 			//Player must own destination
 			if (!thisPlayer->ownsCountry(moveTo)) {
 				moveTo = NULL;
-				throw std::invalid_argument("You do not own this country.");
+				throw std::invalid_argument("You do not own this country. Try again: ");
 			}
 		}
 		catch (std::invalid_argument e) {
-			std::cout << e.what();
+			std::cout << e.what() << " Try again: ";
 		}
 	}
 	return moveTo;
 }
-
+/**Chose country to add troops to*/
 Country * HumanPlayer::chooseReinforceCountry(Player* thisPlayer)
 {
 	std::string countrySelectedString;
 	Country* countrySelected = NULL;
 	while (countrySelected == NULL) {
 		std::getline(std::cin, countrySelectedString);
+		if (countrySelectedString == "cancel")
+			break;
 		try {
 			countrySelected = Country::getCountryFromSet(countrySelectedString, thisPlayer->getCountriesOwned());
 		}
@@ -233,7 +237,7 @@ Country * HumanPlayer::chooseReinforceCountry(Player* thisPlayer)
 	}
 	return countrySelected;
 }
-
+/**Chose number of troops to add to a country*/
 int HumanPlayer::chooseNumberOfTroopsToReinforce(Country * reinforcedCountry, int troopsAvailable) {
 	std::string in;
 	int numTroopsToReinforce = NULL;
@@ -255,7 +259,7 @@ int HumanPlayer::chooseNumberOfTroopsToReinforce(Country * reinforcedCountry, in
 	}
 	return numTroopsToReinforce;
 }
-
+/**Chose country to fortify to (guven origin)*/
 bool HumanPlayer::askExchange() {
 	//Ask if player would like to exchange
 	std::string input;
@@ -264,7 +268,7 @@ bool HumanPlayer::askExchange() {
 		return false;
 	return true;
 }
-
+/**Chose country to setup troops in*/
 Country * HumanPlayer::askSetup(Player* player) {
 	std::string countrySelectedString;
 	Country* countrySelected = NULL;

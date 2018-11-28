@@ -62,21 +62,15 @@ int main() {
 	}
 	std::cout << std::endl;
 	//Create player objects and AI
-	HumanPlayer* human = new HumanPlayer();
-	AggressiveAI* aggressive = new AggressiveAI();
-	BenevolentAI* benevolent = new BenevolentAI();
-	CheaterAI* cheater = new CheaterAI();
-	RandomAI* random = new RandomAI();
 
 	std::vector<Player*> players = std::vector<Player*>();
 	for (int i = 1; i < numPlayers+1; i++) {
 		std::string playerName;
 		std::cout << "Enter name of player " << i << ": ";
 		std::getline(std::cin, playerName);
-		if(i == 1)
-			players.push_back(new Player(playerName, aggressive));
-		else
-			players.push_back(new Player(playerName, random));
+
+		players.push_back(new Player(playerName, NULL));
+
 	}
 	std::cout << std::endl;
 	//Create deck
@@ -90,11 +84,8 @@ int main() {
 	ObserverPlayerPhase gameObserver = ObserverPlayerPhase(&game);
 	//Start up game
 	game.start();
-
 	for (Player* player : players)
 		delete player;
 	delete deck;
 	delete map;
-	delete human;
-	delete aggressive;
 }

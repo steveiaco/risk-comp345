@@ -1,7 +1,11 @@
 #include "CheaterAI.h"
 
+//CONSTRUCTOR
+/*Default cheater constructor*/
 CheaterAI::CheaterAI() {}
 
+//DESTRUCTOR
+/*Cheater destructor*/
 CheaterAI::~CheaterAI() {}
 
 //simply conquers all neighboring countries
@@ -16,35 +20,13 @@ bool CheaterAI::attack(Player* player) {
 			if (player->ownsCountry(defendingCountry))
 				continue;
 
-
 			std::cout << player->getName() << ": Choose a country to attack from (cancel to cancel): " << attackingCountry->getName() << std::endl;
 			std::cout << player->getName() << ": Choose a country to attack (cancel to cancel): " << defendingCountry->getName() << std::endl;
 
-			//get a number of attacking die
-			std::cout << player->getName() << ": Choose a number of dice to attack with [1," << ((attackingCountry->getTroops() > 3) ? 3 : attackingCountry->getTroops() - 1) << "] : ";
-			int attackerRoll = chooseAttackerRoll(attackingCountry);
-
-			//get a number of defending die
-			std::cout << defendingCountry->getOccupant()->getName() << ": Choose a number of dice to defend with [1," << ((defendingCountry->getTroops() > 1) ? 2 : 1) << "] : ";
-			int defenderRoll = defendingCountry->getOccupant()->getStrategy()->chooseDefenderRoll(defendingCountry);
-
-			std::cout << "Attacker rolled: ";
-			for (int i = 0; i < attackerRoll; i++)
-				std::cout << "[7]";
-			std::cout << std::endl;
-			std::cout << "Defender rolled: ";
-			for (int i = 0; i < attackerRoll; i++)
-				std::cout << "[1]";
-			std::cout << std::endl;
-
-			std::cout << player->getName() << " has successfully invaded " << defendingCountry->getName() << " and managed to convince the invaded country's troops to pledge allegiance to " << player->getName() << "." << std::endl;
+			std::cout << player->getName() << ": successfully invaded " << defendingCountry->getName() << " and managed to convince the invaded country's troops to pledge allegiance to " << player->getName() << "." << std::endl;
 			defendingCountry->changeOccupant(player);
-
-
 		}		
 	}
-
-	hasAttacked = true;
 	return true;
 }
 
@@ -62,8 +44,7 @@ void CheaterAI::reinforce(Player * player)
 	}
 
 	for (Country* thisCountry : player->getCountriesOwned()) {
-		std::cout << "You have " << troopsAvailable << " troops left to place, which country would you like to add troops to? " << thisCountry->getName() << std::endl;
-		std::cout << "You have selected " << thisCountry->getName() << ". How many troops would you like to place on this country? (Max: " << troopsAvailable << ") : " << thisCountry->getTroops() << std::endl;
+		std::cout << player->getName() << ": successfuly summoned " << thisCountry->getTroops() << " troops from the void and place them on " << thisCountry->getName() << "." << std::endl;
 		thisCountry->addTroops(thisCountry->getTroops());
 	}
 }
@@ -80,7 +61,7 @@ void CheaterAI::fortify(Player* player) {
 				countriesToFortify.insert(ownedCountry);
 
 	//Ask if player would like to fortify
-	std::cout << player->getName() << ": would you like to fortify? (y/n) y";
+	std::cout << player->getName() << ": would you like to fortify? (y/n) y\n";
 
 	for (Country* countryToFortify : countriesToFortify) {
 		std::cout << player->getName() << ": successfully moved (spontaneously spawned) " << countryToFortify->getTroops() << " troop(s) from ThE mAgIcAl VoId to " << countryToFortify->getName() << ".\n";
@@ -108,8 +89,6 @@ Country * CheaterAI::askSetup(Player * player)
 	return *iter;
 }
 
-
-
 bool CheaterAI::askAttack(Player * player)
 {
 	if (!hasAttacked) {
@@ -119,11 +98,10 @@ bool CheaterAI::askAttack(Player * player)
 	}
 	else {
 		std::cout << "n" << std::endl;
+		hasAttacked = false;
 		return false;
 	}
 }
-
-
 
 //always exchange
 bool CheaterAI::askExchange()

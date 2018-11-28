@@ -16,8 +16,7 @@ Deck::Deck(Map* map) {
 /**Deck destructor. Deletes deck and cards in deck.*/
 Deck::~Deck(){
 	//Delete cards in deck
-	for (Card* card : cards)
-		delete card;
+	cards.clear();
 }
 
 //Mutator

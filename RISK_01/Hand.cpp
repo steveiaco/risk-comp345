@@ -11,8 +11,7 @@ Hand::Hand() {
 /**Hand destructor. Deletes hand and cards in hand.*/
 Hand::~Hand(){
 	//Delete cards in hand
-	for (Card* card : hand)
-		delete card;
+	hand.clear();
 }
 
 //Mutators
@@ -44,12 +43,12 @@ std::unordered_set<Card*> Hand::canExchange() const {
 			case 1:
 				cavalry.insert(card);
 				if (cavalry.size() > 2) //If we find more than two cavalry cards, return them
-					return infantry;
+					return cavalry;
 				break;
 			case 2:
 				artillery.insert(card);
 				if (artillery.size() > 2) //If we find more than two artillery cards, return them
-					return infantry;
+					return artillery;
 				break;
 		}
 	//Add the first element of every set to toRet. If toRet ends up with 3 elements, it contains one of each type.
@@ -74,7 +73,7 @@ int Hand::exchange() {
 		throw std::invalid_argument("You can not exchange your cards.\nYou need three cards of different or identical troop type to exchange.");
 	for (auto it = toExchange.begin(); it != toExchange.end();) {
 		if (hand.count(*it))
-			it = hand.erase(it);
+			hand.erase(*it);
 		else
 			++it;
 	}
