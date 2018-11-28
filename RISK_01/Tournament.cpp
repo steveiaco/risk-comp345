@@ -22,12 +22,12 @@ void Tournament::TournamentStart()
 	{
 		//create a player object that will receive the winner returned by the start function;
 		Player* player = NULL;
-		player = actualGame.start();
+		player = actualGame->start();
 		
 		//Push the name of the player into the WinningPlayer vector, or draw if it was a draw
 		if (player == NULL)
 			winningPlayers.push_back("Draw");
-		else winningPlayers.push_back(player.getName());
+		else winningPlayers.push_back(player->getName());
 
 	}
 }
@@ -46,7 +46,7 @@ void Tournament::TournamentResultsDisplay()
 	//print the following rows, which have the name of the map and the winner for that map
 	for (int x = 0; x < maps.size(); x++)
 	{
-		std::cout << maps[x].getName << "\t |";   //Print name of map first
+		std::cout << maps[x]->getWinner()->getName() << "\t |";   //Print name of map first
 		for (int y = 0; y < games.size(); y++)	  //Print winners of all games
 		{
 			std::cout << winningPlayers[(x*nbGames) + y] << "\t |";
