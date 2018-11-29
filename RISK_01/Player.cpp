@@ -15,6 +15,7 @@ Player::Player(std::string name, PlayerStrategy* strategy) {
 Player::~Player() {
 	delete dice;
 	delete hand;
+	delete strategy;
 }
 
 //Mutator
@@ -209,3 +210,8 @@ bool Player::askAttack() { return strategy->askAttack(this); };
 
 /**Ask the player where they would like to place a troop for setup.*/
 Country* Player::askSetup() { return strategy->askSetup(this); };
+
+/**Reset the player. Map posession should already have been reset. We just need to ensure that cards in players hand are returned to deck. We will not reset dice statistics (though we could) as it makes more sense to keep them.*/
+void Player::reset() {
+	hand->returnToDeck();
+}

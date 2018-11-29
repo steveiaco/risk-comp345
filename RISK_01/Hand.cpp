@@ -71,20 +71,19 @@ int Hand::exchange() {
 	//Check if the players either has a minimum of 3 identical cards, or 3 unique cards
 	if (toExchange.size() != 3)
 		throw std::invalid_argument("You can not exchange your cards.\nYou need three cards of different or identical troop type to exchange.");
-	for (auto it = toExchange.begin(); it != toExchange.end();) {
-		if (hand.count(*it))
-			hand.erase(*it);
-		else
-			++it;
-	}
+	for (auto it = toExchange.begin(); it != toExchange.end(); it++)
+			returnCardToDeck(*it);
 	//Add one to times excahnged and return the appropriate number of armies. Armies recieved should be 5 for the first exchange and 5 more for each additional exchange.
 	return (++timesExchanged * 5);
 }
 /**Transfer cards from one hand to another. Useful for moving cards when player is eliminated.**/
-void Hand::giveHandTo(Hand* hand) {
-	for (Card* card : this->hand)
-		hand->addCard(card);
-	this->hand.clear();
+void Hand::giveHandTo(Hand* otherHand) {
+	for (auto it = hand.begin(); it != hand.end();) {
+		Card* lastCard = *it;
+		it++;
+		otherHand->addCard(lastCard);
+		hand.erase(lastCard);
+	}
 }
 /**Display contents of a hand.**/
 void Hand::display() const {
@@ -94,5 +93,20 @@ void Hand::display() const {
 		std::cout << "  Card " << index << ": ";
 		card->display();
 		index++;
+	}
+}
+/**Return a card to the deck that it came from*/
+void Hand::returnCardToDeck(Card* card) {
+	if (!hand.count(card))
+		throw std::invalid_argument("This should never happen.");
+	hand.erase(card);
+	card->returnToDeck();
+}
+/**Return all cards in hand to deck*/
+void Hand::returnToDeck() {
+	for (auto it = hand.begin(); it != hand.end();) {
+		Card* lastCard = *it;
+		it++;
+		returnCardToDeck(lastCard);
 	}
 }

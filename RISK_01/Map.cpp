@@ -96,7 +96,7 @@ void Map::populateDeck(Deck* deck) const {
 	int keepCount = 0;
 	//Troop types must be evenly distributed abong cards
 	for (Country* country : countryList)
-		deck->addCard(new Card(country, static_cast<TroopType>(keepCount++%3)));
+		deck->addCard(new Card(country, static_cast<TroopType>(keepCount++%3), deck));
 }
 /**Assign equal number of countries to players randomly*/
 void Map::assignCountries(std::vector<Player*>& players) {
@@ -117,4 +117,9 @@ Player* Map::getWinner() const {
 			return NULL;
 	//If all countreis are owned by the same person, return the person who owns the first one
 	return potentialWinner;
+}
+/**Resets map so that countries are unnocupied and troopless*/
+void Map::reset() {
+	for (Country* country : countryList)
+		country->reset();
 }

@@ -1,8 +1,8 @@
 #include "Game.h"
 
 //CONSTRUCTORS
-/**Constructs a controller from a list of players on a given map*/
-Game::Game(std::vector<Player*> listOfPlayers, Map* theControllerMap, Deck* theDeck) {
+/**Constructs a game for a given list of players on a given map. Game lasts at most maxTurns. Set max turns to null for game to last until one player wins.*/
+Game::Game(std::vector<Player*> listOfPlayers, Map* theControllerMap, Deck* theDeck, int maxTurns) {
 	//Make sure number of players is valid (we will have problems otherwise)
 	if (listOfPlayers.size() < 2 || listOfPlayers.size() > 6)
 		throw std::invalid_argument("Invalid nmber of players. Game can only be played by 2-6 players.");
@@ -10,6 +10,7 @@ Game::Game(std::vector<Player*> listOfPlayers, Map* theControllerMap, Deck* theD
     map = theControllerMap;
 	deck = theDeck;
 	turn = 0;
+	this->maxTurns = maxTurns;
 	swapType = false;
 	pauseToRead = true;
 }
@@ -22,6 +23,7 @@ Game::~Game(){
 //UTILITIES
 /**Set up game (assign countries, randomize play order)*/
 Player* Game::start() {
+	//Change state
 	currentState = SETUP;
 	system("CLS");
 	//Display a message
@@ -44,20 +46,25 @@ Player* Game::start() {
 		for (Player* player : players)
 			swapStrategy(player);
 	//Prompt player to press to continue
-	std::cout << std::endl;
-	std::cout << "Hit enter to continue...";
-	std::string temp;
-	std::getline(std::cin, temp);
+	pause();
 	//Prompt players to assign starting armies to countries
 	assignArmies();
 	//Launch game loop
 	runGameLoop();
-	return map->getWinner();
+	//Get winner (before we rest map)
+	Player* winner = map->getWinner();
+	//Reset game objects
+	map->reset();
+	for (Player* player : players)
+		player->reset();
+	turn = 0;
+	//Return winnner
+	return winner;
 }
 /**Runs main game loop until game is over*/
 void Game::runGameLoop() {
-	//Run loop until a winner is determined
-	while (!map->getWinner()) {
+	//Run loop until a winner is determined or max turns is reached
+	while (!map->getWinner() && (maxTurns == NULL || turn < maxTurns)) {
 		//Increment turn counter
 		turn++;
 		//Loop over players

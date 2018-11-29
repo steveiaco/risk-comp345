@@ -25,6 +25,8 @@ class Game: public Subject {
     private:
 		/**Current turn*/
         int turn;
+		/**Max number of turns*/
+		int maxTurns;
 		/**Current player*/
 		Player* currentPlayer;
 		/**Current game state*/
@@ -62,8 +64,8 @@ class Game: public Subject {
 
     public:
 		//CONSTRUCTORS
-		/**Constructs a controller from a list of players on a given map*/
-		Game(std::vector<Player*> players, Map* theControllerMap, Deck* theDeck);
+		/**Constructs a game for a given list of players on a given map. Game lasts at most maxTurns. Set max turns to null for game to last until one player wins.*/
+		Game(std::vector<Player*> players, Map* theControllerMap, Deck* theDeck, int maxTurns);
 
 		//DESTRUCTOR
 		/**Controller destructor*/
@@ -82,6 +84,8 @@ class Game: public Subject {
 		inline std::vector<Player*> getPlayers() { return players; };
 		/**Get current turn (good for attached observers)*/
 		inline int getCurrentTurn() { return turn; };
+		/**Get max number of turns (good for attached observers)*/
+		inline int getMaxTurns() { return maxTurns; };
 		/**Get current player (good for attached observers)*/
 		inline Player* getCurrentPlayer() { return currentPlayer; };
 		/**Get current game state (good for attached observers)*/

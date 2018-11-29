@@ -2,9 +2,10 @@
 
 //Constructor
 /**Construct a card for country country with troop type troopType.*/
-Card::Card(Country* country, TroopType troopType) {
+Card::Card(Country* country, TroopType troopType, Deck* deck) {
 	this->country = country;
 	this->type = troopType;
+	this->deck = deck;
 }
 
 //Destructor
@@ -27,5 +28,9 @@ void Card::display(std::string lspace) const {
 	}
 	//Display card
 	std::cout << lspace << "Card for " << country->getName() << " of " << toRet << " type." << std::endl;
+}
+/**Return this card to the deck that it came from.*/
+void Card::returnToDeck() {
+	deck->addCard(this);
 }
 

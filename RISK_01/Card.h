@@ -4,6 +4,7 @@
 class Card;
 
 #include "Country.h"
+#include "Deck.h"
 #include <string>
 #include <iostream>
 
@@ -17,11 +18,13 @@ private:
 	Country* country;
 	/**Troop type of card**/
 	TroopType type;
+	/**Deck that card came from (good for returning card to deck)**/
+	Deck* deck;
 
 public:
 	//Constructor
-	//Construct a card for country country with troop type troopType.
-	Card(Country* country, TroopType troopType);
+	//Construct a card for country country with troop type troopType that belongs to deck deck.
+	Card(Country* country, TroopType troopType, Deck* deck);
 
 	//Destructor
 	/**Card Destructor*/
@@ -34,5 +37,7 @@ public:
 	//Utility
 	//Display card details.
 	void display(std::string lspace = "") const;
+	/**Return card to deck that it came from*/
+	void returnToDeck();
 };
 #endif

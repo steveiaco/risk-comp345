@@ -50,6 +50,8 @@ public:
 	inline int getNumberOfCountries() const { return countryList.size(); }
 	/**Get number of continents in map.**/
 	inline int getNumberOfContinents() const { return continentList.size(); }
+	/**Get name of map.**/
+	inline std::string getName() const { return name; }
 
 	//Utility
 	/**Display the name of the map and a list of its continents (with their included countries) to the user.**/
@@ -62,6 +64,8 @@ public:
 	void assignCountries(std::vector<Player*>& players);
 	/**Return winner if one person owns all countries. Return null otherwise.*/
 	Player* getWinner() const;
+	/**Resets map so that countries are troopless and unoccupied.*/
+	void reset();
 };
 
 #endif

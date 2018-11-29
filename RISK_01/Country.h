@@ -73,6 +73,8 @@ public:
 	bool isNeighbor(Country* country) const;
 	/**Given a set of countries, get a country specified by name from the set (if it is a set member). Throw an exception otherwise.**/
 	static Country* getCountryFromSet(std::string countryName, std::unordered_set<Country*> countryList);
+	/**Resets country so that it is unnocupied and troopless*/
+	void reset();
 };
 
 #endif

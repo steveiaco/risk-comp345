@@ -108,6 +108,8 @@ public:
 	bool askAttack();
 	/**Ask the player where they would like to place a troop for setup.*/
 	Country* askSetup();
+	/**Reset the player. Map posession should already have been reset. We just need to ensure that cards in players hand are returned to deck. We will not reset dice statistics (though we could) as it makes more sense to keep them.*/
+	void reset();
 };
 
 #endif

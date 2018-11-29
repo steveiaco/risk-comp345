@@ -3,28 +3,45 @@
 #include <vector>
 #include <string>
 
-class Tournament
-{
+class Tournament {
 private:
+	/**Datatype for storing tournament victories and their details**/
+	class Victory {
+	public:
+		/**Victory constructor*/
+		Victory(Player* player, Map* map);
+		/**Victory destructor*/
+		~Victory();
+		/**Winning player*/
+		Player* player;
+		/**Map that player won on*/
+		Map* map;
+	};
+
 	//List of maps
 	std::vector<Map*> maps;
-
-	//List of games
-	std::vector<Game*> games;
-
-	//List of winning players names
-	std::vector<std::string> winningPlayers;
-
-	//Maximum number of turn allowed
+	//List of players
+	std::vector<Player*> players;
+	//List of victories
+	std::vector<Victory> victories;
+	//Maximum number of turns per game
 	int turnLimit;
-
 	//Number of games per map
 	int nbGames;
 
 public:
-	Tournament(std::vector<Map*> map, std::vector<Game*> game, int turn, int nbGame);
+	//CONSTRUCTORS
+	/**Tournament constructor*/
+	Tournament(std::vector<Map*> maps, std::vector<Player*> players, int numTurns, int numGames);
+
+	//DESTRUCTOR
+	/**Tournament destructor*/
 	~Tournament();
-	void TournamentStart();
-	void TournamentResultsDisplay();
+
+	//UTILITY
+	/**Start tournament*/
+	void start();
+	/**Display results of tournament in a table*/
+	void displayResults();
 };
 

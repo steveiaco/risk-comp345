@@ -15,6 +15,10 @@ private:
 	/**Number of times a player has exchanged cards**/
 	static int timesExchanged;
 
+	//Utility
+	/**Return a card to the deck that it came from*/
+	void returnCardToDeck(Card* card);
+
 public:
 	//Constructor
 	/**Default constructor. Creates an empty hand.**/
@@ -41,6 +45,8 @@ public:
 	int exchange();
 	/**Transfoer cards from one hand to another. Useful for moving cards when player is eliminated.**/
 	void giveHandTo(Hand* hand);
+	/**Return all cards in hand to deck*/
+	void returnToDeck();
 
 };
 

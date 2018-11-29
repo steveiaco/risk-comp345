@@ -26,7 +26,8 @@ void Country::changeOccupant(Player * newOccupant) {
 	if (this->occupant != NULL) //If country had a previous occupant, remove this country from their posession
 		this->occupant->removeCountry(this);
 	this->occupant = newOccupant;
-	newOccupant->addCountry(this); //Add country to player's posession
+	if(newOccupant != NULL)
+		newOccupant->addCountry(this); //Add country to player's posession
 	this->continent->update(); //Update continent (check if posession has changed)
 }
 /**Add a neighboring country to neighborList. Ensure that neighbor also has this country as its own neighbor (edges must all be bidirectional). If neighbor belongs to a different continent, link the continents by defining them as neighbors.**/
@@ -110,4 +111,9 @@ Country* Country::getCountryFromSet(std::string countryName, std::unordered_set<
 void Country::displayNeighbors(std::string lspace) const {
 	for (Country* neighbor : neighborList)
 		neighbor->display(lspace);
+}
+/**Resets country so that it is unnocupied and troopless*/
+void Country::reset() {
+	changeOccupant(NULL);
+	troopCount = 0;
 }

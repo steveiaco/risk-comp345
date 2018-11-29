@@ -32,8 +32,7 @@ Country * RandomAI::randomOwnedCountry(Player * player)
 /*Get whether or not player would like to attack*/
 bool RandomAI::askAttack(Player * player)
 {
-	//srand(time(NULL)); //initialize the random seed
-	if (std::rand() % 2) {
+	if (player->canAttack() && std::rand() % 2) {
 		std::cout << "y" << std::endl;
 		return true;
 	}
@@ -66,7 +65,6 @@ Country * RandomAI::chooseReinforceCountry(Player * player)
 /*Get number of troops to reinforce to country*/
 int RandomAI::chooseNumberOfTroopsToReinforce(Country * reinforcedCountry, int troopsAvailable)
 {
-	//srand(time(NULL)); //initialize the random seed
 	int num = ((std::rand() % troopsAvailable) + 1);
 
 	//display what happened
@@ -77,7 +75,6 @@ int RandomAI::chooseNumberOfTroopsToReinforce(Country * reinforcedCountry, int t
 /*Get whether or not player would like to exchange cards*/
 bool RandomAI::askExchange()
 {
-	//srand(time(NULL)); //initialize the random seed
 	if (std::rand() % 2) {
 		std::cout << "y" << std::endl;
 		return true;
@@ -91,8 +88,6 @@ bool RandomAI::askExchange()
 /*Get number of dice to roll on defense*/
 int RandomAI::chooseDefenderRoll(Country * defendingCountry)
 {
-	//srand(time(NULL)); //initialize the random seed
-
 	if (defendingCountry->getTroops() == 1) {
 		std::cout << "1" << std::endl;
 		return 1;
@@ -109,7 +104,6 @@ int RandomAI::chooseAttackerRoll(Country * attackingCountry)
 {
 	int roll;
 
-	//srand(time(NULL)); //initialize the random seed
 	if (attackingCountry->getTroops() == 2)
 		roll = 1;
 	else if (attackingCountry->getTroops() == 3)
@@ -132,7 +126,6 @@ Country * RandomAI::chooseAttackFrom(Player * player)
 			listAttack.insert(add);
 	std::unordered_set<Country*>::iterator iter = listAttack.begin();
 
-	//srand(time(NULL));
 	int randIndex = std::rand() % listAttack.size();
 
 	advance(iter, randIndex);
@@ -167,10 +160,8 @@ Country * RandomAI::chooseAttackTo(Country * attackFrom)
 }
 
 /*Get number of troops to move between countries after successful attack*/
-int RandomAI::chooseMoveTroops(Country * attackingCountry, Country * defendingCountry)
-{
+int RandomAI::chooseMoveTroops(Country * attackingCountry, Country * defendingCountry) {
 	int num;
-	//srand(time(NULL));
 	if (attackingCountry->getTroops() == 1)
 		num = 0;
 	else
@@ -183,9 +174,7 @@ int RandomAI::chooseMoveTroops(Country * attackingCountry, Country * defendingCo
 }
 
 /*Get whether or not player would like to fortify*/
-bool RandomAI::askFortify(Player * player)
-{
-	//srand(time(NULL)); //initialize the random seed
+bool RandomAI::askFortify(Player * player) {
 	if (std::rand() % 2) {
 		std::cout << "y" << std::endl;
 		return true;
@@ -197,8 +186,7 @@ bool RandomAI::askFortify(Player * player)
 }
 
 /*Get country to fortify from*/
-Country * RandomAI::chooseOriginCountryFortify(Player * player)
-{
+Country * RandomAI::chooseOriginCountryFortify(Player * player) {
 	std::unordered_set<Country*> listFortify;
 	for (Country* add : player->getCountriesOwned())
 		if (add->getTroops() > 1)
@@ -217,8 +205,7 @@ Country * RandomAI::chooseOriginCountryFortify(Player * player)
 }
 
 /*Get country to fortify to*/
-Country * RandomAI::chooseDestinationCountryFortify(Country * originCountry)
-{
+Country * RandomAI::chooseDestinationCountryFortify(Country * originCountry) {
 	std::unordered_set<Country*> listFortify;
 	for (Country* add : originCountry->getNeighbors())
 		if (originCountry->getOccupant()->ownsCountry(add))
