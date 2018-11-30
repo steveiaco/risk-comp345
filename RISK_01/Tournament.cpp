@@ -46,7 +46,7 @@ void Tournament::displayResults()
 
 	//first display the tournament options used
 	system("CLS");
-	std::cout << "Tournament Results: ";
+	std::cout << "Tournament Results: \n";
 	std::cout << "\nM: ";
 	for (std::vector<Map*>::iterator map = maps.begin(); map != maps.end() - 1; map++) std::cout << (*map)->getName() << ", "; std::cout << (*(maps.end() - 1))->getName();
 	std::cout << "\nP: ";
