@@ -110,7 +110,7 @@ void startTournament() {
 				choiceOfAI = std::stoi(choiceOfAIString);
 				if (choiceOfAI < 1 || choiceOfAI > 4)
 					throw std::invalid_argument("Choice of startegy must be a valid integer.");
-				if (strategiesTaken[choiceOfAI] == true)
+				if (strategiesTaken[choiceOfAI-1] == true)
 					throw std::invalid_argument("Strategies must all be unique.");
 			}
 			catch (std::exception &e) { //Catch invalid strategy
@@ -119,7 +119,7 @@ void startTournament() {
 			}
 		}
 		//Player is added only if the Entry is correct AND it is not already chosen
-		strategiesTaken[choiceOfAI] = true;
+		strategiesTaken[choiceOfAI-1] = true;
 		switch (choiceOfAI) {
 		case 1:
 			players.push_back(new Player("Aggressive", new AggressiveAI()));
