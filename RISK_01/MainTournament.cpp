@@ -160,11 +160,13 @@ void startTournament() {
 	//Keep trying to get max number of turns per game
 	while (maxTurns == NULL) {
 		std::string turnMaxString;
-		std::cout << "Enter the maximum number of turns in a game until it is declared a draw (10 to 50): ";
+		std::cout << "Enter the maximum number of turns in a game until it is declared a draw [10,50] (0 for no limit): ";
 		std::getline(std::cin, turnMaxString);
 		try {
 			maxTurns = std::stoi(turnMaxString);
-			if (maxTurns < 10 || maxTurns > 50)
+			if (maxTurns == 0)
+				maxTurns = 2147483647;
+			else if (maxTurns < 10 || maxTurns > 50)
 				throw std::invalid_argument("Invalid number of maximum turns.");
 		}
 		catch (std::exception& e) { //Catch invalid number of turns
