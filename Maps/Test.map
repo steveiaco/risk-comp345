@@ -1,0 +1,15 @@
+[Map]
+author=Emanuel Sharma
+image=world.bmp
+wrap=no
+scroll=horizontal
+warn=yes
+
+[Continents]
+Left=2
+Right=4
+
+[Territories]
+LA,1,1,Left,RB,RA
+RA,1,1,Right,LA,RB
+RB,1,1,Right,LA,RA

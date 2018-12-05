@@ -67,6 +67,15 @@ void Game::runGameLoop() {
 	while (!map->getWinner() && (maxTurns == NULL || turn < maxTurns)) {
 		//Increment turn counter
 		turn++;
+
+		//Prompt all users to change strategy on turns divisible by 5
+		if (turn % 5 == 0) {
+			std::cout << "You are currently in a mode for testing the strategy swap feature, you will now be asked to change all player strategy types. \n";
+
+			for (Player* player : players) {
+				swapStrategy(player);
+			}
+		}
 		//Loop over players
 		for (Player* player : players) {
 			//Player can only play if they are still in the game (they have countries left to play with)
@@ -166,7 +175,7 @@ void Game::fortify(Player* player) {
 void Game::swapStrategy(Player* player) {
 	std::string in;
 	int choice = NULL;
-	std::cout << "You are currently in a mode for testing the strategy swap feature. The available strategies are Human (1), Aggressive (2), Benevolent (3), Cheater (4), and Random (5).\n";
+	std::cout << "The available strategies are Human (1), Aggressive (2), Benevolent (3), Cheater (4), and Random (5).\n";
 	while (true) {
 		std::cout << "Choose a valid new player strategy for " << player->getName() << ": ";
 		std::getline(std::cin, in);
